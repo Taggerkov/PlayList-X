@@ -4,7 +4,8 @@ module com.group8.playlistx {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires org.jetbrains.annotations;
 
-    opens com.group8.playlistx to javafx.fxml;
-    exports com.group8.playlistx;
+    opens com.playlistx to javafx.fxml;
+    exports com.playlistx;
 }
