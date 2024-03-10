@@ -9,19 +9,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class KeyChain extends FileHandler implements Serializable {
     private final static String PATH = AppData.usersPath;
     private static KeyChain instance;
-    private ArrayList<HashKey> passwordList = new ArrayList<>();
+    private HashMap<String, Integer> keyMap = new HashMap<>();
 
     private KeyChain() {
         try {
-            if (checkFile(PATH)){
+            if (checkFile(PATH)) {
                 KeyChain extracted = (KeyChain) readFromBinary(PATH);
-                passwordList = extracted.passwordList;
-            }
-            else save();
+                keyMap = extracted.keyMap;
+            } else save();
         } catch (Exception e) {
             throw new InvalidFile("Couldn't read/write user file!");
         }
@@ -32,43 +32,33 @@ public class KeyChain extends FileHandler implements Serializable {
         return instance;
     }
 
-    public void setPasswordList(@NotNull ArrayList<HashKey> passwordList) {
-        this.passwordList = passwordList;
-    }
-
-    public void addKey(@NotNull HashKey key) {
-        if (!passwordList.contains(key)) {
-            passwordList.add(key);
+    public void registerKey(@NotNull UserName username, int hashWord) {
+        if (!keyMap.containsKey(username.getUserName())) {
+            keyMap.put(username.getUserName(), hashWord);
             save();
         }
     }
-
-    public void deleteKey(@Nullable HashKey key) {
-        passwordList.remove(key);
-        save();
-        replaceKey(null,null);
-    }
-
-    public void replaceKey(@NotNull HashKey addKey, @NotNull HashKey deleteKey) {
-        addKey(addKey);
-        deleteKey(deleteKey);
+    public void addKey(@NotNull UserName username, int hashWord){
+        keyMap.put(username.getUserName(), hashWord);
         save();
     }
 
-    public @Nullable HashKey getKey(@Nullable String userName) {
-        for (HashKey key : passwordList) {
-            if (key.getUserName().equals(userName)) return key;
-        }
-        return null;
+    public void deleteKey(@Nullable UserName username, int hashWord) {
+        keyMap.remove(username.getUserName(), hashWord);
+        save();
     }
 
-    public boolean isAvailable(@NotNull String userName) {
-        for (HashKey hashKey : passwordList) if (hashKey.getUserName().equals(userName)) return false;
+    public int getKey(@Nullable UserName username) {
+       return keyMap.get(username.getUserName());
+    }
+
+    public boolean isAvailable(@NotNull String username) {
+        for (String key : keyMap.keySet()) if (key.equalsIgnoreCase(username)) return false;
         return true;
     }
 
     public int size() {
-        return passwordList.size();
+        return keyMap.size();
     }
 
     public void save() {

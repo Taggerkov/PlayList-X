@@ -1,6 +1,7 @@
 package com.playlistx.model.login;
 
 import com.playlistx.model.utils.exceptions.InvalidInput;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -29,7 +30,8 @@ public class UserName implements Serializable {
         this.userName = userName;
     }
 
-    public static UserName fresh(String userName) throws InvalidInput {
+    @Contract("_ -> new")
+    public static @NotNull UserName fresh(String userName) throws InvalidInput {
         if (userName == null || userName.isEmpty()) {
             String generatedName = generateName();
             while (!keyChain.isAvailable(generatedName)) generatedName = generateName();
@@ -74,13 +76,13 @@ public class UserName implements Serializable {
     }
 
     public boolean equals(String userName) {
-        return this.userName.equals(userName);
+        return this.userName.equalsIgnoreCase(userName);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof UserName otherName)) return false;
-        return userName.equals(otherName.userName);
+        return userName.equalsIgnoreCase(otherName.userName);
     }
 }

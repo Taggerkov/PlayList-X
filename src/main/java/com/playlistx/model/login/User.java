@@ -6,28 +6,42 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * The {@code User} class holds the login information and is responsible for 'user' handling.
+ * <p>
+ * This class interacts with {@link KeyChain} class to create, delete and check user credentials, and makes
+ * use of {@link UserName} class as for the users 'username'.
+ * <p>
+ * Class features {@link PropertyChangeSupport} which fires 'PropertyChange' to its listeners, this occurs in most of related changes or with invalid inputs,
+ * such as credentials.
+ *
+ * @author Sergiu Chirap
+ * @see KeyChain
+ * @see UserName
+ * @see java.beans.PropertyChangeSupport
+ * @since 0.1
+ */
 public class User {
+    /**
+     * This class is used for credential storage.
+     */
     private static final KeyChain keyChain = KeyChain.get();
+    /**
+     * This class is used for 'PropertyChange' handling.
+     */
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
-    private UserName userName;
-    private int passwordHash;
-    private HashKey logInHashKey;
+    private UserName username;
 
     public User(PropertyChangeListener listener) {
         signal.addPropertyChangeListener(listener);
     }
-    public void addListener(PropertyChangeListener listener) {
-        signal.addPropertyChangeListener(listener);
-    }
-    public void removeListener(PropertyChangeListener listener) {
-        signal.removePropertyChangeListener(listener);
-    }
 
-    public boolean login(@NotNull String userName, int passwordHash) {
-        HashKey key = keyChain.getKey(userName);
-        if (key != null) {
-            if (key.equals(new HashKey(UserName.fresh(userName), passwordHash))) {
-                setUser(key);
+    public boolean login(@NotNull String username, int hashWord) {
+        UserName userName = UserName.fresh(username);
+        int key = keyChain.getKey(userName);
+        if (key != 0) {
+            if (key == hashWord) {
+                this.username = userName;
                 return true;
             } else {
                 signal.firePropertyChange("PASSWORD", null, null);
@@ -38,29 +52,32 @@ public class User {
 
     public void signUp(@NotNull String userName, int passwordHash) {
         try {
-            KeyChain.get().addKey(new HashKey(UserName.fresh(userName), passwordHash));
+            KeyChain.get().registerKey(UserName.fresh(userName), passwordHash);
             signal.firePropertyChange("SIGN", null, null);
         } catch (InvalidInput e) {
             signal.firePropertyChange("INV-USER", null, null);
         }
     }
 
-    private void setUser(@NotNull HashKey key) {
-        userName = key.getUserName();
-        passwordHash = key.getHashPass();
-        logInHashKey = key;
+    public boolean isAvailable(String username) {
+        return keyChain.isAvailable(username);
     }
 
-    public UserName getUserName() {
-        return userName;
+    public UserName getUsername() {
+        return username;
     }
 
-    public int getPasswordHash() {
-        return passwordHash;
+    public void addListener(PropertyChangeListener listener) {
+        signal.addPropertyChangeListener(listener);
+    }
+
+    public void removeListener(PropertyChangeListener listener) {
+        signal.removePropertyChangeListener(listener);
     }
 
     public void logout() {
-        HashKey logOutHashKey = new HashKey(userName, passwordHash);
-        if (!logOutHashKey.equals(logInHashKey)) keyChain.replaceKey(logOutHashKey, logInHashKey);
+        for (PropertyChangeListener listener : signal.getPropertyChangeListeners())
+            signal.removePropertyChangeListener(listener);
+        signal.firePropertyChange("LOGOUT", this, null);
     }
 }
