@@ -30,12 +30,38 @@ public class User {
      * This class is used for 'PropertyChange' handling.
      */
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
+    /**
+     * This class is responsible for the 'username' proper application.
+     */
     private UserName username;
 
+    /**
+     * {@code User}'s constructor. Initializes a new 'user', which will carry non initialized credentials.
+     * A {@code User} instance must call {@link #login(String, int)} for its proper function.
+     * <p>
+     * The {@code listener} is required due some methods relying on {@link java.beans.PropertyChangeEvent Event}s.
+     *
+     * @param listener A {@link java.beans.PropertyChangeListener}.
+     */
     public User(PropertyChangeListener listener) {
         signal.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Logs the 'user' in based on provided credentials. This method checks local saved users with {@link KeyChain}.
+     * <p>
+     * If no such 'user' exist, try calling {@link #signUp(String, int)} instead.
+     * <p>
+     * This method will fire the following {@link java.beans.PropertyChangeEvent Event}s:
+     * <blockquote><pre>
+     *     PASSWORD - When the provided {@code hashWord} doesn't match.
+     *     USER - When such provided {@code username} wasn't found.
+     * </pre></blockquote>
+     *
+     * @param username A {@link String} which will represent the 'username'.
+     * @param hashWord An {@code int} which contains the hashed password.
+     * @return A {@code boolean} which states if the login process was successful.
+     */
     public boolean login(@NotNull String username, int hashWord) {
         UserName userName = UserName.fresh(username);
         int key = keyChain.getKey(userName);
@@ -50,9 +76,23 @@ public class User {
         return false;
     }
 
-    public void signUp(@NotNull String userName, int passwordHash) {
+    /**
+     * Registers the 'user' with the provided credentials. This method locally saves with {@link KeyChain}.
+     * <p>
+     * After 'user' registration, proceed calling {@link #login(String, int)} for proper function.
+     * <p>
+     * This method will fire the following {@link java.beans.PropertyChangeEvent Event}s:
+     * <blockquote><pre>
+     *      SIGN - When the sign up process was successful.
+     *      INV-USER - When the provided {@code username} is already registered.
+     * </pre></blockquote>
+     *
+     * @param username A {@link String} which will represent the 'username'.
+     * @param hashWord An {@code int} which contains the hashed password.
+     */
+    public void signUp(@NotNull String username, int hashWord) {
         try {
-            KeyChain.get().registerKey(UserName.fresh(userName), passwordHash);
+            KeyChain.get().registerKey(UserName.fresh(username), hashWord);
             signal.firePropertyChange("SIGN", null, null);
         } catch (InvalidInput e) {
             signal.firePropertyChange("INV-USER", null, null);
