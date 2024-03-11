@@ -18,7 +18,8 @@ public class LoginModel implements PropertyChangeListener {
     private static LoginModel instance;
     private final User user = new User(this);
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
-    private LoginModel(){
+
+    private LoginModel() {
     }
 
     public static LoginModel get() {
@@ -26,16 +27,16 @@ public class LoginModel implements PropertyChangeListener {
         return instance;
     }
 
-    public void login(String userName, int hashPassword) {
-        if (user.login(userName, hashPassword)) {
+    public void login(String userName, String password) {
+        if (user.login(userName, password)) {
             signal.firePropertyChange("EXIT", null, null);
             ViewHandler.get().setUser(user);
             // ViewHandler.get().display(Views.SHELVE);
         }
     }
 
-    public void signUp(String username, int hashPassword) {
-        user.signUp(username, hashPassword);
+    public void signUp(String username, String password) {
+        user.signUp(username, password);
     }
 
     public void cancel() {
@@ -46,7 +47,7 @@ public class LoginModel implements PropertyChangeListener {
         return UserName.fresh(null).toString();
     }
 
-    public void addSignUserListener(@NotNull TextField signUser) {
+    public void addSignListeners(@NotNull TextField signUser, PasswordField signPass) {
         signUser.textProperty().addListener((obs, oldText, newText) -> {
             if (signUser.getText().isBlank()) signUser.setStyle("");
             else {
@@ -58,12 +59,22 @@ public class LoginModel implements PropertyChangeListener {
                 }
             }
         });
+        signPass.textProperty().addListener((obs, oldText, newText) -> {
+            if (signPass.getText().isBlank()) signPass.setStyle("");
+            else checkPasswordRequirements(signPass);
+        });
     }
 
     public void checkUserAvailability(@NotNull TextField signUser) {
         if (user.isAvailable(signUser.getText()))
             signUser.setStyle("-fx-border-color: green; -fx-border-width: 2px");
         else signUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
+    }
+
+    public void checkPasswordRequirements(@NotNull PasswordField signPass) {
+        if (user.checkPassword(signPass.getText()))
+            signPass.setStyle("-fx-border-color: green; -fx-border-width: 2px");
+        else signPass.setStyle("-fx-border-color: red; -fx-border-width: 2px");
     }
 
     public void cleanUp(@Nullable TextField user, @Nullable PasswordField password) {

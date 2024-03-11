@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class UserName implements Serializable {
-    private static final String ERROR_MESSAGE = "Username length should be within 5 and 100 characters!";
+    private static final String ERROR_MESSAGE = "Username length should be within 3 and 100 characters!";
     private static final KeyChain keyChain = KeyChain.get();
     private static final Random randomizer = new Random();
     public static final String[] defaultNouns = {"Sun", "Moon", "Sky", "Clouds", "Player", "Response", "Difference", "Establishment", "Drawer", "Girl", "Camera",

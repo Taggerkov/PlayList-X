@@ -39,7 +39,7 @@ public class LoginController implements PropertyChangeListener {
     public void init(@NotNull Scene scene) {
         this.scene = scene;
         model.addListener(this);
-        model.addSignUserListener(signUser);
+        model.addSignListeners(signUser, signPass);
     }
 
     public Scene getScene() {
@@ -48,12 +48,12 @@ public class LoginController implements PropertyChangeListener {
 
     @FXML
     private void login() {
-        model.login(loginUser.getText(), loginPass.getText().hashCode());
+        model.login(loginUser.getText(), loginPass.getText());
     }
 
     @FXML
     private void signup() {
-        model.signUp(signUser.getText(), signPass.getText().hashCode());
+        model.signUp(signUser.getText(), signPass.getText());
     }
 
     @FXML
@@ -103,6 +103,10 @@ public class LoginController implements PropertyChangeListener {
             case "SIGNUP-USER" -> {
                 signUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
                 ViewHandler.get().popUp(PopUp.INPUT, "Username should be between 2 and 40 characters!");
+            }
+            case "SIGNUP-PASSWORD" -> {
+                signPass.setStyle("-fx-border-color: red; -fx-border-width: 2px");
+                ViewHandler.get().popUp(PopUp.INPUT, "Password must contain at least one 'Number', 'Upper' & 'Lower' case and a special character.");
             }
             case "SIGNUP" -> {
                 tabPane.getSelectionModel().select(tabLogin);
