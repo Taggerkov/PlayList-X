@@ -90,21 +90,21 @@ public class LoginController implements PropertyChangeListener {
     @Override
     public void propertyChange(@NotNull PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case "USER" -> {
+            case "LOGIN-USER" -> {
                 model.cleanUp(loginUser, loginPass);
                 loginUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
                 ViewHandler.get().popUp(PopUp.INPUT, "User doesn't exist!");
             }
-            case "PASSWORD" -> {
+            case "LOGIN-PASSWORD" -> {
                 model.cleanUp(null, loginPass);
                 loginPass.setStyle("-fx-border-color: red; -fx-border-width: 2px");
                 ViewHandler.get().popUp(PopUp.INPUT, "Password doesn't match");
             }
-            case "INV-USER" -> {
+            case "SIGNUP-USER" -> {
                 signUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
                 ViewHandler.get().popUp(PopUp.INPUT, "Username should be between 2 and 40 characters!");
             }
-            case "SIGN" -> {
+            case "SIGNUP" -> {
                 tabPane.getSelectionModel().select(tabLogin);
             }
             case "EXIT" -> {

@@ -71,7 +71,8 @@ public class UserName implements Serializable {
         return defaultExtended[randomizer.nextInt(defaultExtended.length)];
     }
 
-    public String getUserName() {
+    @Override
+    public String toString() {
         return userName;
     }
 

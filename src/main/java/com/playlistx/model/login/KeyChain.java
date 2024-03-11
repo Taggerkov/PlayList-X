@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class KeyChain extends FileHandler implements Serializable {
+class KeyChain extends FileHandler implements Serializable {
     private final static String PATH = AppData.usersPath;
     private static KeyChain instance;
     private HashMap<String, Integer> keyMap = new HashMap<>();
@@ -33,23 +33,24 @@ public class KeyChain extends FileHandler implements Serializable {
     }
 
     public void registerKey(@NotNull UserName username, int hashWord) {
-        if (!keyMap.containsKey(username.getUserName())) {
-            keyMap.put(username.getUserName(), hashWord);
+        if (!keyMap.containsKey(username.toString())) {
+            keyMap.put(username.toString(), hashWord);
             save();
         }
     }
-    public void addKey(@NotNull UserName username, int hashWord){
-        keyMap.put(username.getUserName(), hashWord);
+
+    public void addKey(@NotNull UserName username, int hashWord) {
+        keyMap.put(username.toString(), hashWord);
         save();
     }
 
     public void deleteKey(@Nullable UserName username, int hashWord) {
-        keyMap.remove(username.getUserName(), hashWord);
+        keyMap.remove(username.toString(), hashWord);
         save();
     }
 
     public int getKey(@Nullable UserName username) {
-       return keyMap.get(username.getUserName());
+        return keyMap.get(username.toString());
     }
 
     public boolean isAvailable(@NotNull String username) {

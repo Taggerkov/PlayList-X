@@ -43,7 +43,7 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     public String genUser() {
-        return UserName.fresh(null).getUserName();
+        return UserName.fresh(null).toString();
     }
 
     public void addSignUserListener(@NotNull TextField signUser) {
