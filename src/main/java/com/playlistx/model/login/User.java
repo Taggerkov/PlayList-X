@@ -34,7 +34,7 @@ public class User {
      */
     private static final KeyChain keyChain = KeyChain.get();
     /**
-     * This class is used for 'PropertyChange' handling.
+     * This class is used for {@link java.beans.PropertyChangeEvent Event} handling.
      */
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
     /**
