@@ -59,7 +59,7 @@ public class ViewHandler {
                 });
                 title += "Shelve";
             }*/
-            default -> popUp(PopUp.ACCESS, "This 'View' doesn't exist or is not available!");
+            default -> popUp(Notify.ACCESS, "This 'View' doesn't exist or is not available!");
         }
 
         scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.getCSS().get()))));
@@ -76,11 +76,11 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource(FXMLs.loginPath));
             login.init(new Scene(loader.load()));
         } catch (IOException e) {
-            popUp(PopUp.ACCESS, "Failed loading start-up window!");
+            popUp(Notify.ACCESS, "Failed loading start-up window!");
         }
     }
 
-    public boolean popUp(@NotNull PopUp type, String msg) {
+    public boolean popUp(@NotNull ViewHandler.Notify type, String msg) {
         switch (type) {
             case CONFIRM -> {
                 Alert alert = new Alert(Alert.AlertType.WARNING, msg, ButtonType.YES, ButtonType.NO);
@@ -135,7 +135,7 @@ public class ViewHandler {
         LOGIN;
     }
 
-    public enum PopUp {
+    public enum Notify {
         CONFIRM, ACCESS, FILE, INPUT;
     }
 }

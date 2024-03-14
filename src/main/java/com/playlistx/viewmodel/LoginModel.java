@@ -4,17 +4,18 @@ import com.playlistx.model.login.User;
 import com.playlistx.model.login.UserName;
 import com.playlistx.model.utils.exceptions.InvalidInput;
 import com.playlistx.view.ViewHandler;
-import com.playlistx.view.ViewHandler.PopUp;
+import com.playlistx.view.ViewHandler.Notify;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class LoginModel implements PropertyChangeListener {
+    private static final String STYLE_RED = "-fx-border-color: red; -fx-border-width: 2px";
+    private static final String STYLE_GREEN = "-fx-border-color: green; -fx-border-width: 2px";
     private static LoginModel instance;
     private final User user = new User(this);
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
@@ -39,23 +40,27 @@ public class LoginModel implements PropertyChangeListener {
         user.signUp(username, password);
     }
 
-    public void cancel() {
-        if (ViewHandler.get().popUp(PopUp.CONFIRM, "Are you sure you want to exit the program?")) System.exit(0);
+    public void cancel(String msg) {
+        if (ViewHandler.get().popUp(Notify.CONFIRM, msg)) System.exit(0);
     }
 
     public String genUser() {
         return UserName.fresh(null).toString();
     }
 
-    public void addSignListeners(@NotNull TextField signUser, PasswordField signPass) {
+    public void popUp(String msg) {
+        ViewHandler.get().popUp(Notify.INPUT, msg);
+    }
+
+    public void addSignListeners(@NotNull TextField signUser, @NotNull PasswordField signPass) {
         signUser.textProperty().addListener((obs, oldText, newText) -> {
             if (signUser.getText().isBlank()) signUser.setStyle("");
             else {
-                checkUserAvailability(signUser);
                 try {
                     UserName.fresh(signUser.getText());
+                    checkUserAvailability(signUser);
                 } catch (InvalidInput e) {
-                    signUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
+                    signUser.setStyle(STYLE_RED);
                 }
             }
         });
@@ -65,27 +70,16 @@ public class LoginModel implements PropertyChangeListener {
         });
     }
 
-    public void checkUserAvailability(@NotNull TextField signUser) {
+    private void checkUserAvailability(@NotNull TextField signUser) {
         if (user.isAvailable(signUser.getText()))
-            signUser.setStyle("-fx-border-color: green; -fx-border-width: 2px");
-        else signUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
+            signUser.setStyle(STYLE_GREEN);
+        else signUser.setStyle(STYLE_RED);
     }
 
-    public void checkPasswordRequirements(@NotNull PasswordField signPass) {
+    private void checkPasswordRequirements(@NotNull PasswordField signPass) {
         if (user.checkPassword(signPass.getText()))
-            signPass.setStyle("-fx-border-color: green; -fx-border-width: 2px");
-        else signPass.setStyle("-fx-border-color: red; -fx-border-width: 2px");
-    }
-
-    public void cleanUp(@Nullable TextField user, @Nullable PasswordField password) {
-        if (user != null) {
-            user.setText("");
-            user.setStyle("");
-        }
-        if (password != null) {
-            password.setText("");
-            password.setStyle("");
-        }
+            signPass.setStyle(STYLE_GREEN);
+        else signPass.setStyle(STYLE_RED);
     }
 
     public void addListener(PropertyChangeListener listener) {

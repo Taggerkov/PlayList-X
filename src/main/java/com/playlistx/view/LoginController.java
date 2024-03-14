@@ -1,6 +1,5 @@
 package com.playlistx.view;
 
-import com.playlistx.view.ViewHandler.PopUp;
 import com.playlistx.viewmodel.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +12,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginController implements PropertyChangeListener {
+    private static final String ERROR_USER = "User doesn't exist!";
+    private static final String ERROR_PASSWORD = "Password doesn't match!";
+    private static final String ERROR_LENGTH = "Username should be between 2 and 40 characters!";
+    private static final String ERROR_COMPLEXITY = "Password must contain at least one 'Digit', 'Upper' & 'Lower' case and a 'Special Character'.";
+    private static final String CONFIRM_CANCEL = "Are you sure you want to exit the program?";
+    private static final String STYLE_RED = "-fx-border-color: red; -fx-border-width: 2px";
     private static final LoginModel model = LoginModel.get();
     private static LoginController instance;
     private Scene scene;
@@ -28,7 +33,8 @@ public class LoginController implements PropertyChangeListener {
     private Button toSign, toLogin;
     @FXML
     private ImageView loginLogo, signLogo;
-    private LoginController(){
+
+    private LoginController() {
     }
 
     public static LoginController get() {
@@ -58,7 +64,7 @@ public class LoginController implements PropertyChangeListener {
 
     @FXML
     private void cancel() {
-        model.cancel();
+        model.cancel(CONFIRM_CANCEL);
     }
 
     @FXML
@@ -75,9 +81,11 @@ public class LoginController implements PropertyChangeListener {
     @FXML
     private void cleanUp() {
         if (tabSign != null && tabLogin != null) if (tabSign.isSelected()) {
-            model.cleanUp(loginUser, loginPass);
+            loginUser.setText("");
+            loginPass.setStyle("");
         } else {
-            model.cleanUp(signUser, signPass);
+            signUser.setText("");
+            signPass.setStyle("");
         }
     }
 
@@ -91,28 +99,28 @@ public class LoginController implements PropertyChangeListener {
     public void propertyChange(@NotNull PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case "LOGIN-USER" -> {
-                model.cleanUp(loginUser, loginPass);
-                loginUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
-                ViewHandler.get().popUp(PopUp.INPUT, "User doesn't exist!");
+                cleanUp();
+                loginUser.setStyle(STYLE_RED);
+                model.popUp(ERROR_USER);
             }
             case "LOGIN-PASSWORD" -> {
-                model.cleanUp(null, loginPass);
-                loginPass.setStyle("-fx-border-color: red; -fx-border-width: 2px");
-                ViewHandler.get().popUp(PopUp.INPUT, "Password doesn't match");
+                cleanUp();
+                loginPass.setStyle(STYLE_RED);
+                model.popUp(ERROR_PASSWORD);
             }
             case "SIGNUP-USER" -> {
-                signUser.setStyle("-fx-border-color: red; -fx-border-width: 2px");
-                ViewHandler.get().popUp(PopUp.INPUT, "Username should be between 2 and 40 characters!");
+                signUser.setStyle(STYLE_RED);
+                model.popUp(ERROR_LENGTH);
             }
             case "SIGNUP-PASSWORD" -> {
-                signPass.setStyle("-fx-border-color: red; -fx-border-width: 2px");
-                ViewHandler.get().popUp(PopUp.INPUT, "Password must contain at least one 'Number', 'Upper' & 'Lower' case and a special character.");
+                signPass.setStyle(STYLE_RED);
+                model.popUp(ERROR_COMPLEXITY);
             }
             case "SIGNUP" -> {
                 tabPane.getSelectionModel().select(tabLogin);
             }
             case "EXIT" -> {
-                model.cleanUp(loginUser, loginPass);
+                cleanUp();
             }
         }
     }
