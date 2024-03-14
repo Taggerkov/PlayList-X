@@ -1,6 +1,6 @@
 package com.playlistx.model.paths;
 
-import com.playlistx.model.utils.exceptions.InvalidInput;
+import com.playlistx.model.utils.exceptions.InputException;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeListener;
@@ -41,7 +41,7 @@ public enum CSS {
             case DARK -> {
                 return darkLogo;
             }
-            default -> throw new InvalidInput("No such theme found!");
+            default -> throw new InputException("No such theme found!");
         }
     }
 
@@ -53,7 +53,7 @@ public enum CSS {
             case DARK -> {
                 return darkPath;
             }
-            default -> throw new InvalidInput("No such theme found!");
+            default -> throw new InputException("No such theme found!");
         }
     }
 

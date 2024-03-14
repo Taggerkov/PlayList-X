@@ -1,6 +1,6 @@
 package com.playlistx.model.paths;
 
-import com.playlistx.model.utils.exceptions.InvalidInput;
+import com.playlistx.model.utils.exceptions.InputException;
 import org.jetbrains.annotations.NotNull;
 
 public enum FXMLs {
@@ -11,7 +11,7 @@ public enum FXMLs {
             case LOGIN -> {
                 return loginPath;
             }
-            default -> throw new InvalidInput("No such fxml found!");
+            default -> throw new InputException("No such fxml found!");
         }
     }
 }

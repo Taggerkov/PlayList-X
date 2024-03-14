@@ -1,8 +1,6 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.login.User;
-import com.playlistx.model.login.UserName;
-import com.playlistx.model.utils.exceptions.InvalidInput;
 import com.playlistx.view.ViewHandler;
 import com.playlistx.view.ViewHandler.Notify;
 import javafx.scene.control.PasswordField;
@@ -45,7 +43,7 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     public String genUser() {
-        return UserName.fresh(null).toString();
+        return User.genUsername();
     }
 
     public void popUp(String msg) {
@@ -56,12 +54,8 @@ public class LoginModel implements PropertyChangeListener {
         signUser.textProperty().addListener((obs, oldText, newText) -> {
             if (signUser.getText().isBlank()) signUser.setStyle("");
             else {
-                try {
-                    UserName.fresh(signUser.getText());
-                    checkUserAvailability(signUser);
-                } catch (InvalidInput e) {
-                    signUser.setStyle(STYLE_RED);
-                }
+                if (User.checkUsername(signUser.getText())) checkUserAvailability(signUser);
+                else signUser.setStyle(STYLE_RED);
             }
         });
         signPass.textProperty().addListener((obs, oldText, newText) -> {
@@ -71,13 +65,13 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     private void checkUserAvailability(@NotNull TextField signUser) {
-        if (user.isAvailable(signUser.getText()))
+        if (User.isAvailable(signUser.getText()))
             signUser.setStyle(STYLE_GREEN);
         else signUser.setStyle(STYLE_RED);
     }
 
     private void checkPasswordRequirements(@NotNull PasswordField signPass) {
-        if (user.checkPassword(signPass.getText()))
+        if (User.checkPassword(signPass.getText()))
             signPass.setStyle(STYLE_GREEN);
         else signPass.setStyle(STYLE_RED);
     }

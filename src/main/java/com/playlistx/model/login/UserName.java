@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.Random;
 
+/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 3.48h */
+
 /**
  * The {@code UserName} is a serializable package-wide class that holds the 'user' username across the package while ensuring its proper use.
  * <p>
@@ -14,24 +16,17 @@ import java.util.Random;
  * Some methods may throw a {@link LoginException} based on unmet requirements.
  *
  * @author Sergiu Chirap
+ * @version 1.0
  * @see LoginException
  * @see java.io.Serializable
  * @since 0.1
  */
 
-public class UserName implements Serializable {
+class UserName implements Serializable {
     /**
-     * This {@link java.lang.String} stores the length error message.
+     * This {@link java.lang.String} stores the 'Length' error message.
      */
-    private static final String ERROR_LENGTH = "Username length should be within 3 and 100 characters!";
-    /**
-     * This class is used for 'username' availability.
-     */
-    private static final KeyChain keyChain = KeyChain.get();
-    /**
-     * This class is used for the random factor of the 'username' generator.
-     */
-    private static final Random randomizer = new Random();
+    private static final String ERROR_LENGTH = "username length should be within 3 and 100 characters!";
     /**
      * This {@link java.lang.String} array is used to store nouns for the 'username' generator.
      */
@@ -57,6 +52,14 @@ public class UserName implements Serializable {
             "Ciphered", "Frugged", "Unpurgatively", "Abnormalize", "Apterygidae", "Escarpments", "Acestes", "Carriageless", "Nonaffection", "Anterevolutional",
             "Preamplifier", "Dendritiform", "Wormfishes", "Muzzlewood", "Patriarchship", "Peul", "Postdiluvial", "Hypochondriacally", "Photoreduction", "Juans",
             "Coccoids", "Bamboozles", "Graduated", "Sacrificant", "Certifiableness", "Fjorded"};
+    /**
+     * This class is used for 'username' availability.
+     */
+    private static final KeyChain keyChain = KeyChain.get();
+    /**
+     * This class is used for the random factor of the 'username' generator.
+     */
+    private static final Random randomizer = new Random();
     /**
      * This {@link java.lang.String} is used to store the provided or generated 'username'.
      */
@@ -170,5 +173,15 @@ public class UserName implements Serializable {
         if (this == obj) return true;
         if (!(obj instanceof UserName otherName)) return false;
         return username.equalsIgnoreCase(otherName.username);
+    }
+
+    /**
+     * An {@code override} method of {@link java.lang.Object#hashCode()}.
+     *
+     * @return An {@code int} which represents the hash code value of this instance.
+     */
+    @Override
+    public int hashCode() {
+        return username.hashCode();
     }
 }

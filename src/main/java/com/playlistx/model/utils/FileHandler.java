@@ -1,6 +1,6 @@
 package com.playlistx.model.utils;
 
-import com.playlistx.model.utils.exceptions.InvalidFile;
+import com.playlistx.model.utils.exceptions.FileException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -36,7 +36,7 @@ public abstract class FileHandler {
      * @param path      Path of the file.
      * @param text      String to be written in the file.
      * @param overwrite If file already exists, true to overwrite or false to add.
-     * @throws InvalidFile Exception if file has invalid extension.
+     * @throws FileException Exception if file has invalid extension.
      */
     protected static void writeToText(@NotNull String path, String text, boolean overwrite) {
         if (path.endsWith(".txt")) {
@@ -53,7 +53,7 @@ public abstract class FileHandler {
                     convertToFile.close();
                 }
             }
-        } else throw new InvalidFile(NOT_TXT);
+        } else throw new FileException(NOT_TXT);
     }
 
     /**
@@ -62,7 +62,7 @@ public abstract class FileHandler {
      *
      * @param path        Path of the file.
      * @param stringArray Array of Strings to be written in the file.
-     * @throws InvalidFile Exception if file has invalid extension.
+     * @throws FileException Exception if file has invalid extension.
      */
     protected static void writeToText(@NotNull String path, String[] stringArray) {
         if (path.endsWith(".txt")) {
@@ -81,7 +81,7 @@ public abstract class FileHandler {
                     writeToFile.close();
                 }
             }
-        } else throw new InvalidFile(NOT_TXT);
+        } else throw new FileException(NOT_TXT);
     }
 
     /**
@@ -89,9 +89,9 @@ public abstract class FileHandler {
      *
      * @param path Path of the file.
      * @return Array of Strings extracted from the file.
-     * @throws InvalidFile Exception if file has invalid extension.
+     * @throws FileException Exception if file has invalid extension.
      */
-    protected static String[] readFromText(String path) throws InvalidFile {
+    protected static String[] readFromText(String path) throws FileException {
         if (path.endsWith(".txt")) {
             Scanner readFromFile = null;
             ArrayList<String> stringArray = new ArrayList<>();
@@ -110,7 +110,7 @@ public abstract class FileHandler {
                 }
             }
             return stringArray.toArray(new String[0]);
-        } else throw new InvalidFile(NOT_TXT);
+        } else throw new FileException(NOT_TXT);
     }
 
     //BINARY FILES
@@ -121,7 +121,7 @@ public abstract class FileHandler {
      *
      * @param path Path of the file.
      * @param obj  Object to be written in the file.
-     * @throws InvalidFile Exception if file has invalid extension.
+     * @throws FileException Exception if file has invalid extension.
      */
     protected static void writeToBinary(String path, Object obj) {
         if (path.endsWith(".bin")) {
@@ -145,7 +145,7 @@ public abstract class FileHandler {
                     }
                 }
             }
-        } else throw new InvalidFile(NOT_BIN);
+        } else throw new FileException(NOT_BIN);
     }
 
     /**
@@ -153,7 +153,7 @@ public abstract class FileHandler {
      *
      * @param path Path of the file.
      * @return Object extracted from the file.
-     * @throws InvalidFile Exception if file has invalid extension.
+     * @throws FileException Exception if file has invalid extension.
      */
     protected static Object readFromBinary(String path) {
         if (path.endsWith(".bin")) {
@@ -179,6 +179,6 @@ public abstract class FileHandler {
                 }
             }
             return obj;
-        } else throw new InvalidFile(NOT_BIN);
+        } else throw new FileException(NOT_BIN);
     }
 }

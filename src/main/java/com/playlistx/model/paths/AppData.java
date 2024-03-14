@@ -1,6 +1,6 @@
 package com.playlistx.model.paths;
 
-import com.playlistx.model.utils.exceptions.InvalidInput;
+import com.playlistx.model.utils.exceptions.InputException;
 import org.jetbrains.annotations.NotNull;
 
 public enum AppData {
@@ -12,7 +12,7 @@ public enum AppData {
             case USERS -> {
                 return usersPath;
             }
-            default -> throw new InvalidInput("No such file found!");
+            default -> throw new InputException("No such file found!");
         }
     }
 }
