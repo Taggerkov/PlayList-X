@@ -1,15 +1,10 @@
-package com.playlistx.model.login;
+package com.playlistx.login;
 
-import com.playlistx.model.Model;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.rmi.NotBoundException;
 import java.util.Random;
-
-/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 3.48h */
 
 /**
  * The {@code UserName} is a serializable package-wide class that holds the 'user' username across the package while ensuring its proper use.
@@ -25,7 +20,11 @@ import java.util.Random;
  * @since 0.1
  */
 
-class UserName implements Serializable {
+public class UserName implements Serializable {
+    /**
+     * This {@link String} stores the 'Length' error message.
+     */
+    private static final String ERROR_LENGTH = "username length should be within 3 and 100 characters!";
     /**
      * This {@link String} array is used to store nouns for the 'username' generator.
      */
@@ -52,10 +51,9 @@ class UserName implements Serializable {
             "Preamplifier", "Dendritiform", "Wormfishes", "Muzzlewood", "Patriarchship", "Peul", "Postdiluvial", "Hypochondriacally", "Photoreduction", "Juans",
             "Coccoids", "Bamboozles", "Graduated", "Sacrificant", "Certifiableness", "Fjorded"};
     /**
-     * This {@link String} stores the 'Length' error message.
+     * This class is used for 'username' availability.
      */
-    private static final String ERROR_LENGTH = "username length should be within 3 and 100 characters!";
-    private static Model model;
+    private static final KeyChain keyChain = KeyChain.get();
     /**
      * This class is used for the random factor of the 'username' generator.
      */
@@ -74,11 +72,6 @@ class UserName implements Serializable {
      */
     private UserName(String username) {
         this.username = username;
-        try {
-            model = Model.get();
-        } catch (IOException | NotBoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -91,14 +84,10 @@ class UserName implements Serializable {
      * @throws LoginException An {@link Exception} that occurs when requirements are unmet.
      */
     @Contract("_ -> new")
-    protected static @NotNull UserName fresh(String username) throws LoginException {
+    public synchronized static @NotNull UserName fresh(String username) throws LoginException {
         if (username == null || username.isEmpty()) {
             String generatedName = generateName();
-            try {
-                while (!model.isAvailable(generatedName)) generatedName = generateName();
-            } catch (IOException e) {
-                throw new LoginException(e.getMessage());
-            }
+            while (!keyChain.isAvailable(generatedName)) generatedName = generateName();
             return new UserName(generatedName);
         } else {
             if (username.length() > 2 && username.length() < 40) return new UserName(username);
@@ -168,7 +157,7 @@ class UserName implements Serializable {
      * @return A {@link String} which represents the 'username'.
      */
     @Override
-    public String toString() {
+    public synchronized String toString() {
         return username;
     }
 
@@ -178,7 +167,7 @@ class UserName implements Serializable {
      * @return A {@code boolean} which states if the provided {@code Object} is equal.
      */
     @Override
-    public boolean equals(Object obj) {
+    public synchronized boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof UserName otherName)) return false;
         return username.equalsIgnoreCase(otherName.username);
@@ -190,7 +179,7 @@ class UserName implements Serializable {
      * @return An {@code int} which represents the hash code value of this instance.
      */
     @Override
-    public int hashCode() {
+    public synchronized int hashCode() {
         return username.hashCode();
     }
 }

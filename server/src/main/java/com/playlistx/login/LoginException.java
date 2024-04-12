@@ -1,6 +1,4 @@
-package com.playlistx.model.login;
-
-/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 0.17h */
+package com.playlistx.login;
 
 /**
  * The class {@code LoginException} extends {@link RuntimeException} and it's thrown during login related issues.

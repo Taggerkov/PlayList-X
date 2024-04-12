@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.chatty</groupId>
-    <artifactId>server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.playlistx</groupId>
+    <artifactId>playlistx-server</artifactId>
+    <version>0.2</version>
+    <name>Server</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -26,5 +27,4 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>

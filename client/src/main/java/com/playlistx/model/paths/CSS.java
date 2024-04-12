@@ -8,10 +8,10 @@ import java.beans.PropertyChangeSupport;
 
 public enum CSS {
     LIGHT, DARK;
-    public static final String lightPath = "/com/playlistx/css/light.css";
-    public static final String darkPath = "/com/playlistx/css/dark.css";
-    private static final String lightLogo = "file:src/main/resources/com/playlistx/img/logo-black.png";
-    private static final String darkLogo = "file:src/main/resources/com/playlistx/img/logo-white.png";
+    public static final String lightPath = "/app/chatty/css/light.css";
+    public static final String darkPath = "/app/chatty/css/dark.css";
+    private static final String lightLogo = "file:chatty-client/src/main/resources/app/chatty/img/logo.png";
+    private static final String darkLogo = "file:chatty-client/src/main/resources/app/chatty/img/logo.png";
     private static CSS CURRENT = DARK;
 
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);

@@ -1,15 +1,17 @@
 package com.playlistx.model.login;
 
-import com.playlistx.model.utils.exceptions.InputException;
+import com.playlistx.model.Model;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,36 +20,33 @@ import java.util.regex.Pattern;
 /**
  * The {@code User} class holds the login information and is responsible for 'user' handling.
  * <p>
- * This class interacts with {@link KeyChain} class to create, delete and check user credentials, and makes
+ * This class interacts with the 'Server' to create, delete and check user credentials, and makes
  * use of {@link UserName} class as for the users 'username'.
  * <p>
- * Class features {@link java.beans.PropertyChangeSupport} which fires {@link java.beans.PropertyChangeEvent Events} to its listeners, this occurs in most of related changes or with invalid inputs,
+ * Class features {@link PropertyChangeSupport} which fires {@link java.beans.PropertyChangeEvent Events} to its listeners, this occurs in most of related changes or with invalid inputs,
  * such as credentials.
  * <p>
  * Some methods may throw a {@link LoginException}.
  *
  * @author Sergiu Chirap
  * @version 1.0
- * @see KeyChain
  * @see UserName
  * @see LoginException
- * @see java.beans.PropertyChangeSupport PropertyChangeSupport
+ * @see PropertyChangeSupport PropertyChangeSupport
  * @see java.beans.PropertyChangeEvent PropertyChangeEvent
  * @since 0.1
  */
 public class User {
     /**
-     * This {@link java.lang.String} stores the 'Hash Algorithm' error message.
+     * This {@link String} stores the 'Hash Algorithm' error message.
      */
     private static final String ERROR_HASH = "password hashing being corrupted. Invalid hash algorithm!";
     /**
-     * This {@link java.lang.String} contains the 'password' requirements as a regex.
+     * This {@link String} contains the 'password' requirements as a regex.
      */
     private static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*., ?]).+$";
-    /**
-     * This class is used for credential storage.
-     */
-    private final KeyChain keyChain;
+    private static User instance;
+    private final Model model = Model.get();
     /**
      * This class is used for {@link java.beans.PropertyChangeEvent Event} handling.
      */
@@ -58,23 +57,35 @@ public class User {
     private UserName username;
 
     /**
-     * {@code User}'s constructor. Initializes a new 'user', which will carry non initialized credentials.
-     * A {@code User} instance must call {@link #login(String, String)} for its proper function.
+     * Initializes a new 'user', which will carry non initialized credentials.
+     * The {@code User} instance must call {@link #login(String, String)} for its proper function.
      * <p>
-     * The {@code listener} is required due some methods relying on {@link java.beans.PropertyChangeEvent Events}.
+     * This is a private constructor, due being a {@code singleton}.
+     * <p>
+     * This method must only be called once.
      *
-     * @param listener A {@link java.beans.PropertyChangeListener}.
-     * @throws LoginException An {@link java.lang.Exception} that occurs if users couldn't be loaded.
+     * @throws LoginException An {@link Exception} that occurs if users couldn't be loaded.
      */
-    public User(@NotNull PropertyChangeListener listener) throws LoginException {
-        keyChain = KeyChain.get();
-        signal.addPropertyChangeListener(listener);
+    private User() throws RemoteException, NotBoundException {
+    }
+
+    /**
+     * Singleton {@code static} calling method.
+     * <p>
+     * Returns the current {@code instance} or a new {@code User} if none exists.
+     *
+     * @return A {@code User} singleton {@code instance}.
+     * @throws LoginException An {@link Exception} that occurs if local users couldn't be loaded.
+     */
+    public static User get() throws RemoteException, NotBoundException {
+        if (instance == null) instance = new User();
+        return instance;
     }
 
     /**
      * Generates an available 'username'.
      *
-     * @return A {@link java.lang.String} which represents the 'username'.
+     * @return A {@link String} which represents the 'username'.
      */
     public static String genUsername() {
         return UserName.fresh(null).toString();
@@ -82,20 +93,24 @@ public class User {
 
     /**
      * Checks if an 'user' already owns the provided {@code username}.
-     * This method locally checks with {@link KeyChain}.
+     * This method checks with the 'Server'.
      *
-     * @param username A {@link java.lang.String String} which represents the 'username'.
+     * @param username A {@link String String} which represents the 'username'.
      * @return A {@code boolean} which states the availability of the {@code username}.
-     * @throws LoginException An {@link java.lang.Exception} that occurs if users couldn't be loaded.
+     * @throws LoginException An {@link Exception} that occurs if users couldn't be loaded.
      */
     public static boolean isAvailable(@NotNull String username) throws LoginException {
-        return KeyChain.get().isAvailable(username);
+        try {
+            return Model.get().isAvailable(username);
+        } catch (IOException | NotBoundException e) {
+            throw new LoginException(e.getMessage());
+        }
     }
 
     /**
      * Checks if the provided {@code username} meets the requirements.
      *
-     * @param username A {@link java.lang.String String} which represents the 'username'.
+     * @param username A {@link String String} which represents the 'username'.
      * @return A {@code boolean} which states if {@code username} meets the requirements.
      */
     public static boolean checkUsername(String username) {
@@ -110,7 +125,7 @@ public class User {
     /**
      * Checks if the provided {@code password} meets the requirements.
      *
-     * @param password A {@link java.lang.String String} which represents the 'password'.
+     * @param password A {@link String String} which represents the 'password'.
      * @return A {@code boolean} which states if {@code username} meets the requirements.
      */
     public static boolean checkPassword(String password) {
@@ -119,17 +134,29 @@ public class User {
         return matcher.matches() && password.length() > 4;
     }
 
+    public static String[] getAllUsers() throws LoginException{
+        try {
+            return Model.get().getAllUsers();
+        } catch (IOException | NotBoundException e) {
+            throw new LoginException(e.getMessage());
+        }
+    }
+
     /**
      * Gets total number of 'users' registered.
      *
      * @return An {@code int} which represents the total number of 'users'.
      */
-    public static int totalUsers() {
-        return KeyChain.get().size();
+    public static int totalUsers() throws LoginException {
+        try {
+            return Model.get().totalUsers();
+        } catch (IOException | NotBoundException e) {
+            throw new LoginException(e.getMessage());
+        }
     }
 
     /**
-     * Logs the 'user' in based on provided credentials. This method checks local saved users with {@link KeyChain}.
+     * Logs the 'user' in based on provided credentials. This method checks saved users with the 'Server'.
      * <p>
      * If no such 'user' exist, try calling {@link #signUp(String, String)} instead.
      * <p>
@@ -140,28 +167,34 @@ public class User {
      *     LOGIN-PASSWORD - When the provided {@code hashWord} doesn't match.
      * </pre></blockquote>
      *
-     * @param username A {@link java.lang.String} which represents the 'username'.
-     * @param password An {@link java.lang.String} which represent the password.
+     * @param username A {@link String} which represents the 'username'.
+     * @param password An {@link String} which represent the password.
      * @return A {@code boolean} which states if the login process was successful.
      */
-    public boolean login(@NotNull String username, String password) {
-        UserName userName = UserName.fresh(username);
+    public boolean login(@NotNull String username, String password) throws LoginException {
+        UserName userName;
+        try {
+            userName = UserName.fresh(username);
+        } catch (LoginException ignore) {
+            signal.firePropertyChange("LOGIN-USER", null, null);
+            return false;
+        }
+
         byte[] hashWord = toHashWord(password);
-        byte[] key = keyChain.getKey(userName);
-        if (key != null) {
-            if (Arrays.equals(key, hashWord)) {
+        try {
+            String answer = model.login(userName.toString(), hashWord);
+            signal.firePropertyChange(answer, null, null);
+            if (answer.equalsIgnoreCase("LOGIN")) {
                 this.username = userName;
-                signal.firePropertyChange("LOGIN", null, null);
                 return true;
-            } else {
-                signal.firePropertyChange("LOGIN-PASSWORD", null, null);
-            }
-        } else signal.firePropertyChange("LOGIN-USER", null, null);
-        return false;
+            } else return false;
+        } catch (RemoteException e) {
+            throw new LoginException(e.getMessage());
+        }
     }
 
     /**
-     * Registers the 'user' with the provided credentials. This method locally saves with {@link KeyChain}.
+     * Registers the 'user' with the provided credentials. This method saves with the 'Server'.
      * <p>
      * After 'user' registration, proceed calling {@link #login(String, String)} for proper function.
      * <p>
@@ -172,19 +205,27 @@ public class User {
      *      SIGNUP-PASSWORD - When the provided {@code password} doesn't meet requirements.
      * </pre></blockquote>
      *
-     * @param username A {@link java.lang.String} which will represent the 'username'.
-     * @param password An {@link java.lang.String} which will represents the 'password'.
+     * @param username A {@link String} which will represent the 'username'.
+     * @param password An {@link String} which will represents the 'password'.
      * @return A {@code boolean} which states if the sign-up process was successful.
      */
-    public boolean signUp(@NotNull String username, String password) {
+    public boolean signUp(@NotNull String username, String password) throws LoginException {
         if (checkPassword(password)) {
+            UserName userName;
+            try {
+                userName = UserName.fresh(username);
+            } catch (LoginException e) {
+                signal.firePropertyChange("SIGNUP-USER", null, null);
+                return false;
+            }
+
             byte[] hashWord = toHashWord(password);
             try {
-                keyChain.registerKey(UserName.fresh(username), hashWord);
+                model.signUp(userName.toString(), hashWord);
                 signal.firePropertyChange("SIGNUP", null, null);
                 return true;
-            } catch (InputException e) {
-                signal.firePropertyChange("SIGNUP-USER", null, null);
+            } catch (RemoteException e) {
+                throw new LoginException(e.getMessage());
             }
         } else signal.firePropertyChange("SIGNUP-PASSWORD", null, null);
         return false;
@@ -195,15 +236,19 @@ public class User {
      * <p>
      * The 'password' is required for identification.
      *
-     * @param newUsername A {@link java.lang.String} which will represent the new 'username'.
-     * @param password    A {@link java.lang.String} which represents the 'password'.
+     * @param newUsername A {@link String} which will represent the new 'username'.
+     * @param password    A {@link String} which represents the 'password'.
      * @return A {@code boolean} which state if the operation was successful.
      */
     public boolean changeUsername(String newUsername, String password) {
         UserName userName = UserName.fresh(newUsername);
-        if (keyChain.changeKey(this.username, userName, toHashWord(password))) {
-            this.username = userName;
-            return true;
+        try {
+            if (model.changeUsername(userName.toString(), toHashWord(password))) {
+                this.username = userName;
+                return true;
+            }
+        } catch (RemoteException e) {
+            throw new LoginException(e.getMessage());
         }
         return false;
     }
@@ -213,12 +258,16 @@ public class User {
      * <p>
      * The current 'password' is required for identification.
      *
-     * @param oldPassword A {@link java.lang.String} which represents the current 'password'.
-     * @param newPassword A {@link java.lang.String} which will represent the new 'password'.
+     * @param oldPassword A {@link String} which represents the current 'password'.
+     * @param newPassword A {@link String} which will represent the new 'password'.
      * @return A {@code boolean} which state if the operation was successful.
      */
     public boolean changePassword(String oldPassword, String newPassword) {
-        return keyChain.changeKeyValue(this.username, toHashWord(oldPassword), toHashWord(newPassword));
+        try {
+            return model.changePassword(toHashWord(oldPassword), toHashWord(newPassword));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -226,17 +275,21 @@ public class User {
      * <p>
      * The 'password' is required for identification.
      *
-     * @param password A {@link java.lang.String} which represents the 'password'.
+     * @param password A {@link String} which represents the 'password'.
      * @return A {@code boolean} which state if the operation was successful.
      */
     public boolean delete(String password) {
-        return keyChain.deleteKey(this.username, toHashWord(password));
+        try {
+            return model.deleteUser(toHashWord(password));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Gets the {@code username} as a String.
      *
-     * @return A {@link java.lang.String} which represents the 'username'.
+     * @return A {@link String} which represents the 'username'.
      */
     public String getUsername() {
         return username.toString();
@@ -245,7 +298,7 @@ public class User {
     /**
      * Adds a listener to this instance.
      *
-     * @param listener A {@link java.beans.PropertyChangeListener} which will be listening this instance.
+     * @param listener A {@link PropertyChangeListener} which will be listening this instance.
      */
     public void addListener(@NotNull PropertyChangeListener listener) {
         signal.addPropertyChangeListener(listener);
@@ -254,7 +307,7 @@ public class User {
     /**
      * Removes a listener of this instance.
      *
-     * @param listener A {@link java.beans.PropertyChangeListener} which will no longer be listening this instance.
+     * @param listener A {@link PropertyChangeListener} which will no longer be listening this instance.
      */
     public void removeListener(@Nullable PropertyChangeListener listener) {
         signal.removePropertyChangeListener(listener);
@@ -263,7 +316,7 @@ public class User {
     /**
      * Logs 'user' out.
      * <p>
-     * Special call for user switching. It will clear all {@link java.beans.PropertyChangeListener PropertyChangeListeners}
+     * Special call for user switching. It will clear all {@link PropertyChangeListener PropertyChangeListeners}
      * and fire the following {@link java.beans.PropertyChangeEvent Event}:
      * <blockquote><pre>
      *      LOGOUT - When the 'user' is logged out.
@@ -272,12 +325,17 @@ public class User {
     public void logout() {
         for (PropertyChangeListener listener : signal.getPropertyChangeListeners()) removeListener(listener);
         signal.firePropertyChange("LOGOUT", this, null);
+        try {
+            model.close();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Private method to transform a {@code password} from {@link java.lang.String} to SHA-512 hash as a {@code byte[]}.
+     * Private method to transform a {@code password} from {@link String} to SHA-512 hash as a {@code byte[]}.
      *
-     * @param password A {@link java.lang.String} which represents the 'password'.
+     * @param password A {@link String} which represents the 'password'.
      * @return A {@code byte[]} which is the SHA-512 of the provided {@code password}.
      */
     private byte[] toHashWord(@NotNull String password) {

@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class LoginController implements PropertyChangeListener {
     private static final String ERROR_USER = "User doesn't exist!";
@@ -18,7 +20,7 @@ public class LoginController implements PropertyChangeListener {
     private static final String ERROR_COMPLEXITY = "Password must contain at least one 'Digit', 'Upper' & 'Lower' case and a 'Special Character'.";
     private static final String CONFIRM_CANCEL = "Are you sure you want to exit the program?";
     private static final String STYLE_RED = "-fx-border-color: red; -fx-border-width: 2px";
-    private static final LoginModel model = LoginModel.get();
+    private final LoginModel model = LoginModel.get();
     private static LoginController instance;
     private Scene scene;
     @FXML
@@ -34,10 +36,10 @@ public class LoginController implements PropertyChangeListener {
     @FXML
     private ImageView loginLogo, signLogo;
 
-    private LoginController() {
+    private LoginController() throws RemoteException, NotBoundException {
     }
 
-    public static LoginController get() {
+    public static LoginController get() throws RemoteException, NotBoundException {
         if (instance == null) instance = new LoginController();
         return instance;
     }
@@ -82,10 +84,10 @@ public class LoginController implements PropertyChangeListener {
     private void cleanUp() {
         if (tabSign != null && tabLogin != null) if (tabSign.isSelected()) {
             loginUser.setText("");
-            loginPass.setStyle("");
+            loginPass.setText("");
         } else {
             signUser.setText("");
-            signPass.setStyle("");
+            signPass.setText("");
         }
     }
 

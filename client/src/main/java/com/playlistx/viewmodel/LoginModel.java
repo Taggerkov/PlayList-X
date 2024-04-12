@@ -1,8 +1,8 @@
 package com.playlistx.viewmodel;
 
-import com.playlistx.model.login.User;
+import com.playlistx.model.login.*;
 import com.playlistx.view.ViewHandler;
-import com.playlistx.view.ViewHandler.Notify;
+import com.playlistx.view.ViewHandler.*;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jetbrains.annotations.NotNull;
@@ -10,18 +10,21 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class LoginModel implements PropertyChangeListener {
     private static final String STYLE_RED = "-fx-border-color: red; -fx-border-width: 2px";
     private static final String STYLE_GREEN = "-fx-border-color: green; -fx-border-width: 2px";
     private static LoginModel instance;
-    private final User user = new User(this);
+    private final User user = User.get();
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
 
-    private LoginModel() {
+    private LoginModel() throws RemoteException, NotBoundException {
+        user.addListener(this);
     }
 
-    public static LoginModel get() {
+    public static LoginModel get() throws RemoteException, NotBoundException {
         if (instance == null) instance = new LoginModel();
         return instance;
     }
@@ -29,8 +32,15 @@ public class LoginModel implements PropertyChangeListener {
     public void login(String userName, String password) {
         if (user.login(userName, password)) {
             signal.firePropertyChange("EXIT", null, null);
-            ViewHandler.get().setUser(user);
-            // ViewHandler.get().display(Views.SHELVE);
+            try {
+                try {
+                    ViewHandler.get().display(Views.CHAT);
+                } catch (LoginException e) {
+                    ViewHandler.get().popUp(Notify.INPUT, "This 'user' doesn't exist!");
+                }
+            } catch (RemoteException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -39,7 +49,11 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     public void cancel(String msg) {
-        if (ViewHandler.get().popUp(Notify.CONFIRM, msg)) System.exit(0);
+        try {
+            if (ViewHandler.get().popUp(Notify.CONFIRM, msg)) System.exit(0);
+        } catch (RemoteException | NotBoundException e) {
+            System.exit(0);
+        }
     }
 
     public String genUser() {
@@ -47,7 +61,11 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     public void popUp(String msg) {
-        ViewHandler.get().popUp(Notify.INPUT, msg);
+        try {
+            ViewHandler.get().popUp(Notify.INPUT, msg);
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addSignListeners(@NotNull TextField signUser, @NotNull PasswordField signPass) {
