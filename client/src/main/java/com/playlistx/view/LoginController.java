@@ -1,5 +1,6 @@
 package com.playlistx.view;
 
+import com.playlistx.model.paths.FXMLs;
 import com.playlistx.viewmodel.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import java.beans.PropertyChangeListener;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-public class LoginController implements PropertyChangeListener {
+class LoginController implements Controller, PropertyChangeListener {
     private static final String ERROR_USER = "User doesn't exist!";
     private static final String ERROR_PASSWORD = "Password doesn't match!";
     private static final String ERROR_LENGTH = "Username should be between 2 and 40 characters!";
@@ -39,17 +40,24 @@ public class LoginController implements PropertyChangeListener {
     private LoginController() throws RemoteException, NotBoundException {
     }
 
-    public static LoginController get() throws RemoteException, NotBoundException {
+    protected static LoginController get() throws RemoteException, NotBoundException {
         if (instance == null) instance = new LoginController();
         return instance;
     }
 
+    @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
         model.addListener(this);
         model.addSignListeners(signUser, signPass);
     }
 
+    @Override
+    public String getFXML() {
+        return FXMLs.LOGIN.get();
+    }
+
+    @Override
     public Scene getScene() {
         return scene;
     }

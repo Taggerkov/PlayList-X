@@ -3,6 +3,7 @@ package com.playlistx.viewmodel;
 import com.playlistx.model.login.*;
 import com.playlistx.view.ViewHandler;
 import com.playlistx.view.ViewHandler.*;
+import com.playlistx.view.Views;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +35,7 @@ public class LoginModel implements PropertyChangeListener {
             signal.firePropertyChange("EXIT", null, null);
             try {
                 try {
-                    ViewHandler.get().display(Views.CHAT);
+                    ViewHandler.get().display(Views.HOME);
                 } catch (LoginException e) {
                     ViewHandler.get().popUp(Notify.INPUT, "This 'user' doesn't exist!");
                 }
