@@ -2,7 +2,6 @@ package com.playlistx.view;
 
 import com.playlistx.model.login.User;
 import com.playlistx.model.paths.CSS;
-import com.playlistx.model.paths.FXMLs;
 import com.playlistx.view.ChooseUserController.ChoiceType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,13 +22,11 @@ import java.rmi.RemoteException;
 public class ViewHandler {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
-    private final LoginController login = LoginController.get();
-    private ChooseUserController chooseUser = ChooseUserController.get(ChoiceType.ADD, 0);
+    private final Controller[] controllers = {LoginController.get(), ChooseUserController.get(ChoiceType.ADD, 0)};
     private final User user = User.get();
 
     private ViewHandler() throws RemoteException, NotBoundException {
-        loadLogin();
-        loadChooseUser();
+        loadAllControllers();
         display(Views.LOGIN);
         WINDOW.setResizable(false);
     }
@@ -48,11 +45,12 @@ public class ViewHandler {
 
         switch (view) {
             case LOGIN -> {
+                Controller login = controllers[0];
                 scene = login.getScene();
                 WINDOW.setOnCloseRequest(event -> System.exit(0));
                 setTitle("Login");
             }
-            /*case CHAT -> {
+            /*case HOME -> {
                 scene = login.getScene();
                 WINDOW.setOnCloseRequest(event -> {
                     user.logout();
@@ -72,7 +70,7 @@ public class ViewHandler {
     }
 
     public void showChooseUser(ChooseUserController.ChoiceType type, int chatID) throws IOException, NotBoundException {
-        chooseUser = ChooseUserController.get(type, chatID);
+        Controller chooseUser = ChooseUserController.get(type, chatID);
         Stage chooseStage = new Stage();
         chooseStage.setTitle("PlayListX: Choose User");
         chooseStage.getIcons().add(new Image(CSS.getLogo()));
@@ -83,35 +81,25 @@ public class ViewHandler {
         chooseStage.setScene(scene);
         chooseStage.initModality(Modality.APPLICATION_MODAL);
         chooseStage.initStyle(StageStyle.TRANSPARENT);
-        chooseUser.setStage(chooseStage);
         chooseStage.show();
     }
 
-    private void loadLogin() {
+    private void loadController(@NotNull Controller controller) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setController(login);
-            loader.setLocation(getClass().getResource(FXMLs.loginPath));
-            login.init(new Scene(loader.load()));
+            loader.setController(controller);
+            loader.setLocation(getClass().getResource(controller.getFXML()));
+            controller.init(new Scene(loader.load()));
         } catch (IOException e) {
-            e.printStackTrace();
-            popUp(Notify.ACCESS, "Failed loading start-up window!");
+            popUp(Notify.ACCESS, "Failed loading " + controller.getClass().getName() + " FXML!");
         }
     }
 
-    private void loadChooseUser() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setController(chooseUser);
-            loader.setLocation(getClass().getResource(FXMLs.chooseUserPath));
-            chooseUser.init(new Scene(loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            popUp(Notify.ACCESS, "Failed loading choose user window!");
-        }
+    private void loadAllControllers() {
+        for (Controller controller : controllers) loadController(controller);
     }
 
-    public boolean popUp(@NotNull ViewHandler.Notify type, String msg) {
+    public boolean popUp(@NotNull Notify type, String msg) {
         switch (type) {
             case CONFIRM -> {
                 Alert alert = new Alert(Alert.AlertType.WARNING, msg, ButtonType.YES, ButtonType.NO);
@@ -160,10 +148,6 @@ public class ViewHandler {
             }
         }
         return false;
-    }
-
-    public enum Views {
-        LOGIN, CHAT;
     }
 
     public enum Notify {

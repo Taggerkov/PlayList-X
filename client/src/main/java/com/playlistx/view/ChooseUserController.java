@@ -1,5 +1,6 @@
 package com.playlistx.view;
 
+import com.playlistx.model.paths.FXMLs;
 import com.playlistx.viewmodel.ChooseUserModel;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class ChooseUserController {
+class ChooseUserController implements Controller {
     private final ChooseUserModel model = ChooseUserModel.get();
     private static ChooseUserController instance;
     private Stage stage;
@@ -28,24 +29,31 @@ public class ChooseUserController {
         this.chatID = chatID;
     }
 
-    public static ChooseUserController get(ChoiceType type, int chatID) throws RemoteException, NotBoundException {
+    protected static ChooseUserController get(ChoiceType type, int chatID) throws RemoteException, NotBoundException {
         if (instance == null) instance = new ChooseUserController(type, chatID);
         instance.type = type;
         instance.chatID = chatID;
         return instance;
     }
 
+    @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
         TextFields.bindAutoCompletion(chosenUser, users);
     }
 
+    @Override
+    public String getFXML() {
+        return FXMLs.CHOOSE_USER.get();
+    }
+
+    @Override
     public Scene getScene() {
         //getUsers(!type.equals(ChoiceType.ADD));
         return scene;
     }
 
-    public void setStage(Stage stage) {
+    protected void setStage(Stage stage) {
         this.stage = stage;
     }
 
