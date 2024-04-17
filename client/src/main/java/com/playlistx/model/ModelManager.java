@@ -14,6 +14,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import com.playlistx.model.music.Playlist;
+import com.playlistx.model.music.Song;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
+
 
 public class ModelManager implements Model, PropertyChangeListener {
     private static ModelManager instance;
@@ -21,6 +30,7 @@ public class ModelManager implements Model, PropertyChangeListener {
     private final Client client;
     private final RemoteListener remoteListener;
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
+    private Map<Integer, Playlist> playlists = new HashMap<>();
 
     private ModelManager() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(1099);
@@ -111,5 +121,51 @@ public class ModelManager implements Model, PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         signal.firePropertyChange(evt);
+    }
+
+    // Song management methods
+    @Override
+    public void addSongToPlaylist(int playlistId, Song song) throws RemoteException {
+        Playlist playlist = playlists.get(playlistId);
+        if (playlist != null) {
+            playlist.addSong(song);
+        }
+    }
+
+    @Override
+    public void removeSongFromPlaylist(int playlistId, Song song) throws RemoteException {
+        Playlist playlist = playlists.get(playlistId);
+        if (playlist != null) {
+            playlist.removeSong(song);
+        }
+    }
+
+    @Override
+    public List<Song> getAllSongsFromPlaylist(int playlistId) throws RemoteException {
+        Playlist playlist = playlists.get(playlistId);
+        return playlist != null ? playlist.getSongs() : new ArrayList<>();
+    }
+
+    // Playlist management methods
+    @Override
+    public void createPlaylist(int id, String title, String owner, List<String> collaborators,
+                               Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
+        Playlist playlist = new Playlist(id, title, owner, collaborators, creationDate, songsCount, isPublic);
+        playlists.put(id, playlist);
+    }
+
+    @Override
+    public void deletePlaylist(int id) throws RemoteException {
+        playlists.remove(id);
+    }
+
+    @Override
+    public Playlist getPlaylist(int id) throws RemoteException {
+        return playlists.get(id);
+    }
+
+    @Override
+    public List<Playlist> getAllPlaylists() throws RemoteException {
+        return new ArrayList<>(playlists.values());
     }
 }
