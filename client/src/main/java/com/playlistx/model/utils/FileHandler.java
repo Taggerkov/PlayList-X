@@ -123,19 +123,22 @@ public abstract class FileHandler {
      * @param obj  Object to be written in the file.
      * @throws FileException Exception if file has invalid extension.
      */
-    protected static void writeToBinary(String path, Object obj) {
+    protected static boolean writeToBinary(String path, Object obj) {
         if (path.endsWith(".bin")) {
             ObjectOutputStream convertToFile = null;
             try {
                 FileOutputStream fileOut = new FileOutputStream(path);
                 convertToFile = new ObjectOutputStream(fileOut);
                 convertToFile.writeObject(obj);
+                return true;
             } catch (FileNotFoundException e) {
                 e.getStackTrace();
                 System.out.println("Path error!");
+                return false;
             } catch (IOException e) {
                 e.getStackTrace();
                 System.out.println("I/O error!");
+                return false;
             } finally {
                 if (convertToFile != null) {
                     try {

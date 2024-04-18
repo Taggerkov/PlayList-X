@@ -94,6 +94,7 @@ public class RMIClient extends UnicastRemoteObject implements Client {
 
     @Override
     public void close() throws RemoteException {
+        isLogin();
         System.out.println(client.toString() + " has left the session!");
         login = false;
         client = null;

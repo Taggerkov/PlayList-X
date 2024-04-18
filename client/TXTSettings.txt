@@ -1,0 +1,14 @@
+# BEHAVIOUR !Warning ~~ ( Deletes Custom Settings )
+Reset: -------------> _false	// Resets current settings to default.
+NeverSave: ---------> _false	// Will always reset settings on read
+
+# LOCAL SETTINGS
+Login: -------------> _default	// Options: default = Type Credentials / save = Store Credentials
+Theme: -------------> _dark	// Options: light, dark
+Home Page: ---------> _home	// Options: home, playlist, radio
+
+
+PlayList X: TXT Settings
+Modify with caution!
+
+©2023, PlayList X. All Rights Reserved.
