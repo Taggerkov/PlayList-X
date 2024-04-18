@@ -43,7 +43,7 @@ public class Settings extends FileHandler implements Serializable {
     }
 
     public void readTXT() {
-        String[] settings = readFromText(AppData.TXT_SETTINGS.get());
+        String[] settings = readFromText(AppData.txtSettings);
         if (readValue(settings[1]).equalsIgnoreCase("TRUE")) reset();
         else {
             isNeverSave = readValue(settings[2]).equalsIgnoreCase("TRUE");
@@ -85,7 +85,7 @@ public class Settings extends FileHandler implements Serializable {
         writeLine(TXTSettings.THEME, CSS.getCSS().toString().toLowerCase());
         writeLine(TXTSettings.HOME_PAGE, homeChoice.toString().toLowerCase());
         txtFile.append(COPY);
-        writeToText(AppData.TXT_SETTINGS.get(), txtFile.toString(), true);
+        writeToText(AppData.txtSettings, txtFile.toString(), true);
     }
 
     private void reset() {
