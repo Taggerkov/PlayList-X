@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -22,18 +23,23 @@ import java.rmi.RemoteException;
 public class ViewHandler {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
-    private final Controller[] controllers = {LoginController.get(), ChooseUserController.get(ChoiceType.ADD, 0)};
     private final User user = User.get();
+    private final Controller[] controllers = {LoginController.get(), ChooseUserController.get(ChoiceType.ADD, 0)};
 
-    private ViewHandler() throws RemoteException, NotBoundException {
+    private ViewHandler() throws NotBoundException, RemoteException {
         loadAllControllers();
         display(Views.LOGIN);
         WINDOW.setResizable(false);
     }
 
-    public static ViewHandler get() throws RemoteException, NotBoundException {
-        if (instance == null) instance = new ViewHandler();
-        return instance;
+    public static @Nullable ViewHandler get() {
+        try {
+            if (instance == null) instance = new ViewHandler();
+            return instance;
+        } catch (RemoteException | NotBoundException e) {
+            popUp(Notify.ACCESS, "RMI Connection Error!");
+            return null;
+        }
     }
 
     public void setTitle(String title) {
@@ -50,33 +56,34 @@ public class ViewHandler {
                 WINDOW.setOnCloseRequest(event -> System.exit(0));
                 setTitle("Login");
             }
-            /*case HOME -> {
-                scene = login.getScene();
+            case HOME -> {
+                Controller home = controllers[1];
+                scene = home.getScene();
                 WINDOW.setOnCloseRequest(event -> {
                     user.logout();
                     System.exit(0);
                 });
-                setTitle("Chat");
-            }*/
+                setTitle("Home");
+            }
             default -> popUp(Notify.ACCESS, "This 'View' doesn't exist or is not available!");
         }
 
         assert scene != null;
-        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.getCSS().get()))));
-        WINDOW.getIcons().add(new Image(CSS.getLogo()));
+        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+        WINDOW.getIcons().add(new Image(CSS.logo()));
         WINDOW.setScene(scene);
         WINDOW.show();
         WINDOW.toFront();
     }
 
-    public void showChooseUser(ChooseUserController.ChoiceType type, int chatID) throws IOException, NotBoundException {
+    public void showChooseUser(ChoiceType type, int chatID) throws IOException, NotBoundException {
         Controller chooseUser = ChooseUserController.get(type, chatID);
         Stage chooseStage = new Stage();
         chooseStage.setTitle("PlayListX: Choose User");
-        chooseStage.getIcons().add(new Image(CSS.getLogo()));
+        chooseStage.getIcons().add(new Image(CSS.logo()));
         chooseStage.initOwner(WINDOW);
         Scene scene = chooseUser.getScene();
-        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.getCSS().get()))));
+        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
         scene.setFill(Color.TRANSPARENT);
         chooseStage.setScene(scene);
         chooseStage.initModality(Modality.APPLICATION_MODAL);
@@ -99,53 +106,34 @@ public class ViewHandler {
         for (Controller controller : controllers) loadController(controller);
     }
 
-    public boolean popUp(@NotNull Notify type, String msg) {
+    public static boolean popUp(@NotNull Notify type, String msg) {
+        Alert alert = null;
         switch (type) {
             case CONFIRM -> {
-                Alert alert = new Alert(Alert.AlertType.WARNING, msg, ButtonType.YES, ButtonType.NO);
+                alert = new Alert(Alert.AlertType.WARNING, msg, ButtonType.YES, ButtonType.NO);
                 alert.setTitle("CONFIRM ACTION?");
-                alert.setHeaderText(null);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(CSS.getLogo()));
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.YES) {
-                    alert.close();
-                    return true;
-                }
             }
             case ACCESS -> {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.CLOSE);
+                alert = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.CLOSE);
                 alert.setTitle("ACTION CANNOT BE DONE: INVALID ACCESS");
-                alert.setHeaderText(null);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(CSS.getLogo()));
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.CLOSE) {
-                    alert.close();
-                }
             }
             case FILE -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.CLOSE);
+                alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.CLOSE);
                 alert.setTitle("ACTION CANNOT BE DONE: INVALID FILE");
-                alert.setHeaderText(null);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(CSS.getLogo()));
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.CLOSE) {
-                    alert.close();
-                }
             }
             case INPUT -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.CLOSE);
+                alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.CLOSE);
                 alert.setTitle("ACTION CANNOT BE DONE: INVALID INPUT");
-                alert.setHeaderText(null);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(CSS.getLogo()));
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.CLOSE) {
-                    alert.close();
-                }
             }
+        }
+        alert.setHeaderText(null);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(CSS.logo()));
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            alert.close();
+            return true;
         }
         return false;
     }

@@ -33,15 +33,7 @@ public class LoginModel implements PropertyChangeListener {
     public void login(String userName, String password) {
         if (user.login(userName, password)) {
             signal.firePropertyChange("EXIT", null, null);
-            try {
-                try {
-                    ViewHandler.get().display(Views.HOME);
-                } catch (LoginException e) {
-                    ViewHandler.get().popUp(Notify.INPUT, "This 'user' doesn't exist!");
-                }
-            } catch (RemoteException | NotBoundException e) {
-                throw new RuntimeException(e);
-            }
+            Views.HOME.show();
         }
     }
 
@@ -50,11 +42,7 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     public void cancel(String msg) {
-        try {
-            if (ViewHandler.get().popUp(Notify.CONFIRM, msg)) System.exit(0);
-        } catch (RemoteException | NotBoundException e) {
-            System.exit(0);
-        }
+        if (ViewHandler.popUp(Notify.CONFIRM, msg)) System.exit(0);
     }
 
     public String genUser() {
@@ -62,11 +50,7 @@ public class LoginModel implements PropertyChangeListener {
     }
 
     public void popUp(String msg) {
-        try {
-            ViewHandler.get().popUp(Notify.INPUT, msg);
-        } catch (RemoteException | NotBoundException e) {
-            throw new RuntimeException(e);
-        }
+        ViewHandler.popUp(Notify.INPUT, msg);
     }
 
     public void addSignListeners(@NotNull TextField signUser, @NotNull PasswordField signPass) {

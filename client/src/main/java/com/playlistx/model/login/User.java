@@ -323,8 +323,8 @@ public class User {
      * </pre></blockquote>
      */
     public void logout() {
-        for (PropertyChangeListener listener : signal.getPropertyChangeListeners()) removeListener(listener);
         signal.firePropertyChange("LOGOUT", this, null);
+        for (PropertyChangeListener listener : signal.getPropertyChangeListeners()) removeListener(listener);
         try {
             model.close();
         } catch (RemoteException e) {
