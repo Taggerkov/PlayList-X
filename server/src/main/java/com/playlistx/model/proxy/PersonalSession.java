@@ -1,4 +1,4 @@
-package com.playlistx.proxy;
+package com.playlistx.model.proxy;
 
 import dk.via.remote.observer.RemotePropertyChangeListener;
 import dk.via.remote.observer.RemotePropertyChangeSupport;

@@ -1,6 +1,6 @@
 package com.playlistx;
 
-import com.playlistx.proxy.PersonalSession;
+import com.playlistx.model.proxy.PersonalSession;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
