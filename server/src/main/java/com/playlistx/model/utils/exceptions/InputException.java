@@ -1,4 +1,4 @@
-package com.playlistx.utils.exceptions;
+package com.playlistx.model.utils.exceptions;
 
 public class InputException extends RuntimeException {
     public InputException(String msg) {

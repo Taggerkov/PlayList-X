@@ -1,4 +1,4 @@
-package com.playlistx.utils.exceptions;
+package com.playlistx.model.utils.exceptions;
 
 public class FileException extends RuntimeException {
     public FileException(String msg){

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="1200.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="PlayList X">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                  <MenuItem mnemonicParsing="false" onAction="#allChats" text="Toggle Chats" />
+                  <MenuItem fx:id="newChat" mnemonicParsing="false" onAction="#newChat" text="New Chat" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#openSettings" text="Settings" />
+               </items>
+            </Menu>
+            <Menu fx:id="menuChat" disable="true" mnemonicParsing="false" text="Playlist">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#addUser" text="Add User" />
+                  <MenuItem mnemonicParsing="false" onAction="#removeUser" text="Remove User" />
+                  <MenuItem mnemonicParsing="false" onAction="#changeAdmin" text="Change Admin" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#clearChat" text="Clear Chat" />
+                  <MenuItem mnemonicParsing="false" onAction="#leaveChat" text="Leave Chat" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteChat" text="Delete Chat" />
+               </items>
+            </Menu>
+         </menus>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </MenuBar>
+      <HBox prefWidth="1200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" spacing="5.0" style="-fx-background-color: red;" styleClass="background" HBox.hgrow="ALWAYS">
+               <children>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="55.0" layoutX="13.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="10.0">
+                           <image>
+                              <Image url="@../img/settings.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="55.0" layoutX="13.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="10.0">
+                           <image>
+                              <Image url="@../img/settings.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="55.0" layoutX="13.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="10.0">
+                           <image>
+                              <Image url="@../img/settings.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </AnchorPane>
+                  <Separator prefWidth="280.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <ScrollPane id="chatScroll" fx:id="chatSelect" hbarPolicy="NEVER" prefHeight="100.0" prefWidth="280.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                     <content>
+                        <VBox fx:id="chatList" prefWidth="280.0" spacing="20.0">
+                           <padding>
+                              <Insets left="35.0" right="40.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="© 2024, PlayList X. &#10;All Rights Reserved." textAlignment="JUSTIFY">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="700.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

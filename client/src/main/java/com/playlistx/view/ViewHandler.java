@@ -24,7 +24,7 @@ public class ViewHandler {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
     private final User user = User.get();
-    private final Controller[] controllers = {LoginController.get(), ChooseUserController.get(ChoiceType.ADD, 0)};
+    private final Controller[] controllers = {LoginController.get(), HomeController.get()};
 
     private ViewHandler() throws NotBoundException, RemoteException {
         loadAllControllers();
@@ -97,8 +97,10 @@ public class ViewHandler {
             loader.setController(controller);
             loader.setLocation(getClass().getResource(controller.getFXML()));
             controller.init(new Scene(loader.load()));
-        } catch (IOException e) {
+        } catch (IOException | IllegalStateException e) {
+            e.printStackTrace();
             popUp(Notify.ACCESS, "Failed loading " + controller.getClass().getName() + " FXML!");
+            System.exit(0);
         }
     }
 
