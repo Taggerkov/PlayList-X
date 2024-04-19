@@ -1,8 +1,8 @@
-package com.playlistx.proxy;
+package com.playlistx.model.proxy;
 
-import com.playlistx.login.KeyChain;
-import com.playlistx.login.LoginException;
-import com.playlistx.login.UserName;
+import com.playlistx.model.login.KeyChain;
+import com.playlistx.model.login.LoginException;
+import com.playlistx.model.login.UserName;
 import org.jetbrains.annotations.Nullable;
 
 import java.beans.PropertyChangeListener;

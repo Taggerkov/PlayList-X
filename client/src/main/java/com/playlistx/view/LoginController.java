@@ -54,7 +54,7 @@ class LoginController implements Controller, PropertyChangeListener {
 
     @Override
     public String getFXML() {
-        return FXMLs.LOGIN.get();
+        return FXMLs.login;
     }
 
     @Override

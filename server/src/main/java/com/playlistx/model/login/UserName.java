@@ -1,4 +1,4 @@
-package com.playlistx.login;
+package com.playlistx.model.login;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

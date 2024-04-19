@@ -1,4 +1,4 @@
-package com.playlistx.login;
+package com.playlistx.model.login;
 
 /**
  * The class {@code LoginException} extends {@link RuntimeException} and it's thrown during login related issues.

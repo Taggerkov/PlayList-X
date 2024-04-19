@@ -1,6 +1,6 @@
-package com.playlistx.utils;
+package com.playlistx.model.utils;
 
-import com.playlistx.utils.exceptions.FileException;
+import com.playlistx.model.utils.exceptions.FileException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;

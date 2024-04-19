@@ -1,6 +1,6 @@
-package com.playlistx.login;
+package com.playlistx.model.login;
 
-import com.playlistx.utils.FileHandler;
+import com.playlistx.model.utils.FileHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
