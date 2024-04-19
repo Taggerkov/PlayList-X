@@ -14,7 +14,7 @@ public class Playlist {
     private List<Song> songs;
 
     // Constructor
-    public Playlist(int id, String title, String owner, java.util.List<String> collaborators, java.util.Date creationDate, int songsCount, boolean isPublic) {
+    public Playlist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) {
         this.id = this.id;
         this.title = title;
         this.owner = owner;

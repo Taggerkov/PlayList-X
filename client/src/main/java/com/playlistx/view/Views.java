@@ -1,17 +1,15 @@
 package com.playlistx.view;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+import java.util.Objects;
 
 public enum Views {
     LOGIN, HOME, PLAYLIST, SONG, USER, SETTINGS;
 
-    public boolean show() {
+    public void show() {
         try {
-            ViewHandler.get().display(this);
-            return true;
-        } catch (RemoteException | NotBoundException e) {
-            return false;
+            Objects.requireNonNull(ViewHandler.get()).display(this);
+        } catch (NullPointerException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "An error occurred while trying to display the view.");
         }
     }
 }

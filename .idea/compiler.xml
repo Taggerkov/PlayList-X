@@ -9,6 +9,8 @@
         <module name="Chatty" />
         <module name="client" />
         <module name="server" />
+        <module name="playlistx-client" />
+        <module name="playlistx-server" />
       </profile>
     </annotationProcessing>
   </component>

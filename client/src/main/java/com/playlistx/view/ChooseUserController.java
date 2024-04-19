@@ -44,7 +44,7 @@ class ChooseUserController implements Controller {
 
     @Override
     public String getFXML() {
-        return FXMLs.CHOOSE_USER.get();
+        return FXMLs.chooseUser;
     }
 
     @Override
