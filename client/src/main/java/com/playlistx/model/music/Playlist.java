@@ -3,6 +3,10 @@ package com.playlistx.model.music;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents a playlist in the music system. It includes metadata about the playlist
+ * such as its title, owner, collaborators, and the list of songs it contains.
+ */
 public class Playlist {
     private int id;
     private String title;
@@ -13,18 +17,29 @@ public class Playlist {
     private boolean isPublic;
     private List<Song> songs;
 
-    // Constructor
+    /**
+     * Constructs a Playlist instance.
+     *
+     * @param id the unique identifier for the playlist
+     * @param title the title of the playlist
+     * @param owner the owner of the playlist
+     * @param collaborators a list of collaborators who have access to the playlist
+     * @param creationDate the date the playlist was created
+     * @param songsCount the count of songs currently in the playlist
+     * @param isPublic a flag indicating if the playlist is public or private
+     */
     public Playlist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) {
-        this.id = this.id;
+        this.id = id;
         this.title = title;
         this.owner = owner;
-        this.collaborators = this.collaborators;
-        this.creationDate = this.creationDate;
-        this.songsCount = this.songsCount;
-        this.isPublic = this.isPublic;
+        this.collaborators = collaborators;
+        this.creationDate = creationDate;
+        this.songsCount = songsCount;
+        this.isPublic = isPublic;
     }
 
-    // Getters and setters
+    // Standard getters and setters for each property
+
     public int getId() {
         return id;
     }
@@ -81,48 +96,69 @@ public class Playlist {
         this.isPublic = isPublic;
     }
 
+    // Functionalities related to playlist modification
 
+    /**
+     * Adds a collaborator to the playlist.
+     *
+     * @param collaborator the collaborator to add
+     */
     public void addCollaborator(String collaborator) {
         collaborators.add(collaborator);
     }
 
-
+    /**
+     * Removes a collaborator from the playlist.
+     *
+     * @param collaborator the collaborator to remove
+     */
     public void removeCollaborator(String collaborator) {
         collaborators.remove(collaborator);
     }
 
-    public void setDescription(String description) {
-        return ;
-    }
-
-
-    public String getDescription() {
-        // Implementation
-        return "";
-    }
-
+    /**
+     * Adds a song to the playlist and increments the song count.
+     *
+     * @param song the song to add to the playlist
+     */
     public void addSong(Song song) {
-            this.songsCount++;
+        songs.add(song);
+        this.songsCount++;
     }
 
+    /**
+     * Removes a song from the playlist and decrements the song count.
+     *
+     * @param song the song to remove from the playlist
+     */
     public void removeSong(Song song) {
+        songs.remove(song);
         this.songsCount--;
     }
 
+    /**
+     * Retrieves all songs in the playlist.
+     *
+     * @return a list of all songs in the playlist
+     */
     public List<Song> getSongs() {
-
         return songs;
     }
 
-    private List<Song> getAllSongs() {
-        return getAllSongs();
-    }
-
+    /**
+     * Checks if the playlist is empty.
+     *
+     * @return true if there are no songs in the playlist, otherwise false
+     */
     public boolean isEmpty() {
         return songs.isEmpty();
     }
 
-    // Method to get the total duration of the playlist
+    /**
+     * Calculates the total duration of all songs in the playlist.
+     *
+     * @return the total duration of all songs in seconds
+     */
     public int getTotalDuration() {
         int totalDuration = 0;
         for (Song song : songs) {
@@ -131,10 +167,11 @@ public class Playlist {
         return totalDuration;
     }
 
-    // Method to clear all songs from the playlist
+    /**
+     * Clears all songs from the playlist and resets the song count.
+     */
     public void clear() {
         songs.clear();
+        songsCount = 0;
     }
-
-
 }

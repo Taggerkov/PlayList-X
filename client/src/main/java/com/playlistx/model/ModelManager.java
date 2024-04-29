@@ -29,21 +29,23 @@ public class ModelManager implements Model, PropertyChangeListener {
     private final Session session;
     private final Client client;
     private final RemoteListener remoteListener;
-    private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Map<Integer, Playlist> playlists = new HashMap<>();
 
     private ModelManager() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(1099);
         session = (Session) registry.lookup("session");
-        String clientLookUp = session.getClient();
-        client = (Client) registry.lookup(clientLookUp);
+        client = (Client) registry.lookup(session.getClient());
         remoteListener = new RemoteListener(this, session);
     }
 
     public static Model get() throws RemoteException, NotBoundException {
-        if (instance == null) instance = new ModelManager();
+        if (instance == null) {
+            instance = new ModelManager();
+        }
         return instance;
     }
+
 
     @Override
     public String login(String string, byte[] hashWord) throws RemoteException, LoginException {
@@ -92,12 +94,12 @@ public class ModelManager implements Model, PropertyChangeListener {
 
     @Override
     public void addListener(PropertyChangeListener listener) {
-        signal.addPropertyChangeListener(listener);
+        support.addPropertyChangeListener(listener);
     }
 
     @Override
     public void removeListener(PropertyChangeListener listener) {
-        signal.removePropertyChangeListener(listener);
+        support.removePropertyChangeListener(listener);
     }
 
     @Override
@@ -120,10 +122,10 @@ public class ModelManager implements Model, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        signal.firePropertyChange(evt);
+        support.firePropertyChange(evt);
     }
 
-    // Song management methods
+    // Playlist and song management implementations:
     @Override
     public void addSongToPlaylist(int playlistId, Song song) throws RemoteException {
         Playlist playlist = playlists.get(playlistId);
@@ -143,15 +145,13 @@ public class ModelManager implements Model, PropertyChangeListener {
     @Override
     public List<Song> getAllSongsFromPlaylist(int playlistId) throws RemoteException {
         Playlist playlist = playlists.get(playlistId);
-        return playlist != null ? playlist.getSongs() : new ArrayList<>();
+        return playlist != null ? new ArrayList<>(playlist.getSongs()) : new ArrayList<>();
     }
 
-    // Playlist management methods
     @Override
-    public void createPlaylist(int id, String title, String owner, List<String> collaborators,
-                               Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
-        Playlist playlist = new Playlist(id, title, owner, collaborators, creationDate, songsCount, isPublic);
-        playlists.put(id, playlist);
+    public void createPlaylist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
+        Playlist newPlaylist = new Playlist(id, title, owner, collaborators, creationDate, songsCount, isPublic);
+        playlists.put(id, newPlaylist);
     }
 
     @Override
@@ -168,4 +168,12 @@ public class ModelManager implements Model, PropertyChangeListener {
     public List<Playlist> getAllPlaylists() throws RemoteException {
         return new ArrayList<>(playlists.values());
     }
+
+    @Override
+    public List<String> getPlaylistNames() throws RemoteException {
+        List<String> names = new ArrayList<>();
+        playlists.values().forEach(playlist -> names.add(playlist.getTitle()));
+        return names;
+    }
 }
+
