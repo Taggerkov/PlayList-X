@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="1200.0">
          <menus>
@@ -108,7 +108,7 @@
                         <Insets top="5.0" />
                      </padding>
                   </Separator>
-                  <ScrollPane id="chatScroll" fx:id="favouritesDisplay" hbarPolicy="NEVER" prefHeight="100.0" prefWidth="280.0" VBox.vgrow="ALWAYS">
+                  <ScrollPane fx:id="favouritesDisplay" hbarPolicy="NEVER" prefHeight="100.0" prefWidth="280.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </VBox.margin>
@@ -140,31 +140,42 @@
                                     <ColorAdjust />
                                  </effect>
                               </Label>
-                              <ScrollPane fitToWidth="true" hbarPolicy="NEVER" minWidth="100.0" style="-fx-background-color: green;" VBox.vgrow="ALWAYS">
+                              <Label text="PlayList X - 1.0 // Everything is where you left it!">
+                                 <font>
+                                    <Font name="Sylfaen" size="24.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust />
+                                 </effect>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ScrollPane id="homeScroll" fitToWidth="true" hbarPolicy="NEVER" minWidth="100.0" prefWidth="886.0" style="-fx-background-radius: 30 0 0 0;" styleClass="homeScroll" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" focusTraversable="true" hgap="75.0" prefWidth="885.0" prefWrapLength="0.0" rowValignment="TOP" style="-fx-background-color: red;">
+                                    <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" focusTraversable="true" hgap="75.0" prefWidth="885.0" prefWrapLength="0.0" rowValignment="TOP">
                                        <children>
-                                          <VBox alignment="TOP_CENTER" prefWidth="324.0" spacing="10.0">
+                                          <VBox alignment="TOP_CENTER" maxWidth="700.0" prefWidth="324.0" spacing="10.0">
                                              <children>
                                                 <Label text="LATEST PLAYLIST">
                                                    <font>
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <ScrollPane maxHeight="250.0" minHeight="130.0" prefHeight="180.0" VBox.vgrow="ALWAYS" />
+                                                <ScrollPane hbarPolicy="NEVER" maxHeight="250.0" minHeight="130.0" prefHeight="250.0" styleClass="latestScroll" VBox.vgrow="ALWAYS" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="20.0" />
                                              </padding>
                                           </VBox>
-                                          <VBox alignment="TOP_CENTER" prefWidth="324.0" spacing="10.0">
+                                          <VBox alignment="TOP_CENTER" maxWidth="700.0" prefWidth="324.0" spacing="10.0">
                                              <children>
                                                 <Label text="LATEST PLAYLIST">
                                                    <font>
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <ScrollPane maxHeight="250.0" minHeight="130.0" prefHeight="250.0" VBox.vgrow="ALWAYS" />
+                                                <ScrollPane hbarPolicy="NEVER" maxHeight="250.0" minHeight="130.0" prefHeight="250.0" styleClass="latestScroll" VBox.vgrow="ALWAYS" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="20.0" />
@@ -176,6 +187,9 @@
                                        </padding>
                                     </FlowPane>
                                  </content>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
                               </ScrollPane>
                            </children>
                         </VBox>
