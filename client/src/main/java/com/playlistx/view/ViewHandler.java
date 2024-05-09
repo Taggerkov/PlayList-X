@@ -98,7 +98,6 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource(controller.getFXML()));
             controller.init(new Scene(loader.load()));
         } catch (IOException | IllegalStateException e) {
-            e.printStackTrace();
             popUp(Notify.ACCESS, "Failed loading " + controller.getClass().getName() + " FXML!");
             System.exit(0);
         }
