@@ -9,13 +9,18 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="1200.0">
          <menus>
@@ -48,7 +53,7 @@
       </MenuBar>
       <HBox prefWidth="1200.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" spacing="5.0" styleClass="background" HBox.hgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" fillWidth="false" maxWidth="350.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" spacing="5.0" styleClass="background" HBox.hgrow="ALWAYS">
                <children>
                   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
                      <children>
@@ -121,7 +126,63 @@
                      </VBox.margin></Label>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="700.0" HBox.hgrow="ALWAYS" />
+            <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="0.0" tabMaxWidth="0.0" HBox.hgrow="ALWAYS">
+              <tabs>
+                <Tab closable="false" text="Home">
+                     <content>
+                        <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
+                           <children>
+                              <Label text="Welcome Back!">
+                                 <font>
+                                    <Font size="53.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust />
+                                 </effect>
+                              </Label>
+                              <ScrollPane fitToWidth="true" hbarPolicy="NEVER" minWidth="100.0" style="-fx-background-color: green;" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" focusTraversable="true" hgap="75.0" prefWidth="885.0" prefWrapLength="0.0" rowValignment="TOP" style="-fx-background-color: red;">
+                                       <children>
+                                          <VBox alignment="TOP_CENTER" prefWidth="324.0" spacing="10.0">
+                                             <children>
+                                                <Label text="LATEST PLAYLIST">
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </Label>
+                                                <ScrollPane maxHeight="250.0" minHeight="130.0" prefHeight="180.0" VBox.vgrow="ALWAYS" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="20.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox alignment="TOP_CENTER" prefWidth="324.0" spacing="10.0">
+                                             <children>
+                                                <Label text="LATEST PLAYLIST">
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </Label>
+                                                <ScrollPane maxHeight="250.0" minHeight="130.0" prefHeight="250.0" VBox.vgrow="ALWAYS" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="20.0" />
+                                             </padding>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </FlowPane>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </HBox>
    </children>

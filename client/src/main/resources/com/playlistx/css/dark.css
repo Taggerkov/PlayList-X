@@ -6,7 +6,7 @@
     -fx-fill: white;
 }
 
-.label {
+.label, .tab > .label {
     -fx-fill: white;
     -fx-text-fill: white;
 }
@@ -39,8 +39,8 @@
     -fx-text-fill: white;
 }
 
-/* Menu FXML */
-.menu-bar, .scroll-pane, #msgScroll .thumb {
+/* Menu GUI */
+.menu-bar, .scroll-pane, .thumb {
     -fx-background-color: #1b1b1b;
 }
 
@@ -60,6 +60,8 @@
 .menu-bar > .container > .menu-button > .label, .menu-bar > .container > .menu-button:hover > .label, .menu-bar > .container > .menu-button:pressed > .label, .menu-bar > .container > .menu-button:showing > .label, .menu-item:hover > .label {
     -fx-text-fill: #1b1b1b;
 }
+
+/* SideBar GUI */
 
 .context-menu {
     -fx-background-color: #302e2f;
@@ -87,26 +89,4 @@
 
 .quick-icon:pressed {
     -fx-background-color: red;
-}
-
-#chat-fill {
-    -fx-background-color: #302e2f;
-}
-
-.chat-item, .chat-item > .text {
-    -fx-background-radius: 50px;
-    -fx-background-color: white;
-    -fx-fill: black;
-}
-
-.chat-item:hover, .chat-item:hover > .text {
-    -fx-background-color: black;
-    -fx-fill: whitesmoke;
-}
-.msgItem:hover {
-    -fx-effect: dropshadow(three-pass-box, white, 11, 0, 0, 0);
-}
-
-#msgBar {
-    -fx-background-color: rgba(27, 27, 28, 50);
 }
