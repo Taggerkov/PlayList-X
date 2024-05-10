@@ -1,5 +1,5 @@
 package com.playlistx.model.music;
-
+import java.util.List;
 /**
  * Represents a single song or track in the music library.
  */
@@ -13,6 +13,7 @@ public class Song {
     private String link;
     private int duration; // Duration of the song in seconds
     private String featuredArtists; // Additional artists featured in the song
+    private List<Song> songs;
 
     /**
      * Constructs a Song with detailed attributes.
@@ -35,6 +36,9 @@ public class Song {
         this.albumName = albumName;
         this.link = link;
         this.featuredArtists = featuredArtists;
+    }
+    public List<Song> getAllSongs() {
+        return this.songs;
     }
 
     // Getters and setters for all fields

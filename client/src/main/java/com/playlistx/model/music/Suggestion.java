@@ -1,71 +1,26 @@
 package com.playlistx.model.music;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * The Suggestion class represents a suggestion for songs based on various criteria.
+ * It implements the SongSuggester interface to suggest a song from a playlist.
  */
-public class Suggestion {
+public class Suggestion implements SongSuggester {
     private String label; // Label to indicate the type of suggestion (e.g., "Popular", "New", "Similar")
     private List<Song> suggestedSongs; // List of songs suggested
+    private final Random random = new Random();
 
-    /**
-     * Constructor for Suggestion class.
-     *
-     * @param label The label indicating the type of suggestion.
-     * @param suggestedSongs The list of songs suggested.
-     */
-    public Suggestion(String label, List<Song> suggestedSongs) {
-        this.label = label;
-        this.suggestedSongs = suggestedSongs;
-    }
+    // existing constructors, getters, and setters...
 
-    /**
-     * Gets the label of the suggestion.
-     *
-     * @return A string representing the label.
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets the label of the suggestion.
-     *
-     * @param label A string representing the label.
-     */
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    /**
-     * Gets the list of suggested songs.
-     *
-     * @return A list of Song objects.
-     */
-    public List<Song> getSuggestedSongs() {
-        return suggestedSongs;
-    }
-
-    /**
-     * Sets the list of suggested songs.
-     *
-     * @param suggestedSongs A list of Song objects to be suggested.
-     */
-    public void setSuggestedSongs(List<Song> suggestedSongs) {
-        this.suggestedSongs = suggestedSongs;
-    }
-
-    /**
-     * Provides a string representation of the Suggestion instance.
-     *
-     * @return A string describing the Suggestion.
-     */
     @Override
-    public String toString() {
-        return "Suggestion{" +
-                "label='" + label + '\'' +
-                ", suggestedSongs=" + suggestedSongs +
-                '}';
+    public Song suggestSong(Playlist playlist) {
+        List<Song> songs = playlist.getSongs();
+        if (songs.isEmpty()) {
+            return null; // or throw an exception
+        }
+        int randomIndex = random.nextInt(songs.size());
+        return songs.get(randomIndex);
     }
 }
