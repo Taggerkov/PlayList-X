@@ -2,8 +2,6 @@ package com.playlistx.model.music;
 
 import java.util.Date;
 import java.util.List;
-import com.playlistx.model.music.Song;
-import com.playlistx.model.login.User;
 
 /**
  * Represents a playlist in the music system. It includes metadata about the playlist
@@ -38,14 +36,6 @@ public class Playlist {
         this.creationDate = creationDate;
         this.songsCount = songsCount;
         this.isPublic = isPublic;
-    }
-
-    public void share(){
-
-    }
-
-    public void unshare(){
-
     }
 
     // Standard getters and setters for each property
