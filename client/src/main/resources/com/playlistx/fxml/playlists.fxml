@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Tab closable="false" style="visibility: true;" text="SongList" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Tab closable="false" style="visibility: true;" text="PlayLists" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
          <children>
-            <Label text="Song List">
+            <Label text="Playlists">
                <font>
                   <Font size="53.0" />
                </font>
@@ -22,7 +22,7 @@
                   <ColorAdjust />
                </effect>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="All songs we provide. We accept suggestions!" textAlignment="CENTER" textOverrun="CLIP" VBox.vgrow="ALWAYS">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="All playlists you have access!" textAlignment="CENTER" textOverrun="CLIP" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Sylfaen" size="24.0" />
                </font>
@@ -55,7 +55,7 @@
                            </padding>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
+                        <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Author">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -64,16 +64,7 @@
                            </padding>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
+                        <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Access">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -143,7 +134,7 @@
                                     </VBox>
                                     <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label style="-fx-background-radius: 10px;" text="Artist">
+                                          <Label style="-fx-background-radius: 10px;" text="Author">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
@@ -161,29 +152,9 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                    <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="60.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label style="-fx-background-radius: 10px;" text="Genre">
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label style="-fx-background-radius: 10px;" text="&quot;">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label style="-fx-background-radius: 10px;" text="Album">
+                                          <Label style="-fx-background-radius: 10px;" text="Acces">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
