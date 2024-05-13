@@ -11,6 +11,7 @@ Version: 3.1
     -backgroundColor: #1b1b1b;
     -contrastColor: white;
     -secondaryColor: #302e2f;
+    -mainViewsColor: grey;
     -activeColor: red;
     /* Login Vars */
     -loginInputColor: black;
@@ -32,12 +33,12 @@ Version: 3.1
 }
 
 /* SecondaryColor Items */
-.menu-bar:hover, #chatScroll .thumb, .quick-icon:hover {
+.menu-bar:hover, #chatScroll .thumb, .quick-icon:hover, .songListSelector:hover {
     -fx-background-color: -secondaryColor;
 }
 
 /* ActiveColor Items */
-.quick-icon:pressed {
+.quick-icon:pressed, .songListSelector:pressed {
     -fx-background-color: -activeColor;
 }
 
@@ -108,7 +109,7 @@ Version: 3.1
 }
 
 /* ScrollBar Config */
-.scroll-bar, .homeScroll:hover > .viewport {
+.scroll-bar, .viewScroll:hover > .viewport {
     -fx-background-color: transparent;
 }
 
@@ -124,9 +125,10 @@ Version: 3.1
 }
 
 /* Home Config */
-.homeScroll {
-    -fx-background-color: grey;
+.viewScroll {
+    -fx-background-color: -mainViewsColor;
 }
+
 
 /*
 innerHorizontalFlowPane.prefWidthProperty().bind(
