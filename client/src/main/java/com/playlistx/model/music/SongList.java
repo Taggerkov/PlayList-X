@@ -1,23 +1,20 @@
 package com.playlistx.model.music;
 
-/**
- * Represents an association between a song and a playlist.
- * This class links songs to playlists using their identifiers, facilitating many-to-many relationships
- * where songs can belong to multiple playlists and playlists can contain multiple songs.
- */
 public class SongList {
+    private SongDAO songDAO;  // The SongDAO to interact with the database.
     private int songId;  // The unique identifier for a song.
     private int playlistId;  // The unique identifier for a playlist.
 
     /**
      * Constructs a SongList object to represent the relationship between a song and a playlist.
      *
-     * @param songId the ID of the song in the relationship.
-     * @param playlistId the ID of the playlist in the relationship.
+     * @param songTitle    the title of the song in the relationship.
+     * @param playlistName the name of the playlist in the relationship.
      */
-    public SongList(int songId, int playlistId) {
-        this.songId = songId;
-        this.playlistId = playlistId;
+    public SongList(String songTitle, String playlistName, com.playlistx.model.music.SongDAO songDAO) {
+        this.songDAO = songDAO;
+        this.songId = songDAO.getSongId(songTitle);
+        this.playlistId = songDAO.getPlaylistId(playlistName);
     }
 
     /**
@@ -30,30 +27,12 @@ public class SongList {
     }
 
     /**
-     * Sets the song ID.
-     *
-     * @param songId the new ID of the song.
-     */
-    public void setSongId(int songId) {
-        this.songId = songId;
-    }
-
-    /**
      * Gets the playlist ID.
      *
      * @return the ID of the playlist.
      */
     public int getPlaylistId() {
         return playlistId;
-    }
-
-    /**
-     * Sets the playlist ID.
-     *
-     * @param playlistId the new ID of the playlist.
-     */
-    public void setPlaylistId(int playlistId) {
-        this.playlistId = playlistId;
     }
 
     /**

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import com.playlistx.model.music.SongDAO;
 
 
 
@@ -31,12 +32,14 @@ public class ModelManager implements Model, PropertyChangeListener {
     private final RemoteListener remoteListener;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Map<Integer, Playlist> playlists = new HashMap<>();
+    private SongDAO songDAO; // Add a SongDAO to interact with the database
 
     private ModelManager() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(1099);
         session = (Session) registry.lookup("session");
         client = (Client) registry.lookup(session.getClient());
         remoteListener = new RemoteListener(this, session);
+        songDAO = new SongDAO(); // Initialize the SongDAO
     }
 
     public static Model get() throws RemoteException, NotBoundException {
@@ -150,10 +153,9 @@ public class ModelManager implements Model, PropertyChangeListener {
 
     @Override
     public void createPlaylist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
-        Playlist newPlaylist = new Playlist(id, title, owner, collaborators, creationDate, songsCount, isPublic);
+        Playlist newPlaylist = new Playlist(id, songDAO, title, owner, collaborators, creationDate, songsCount, isPublic); // Pass the SongDAO to the Playlist constructor
         playlists.put(id, newPlaylist);
     }
-
     @Override
     public void deletePlaylist(int id) throws RemoteException {
         playlists.remove(id);

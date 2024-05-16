@@ -1,56 +1,54 @@
 /*
-Author: Sergiu Chirap -> Version: 3.2
-2024, PlayList X. All rights reserved.
+Author: Sergiu Chirap
+Design: Author
+Version: 3.1
 */
 
-/* PlayList-X CSS: Dark */
+/* PlatList-X CSS: Dark */
 
-/* Edit CSS here! CSS Variables: */
-* {
+* { /* Modify here! */
     /* Base Colors */
     -backgroundColor: #1b1b1b;
-    -secondaryColor: #302e2f;
-    -activeColor: red;
-    /* Text Colors */
     -contrastColor: white;
+    -secondaryColor: #302e2f;
+    -mainViewsColor: grey;
+    -activeColor: red;
+    /* Login Vars */
+    -loginInputColor: black;
+    -loginInputDropShadow: #8d8686;
+    /* Others */
+    -hiddenVisibility: false;
+    -staticViewPortColor: transparent;
+    -hoverViewPortColor: -secondaryColor;
 }
 
 /* Hidden Items */
-.tab {
-    visibility: false;
+.tab, .hidden {
+    visibility: -hiddenVisibility;
 }
 
-/* Background-Color Items */
-.background, .tab-pane > .tab-header-area > .tab-header-background, .menu-bar, .scroll-pane, .thumb, .menu-bar > .container > .menu-button > .label, .menu-bar > .container > .menu-button:hover > .label, .menu-bar > .container > .menu-button:pressed > .label, .menu-bar > .container > .menu-button:showing > .label, .menu-item:hover > .label {
+/* BackgroundColor Items */
+.background, .tab-pane > .tab-header-area > .tab-header-background, .menu-bar, .scroll-pane, .thumb {
     -fx-background-color: -backgroundColor;
 }
 
-/* Secondary-Color Items */
-.menu-bar:hover .thumb, .quick-icon:hover {
-    -fx-background-color: -contrastColor;
+/* SecondaryColor Items */
+.menu-bar:hover, #chatScroll .thumb, .quick-icon:hover, .songListSelector:hover {
+    -fx-background-color: -secondaryColor;
 }
 
-/* Active-Color Items */
-.quick-icon:pressed {
+/* ActiveColor Items */
+.quick-icon:pressed, .songListSelector:pressed {
     -fx-background-color: -activeColor;
 }
 
-/* TextFill Items*/
-.background > .text, .menu-bar:hover > .container > .menu-button > .label, .menu-item > .label, .hyperlink, .hyperlink:visited {
-    -fx-fill: -contrastColor;
-}
-
-/* Label-Color Items */
-.label, .tab > .label {
+/* ContrastColor TextFill */
+.background > .text, .label, .tab > .label {
     -fx-fill: -contrastColor;
     -fx-text-fill: -contrastColor;
 }
 
-.logo-white {
-    visibility: true;
-}
-
-/* !-> Login GUI | Specific */
+/* !-> Login GUI | Specific Items */
 /* Button Config */
 .loginButton {
     -fx-background-color: -secondaryColor;
@@ -61,37 +59,78 @@ Author: Sergiu Chirap -> Version: 3.2
 
 /* TextField Config */
 .loginField {
-    -fx-background-color: black;
+    -fx-background-color: -loginInputColor;
     -fx-background-radius: 30px;
     -fx-border-radius: 30px;
-    -fx-effect: dropshadow(three-pass-box, #8d8686, 14.1, 0, 0, 2.0);
-    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, -loginInputDropShadow, 14.1, 0, 0, 2.0);
+    -fx-text-fill: -contrastColor;
 }
 
-/* !-> Menu GUI | Specific */
-.menu-bar > .container > .menu-button:hover, .menu-bar > .container > .menu-button:pressed, .menu-bar > .container > .menu-button:showing, .menu-item:hover {
+/* !-> Menu GUI | Specific Items */
+/* Active Text Config */
+.menu-bar:hover > .container > .menu-button > .label, .menu-item > .label, .hyperlink, .hyperlink:visited {
+    -fx-text-fill: -contrastColor;
+}
+
+/* Text Config */
+.menu-bar > .container > .menu-button > .label, .menu-bar > .container > .menu-button:hover > .label, .menu-bar > .container > .menu-button:pressed > .label, .menu-bar > .container > .menu-button:showing > .label, .menu-item:hover > .label {
+    -fx-text-fill: -backgroundColor;
+}
+
+/* Focus Config */
+.menu-item:focused, .menu-item:focused > .label {
+    -fx-background-color: -contrastColor;
+    -fx-text-fill: -backgroundColor;
+}
+
+/* Hover Config */
+.menu-bar > .container > .menu-button:hover, .menu-bar > .container > .menu-button:pressed, .menu-bar > .container > .menu-button:showing, .menu-item:focused, .menu-item:hover {
     -fx-background-radius: 10px;
-    -fx-background-color: white;
+    -fx-background-color: -contrastColor;
 }
 
+/* Context Config */
 .context-menu {
-    -fx-background-color: #302e2f;
+    -fx-background-color: -secondaryColor;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
     -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em;
 }
 
-/* Scroll Panes */
-.scroll-pane > .viewport, .scroll-bar, #homeScroll:hover > .viewport {
+/* !-> SideBar GUI | Specific Items */
+/* ViewPort Config */
+.scroll-pane > .viewport {
+    -fx-background-color: -staticViewPortColor;
+}
+/* ViewPort Hover Config */
+.scroll-pane:hover > .viewport {
+    -fx-background-color: -hoverViewPortColor;
+    -fx-background-radius: 15;
+}
+
+/* ScrollBar Config */
+.scroll-bar, .viewScroll:hover > .viewport {
     -fx-background-color: transparent;
 }
 
-.scroll-pane:hover > .viewport {
-    -fx-background-color: #302e2f;
-    -fx-background-radius: 15px;
+/* Button Config */
+.quick-icon {
+    -fx-background-radius: 14em;
 }
 
-/* SideBar GUI */
-.quick-icon, .latestScroll {
-    -fx-background-radius: 15px;
+/* !-> Home GUI | Specific Items */
+/* Entry Config */
+.latestScroll {
+    -fx-background-radius: 15;
 }
+
+/* Home Config */
+.viewScroll {
+    -fx-background-color: -mainViewsColor;
+}
+
+
+/*
+innerHorizontalFlowPane.prefWidthProperty().bind(
+      Bindings.add(-50, stage.widthProperty()))
+*/

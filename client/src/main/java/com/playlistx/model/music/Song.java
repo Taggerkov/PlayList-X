@@ -14,19 +14,21 @@ public class Song {
     private int duration; // Duration of the song in seconds
     private String featuredArtists; // Additional artists featured in the song
     private List<Song> songs;
+    private SongDAO songDAO;
 
-    /**
-     * Constructs a Song with detailed attributes.
-     *
-     * @param id the unique identifier for the song
-     * @param artist the main artist of the song
-     * @param year the release year of the song
-     * @param genre the musical genre of the song
-     * @param title the title of the song
-     * @param albumName the name of the album the song is from
-     * @param link a URL to the song or its resources
-     * @param featuredArtists additional artists featured in the song
-     */
+    public Song(String songTitle, SongDAO songDAO) {
+        this.songDAO = songDAO;
+        Song song = songDAO.getSongByTitle(songTitle);
+        this.id = song.getId();
+        this.artist = song.getArtist();
+        this.year = song.getYear();
+        this.genre = song.getGenre();
+        this.title = song.getTitle();
+        this.albumName = song.getAlbumName();
+        this.link = song.getLink();
+        this.featuredArtists = song.getFeaturedArtists();
+    }
+
     public Song(int id, String artist, int year, String genre, String title, String albumName, String link, String featuredArtists) {
         this.id = id;
         this.artist = artist;
@@ -37,6 +39,7 @@ public class Song {
         this.link = link;
         this.featuredArtists = featuredArtists;
     }
+
     public List<Song> getAllSongs() {
         return this.songs;
     }
