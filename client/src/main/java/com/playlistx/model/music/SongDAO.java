@@ -17,7 +17,7 @@ public class SongDAO {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs WHERE playlist_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs WHERE playlist_id =?");
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -73,6 +73,7 @@ public class SongDAO {
         }
         return collaborators;
     }
+
     public Playlist getPlaylistById(int playlistId) {
         Playlist playlist = null;
         try {
@@ -169,6 +170,7 @@ public class SongDAO {
         }
         return songs;
     }
+
     public int getPlaylistId(String playlistName) {
         int playlistId = -1;
         try {
@@ -245,6 +247,32 @@ public class SongDAO {
             e.printStackTrace();
         }
         return song;
+    }
+
+    public List<Song> getAllSongs() {
+        List<Song> songs = new ArrayList<>();
+        try {
+            Connection connection = dbConnector.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Song song = new Song(
+                        resultSet.getInt("id"),
+                        resultSet.getString("artist"),
+                        resultSet.getInt("year"),
+                        resultSet.getString("genre"),
+                        resultSet.getString("title"),
+                        resultSet.getString("albumName"),
+                        resultSet.getString("link"),
+                        resultSet.getString("featuredArtists")
+                );
+                songs.add(song);
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return songs;
     }
 
 }

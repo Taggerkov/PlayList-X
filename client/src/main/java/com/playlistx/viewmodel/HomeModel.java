@@ -2,6 +2,7 @@ package com.playlistx.viewmodel;
 
 import com.playlistx.model.Model;
 import com.playlistx.model.music.Playlist;
+import com.playlistx.model.music.Song;
 import com.playlistx.view.ViewHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,60 +11,137 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * HomeModel class handles the interaction between the view and the model layers,
- * specifically for operations related to fetching playlist information.
- */
 public class HomeModel {
     private static HomeModel instance;
-    private final Model model;
+    private final Model model = Model.get();
 
-    /**
-     * Private constructor to initialize the HomeModel with the Model layer.
-     * Utilizes singleton pattern to ensure only one instance of this model exists.
-     */
     private HomeModel() throws RemoteException, NotBoundException {
-        model = Model.get();  // Retrieve the singleton instance of the model.
     }
 
-    /**
-     * Returns the singleton instance of HomeModel, creating it if necessary.
-     * @return The single, static instance of the HomeModel.
-     * @throws NotBoundException If there is an issue binding to the RMI registry.
-     * @throws RemoteException If an RMI error occurs.
-     */
     public static @NotNull HomeModel get() throws NotBoundException, RemoteException {
-        if (instance == null) {
-            instance = new HomeModel();
-        }
-        return instance;
+        if (instance == null) return instance = new HomeModel();
+        else return instance;
     }
 
-    /**
-     * Retrieves a list of all playlists from the model.
-     * @return A list of Playlist objects or an empty list if an error occurs.
-     */
-    public @NotNull List<Playlist> getPlaylists() {
+    public @NotNull List<Playlist> getPlaylistsAll() {
         try {
             return model.getAllPlaylists();
         } catch (RemoteException e) {
-            // Log and handle the error appropriately.
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
             return new ArrayList<>();
         }
     }
 
-    /**
-     * Retrieves a list of all playlist names from the model.
-     * @return A list of strings containing playlist names or an empty list if an error occurs.
-     */
-    public @NotNull List<String> getPlaylistNames() {
+    public @NotNull List<Playlist> getPlaylistsLatest() {
+        List<Playlist> playlists = getPlaylistsAll();
+        if (playlists.size() <= 1) return playlists;
+        playlists.sort(new PlayListComparator());
+        int index;
+        if (playlists.size() > 15) index = 14;
+        else index = playlists.size() - 1;
+        return playlists.subList(0, index);
+    }
+
+    public @NotNull List<Song> getSongsAll() {
         try {
-            return model.getPlaylistNames();
+            return model.getAllSongs();
         } catch (RemoteException e) {
-            // Log and handle the error appropriately.
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
             return new ArrayList<>();
+        }
+    }
+
+    public @NotNull List<Song> getSongsLatest() {
+        List<Song> songs = getSongsAll();
+        if (songs.size() <= 1) return songs;
+        songs.sort(new SongComparator());
+        int index;
+        if (songs.size() > 15) index = 14;
+        else index = songs.size() - 1;
+        return songs.subList(0, index);
+    }
+
+    private static class PlayListComparator implements java.util.Comparator<Playlist> {
+
+        /**
+         * Compares its two arguments for order.  Returns a negative integer,
+         * zero, or a positive integer as the first argument is less than, equal
+         * to, or greater than the second.<p>
+         * <p>
+         * The implementor must ensure that {@link Integer#signum
+         * signum}{@code (compare(x, y)) == -signum(compare(y, x))} for
+         * all {@code x} and {@code y}.  (This implies that {@code
+         * compare(x, y)} must throw an exception if and only if {@code
+         * compare(y, x)} throws an exception.)<p>
+         * <p>
+         * The implementor must also ensure that the relation is transitive:
+         * {@code ((compare(x, y)>0) && (compare(y, z)>0))} implies
+         * {@code compare(x, z)>0}.<p>
+         * <p>
+         * Finally, the implementor must ensure that {@code compare(x,
+         * y)==0} implies that {@code signum(compare(x,
+         * z))==signum(compare(y, z))} for all {@code z}.
+         *
+         * @param list1 the first Playlist to be compared.
+         * @param list2 the second Playlist to be compared.
+         * @return a negative integer, zero, or a positive integer as the
+         * first argument is less than, equal to, or greater than the
+         * second.
+         * @throws NullPointerException if an argument is null and this
+         *                              comparator does not permit null arguments
+         * @throws ClassCastException   if the arguments' types prevent them from
+         *                              being compared by this comparator.
+         * @apiNote It is generally the case, but <i>not</i> strictly required that
+         * {@code (compare(x, y)==0) == (x.equals(y))}.  Generally speaking,
+         * any comparator that violates this condition should clearly indicate
+         * this fact.  The recommended language is "Note: this comparator
+         * imposes orderings that are inconsistent with equals."
+         */
+        @Override
+        public int compare(@NotNull Playlist list1, @NotNull Playlist list2) {
+            return list1.getSongsCount() - list2.getSongsCount();
+        }
+    }
+
+    private static class SongComparator implements java.util.Comparator<Song> {
+
+        /**
+         * Compares its two arguments for order.  Returns a negative integer,
+         * zero, or a positive integer as the first argument is less than, equal
+         * to, or greater than the second.<p>
+         * <p>
+         * The implementor must ensure that {@link Integer#signum
+         * signum}{@code (compare(x, y)) == -signum(compare(y, x))} for
+         * all {@code x} and {@code y}.  (This implies that {@code
+         * compare(x, y)} must throw an exception if and only if {@code
+         * compare(y, x)} throws an exception.)<p>
+         * <p>
+         * The implementor must also ensure that the relation is transitive:
+         * {@code ((compare(x, y)>0) && (compare(y, z)>0))} implies
+         * {@code compare(x, z)>0}.<p>
+         * <p>
+         * Finally, the implementor must ensure that {@code compare(x,
+         * y)==0} implies that {@code signum(compare(x,
+         * z))==signum(compare(y, z))} for all {@code z}.
+         *
+         * @param song1 the first song to be compared.
+         * @param song2 the second song to be compared.
+         * @return a negative integer, zero, or a positive integer as the
+         * first argument is less than, equal to, or greater than the
+         * second.
+         * @throws NullPointerException if an argument is null and this
+         *                              comparator does not permit null arguments
+         * @throws ClassCastException   if the arguments' types prevent them from
+         *                              being compared by this comparator.
+         * @apiNote It is generally the case, but <i>not</i> strictly required that
+         * {@code (compare(x, y)==0) == (x.equals(y))}.  Generally speaking,
+         * any comparator that violates this condition should clearly indicate
+         * this fact.  The recommended language is "Note: this comparator
+         * imposes orderings that are inconsistent with equals."
+         */
+        @Override
+        public int compare(@NotNull Song song1, @NotNull Song song2) {
+            return song1.getYear() - song2.getYear();
         }
     }
 }

@@ -177,5 +177,10 @@ public class ModelManager implements Model, PropertyChangeListener {
         playlists.values().forEach(playlist -> names.add(playlist.getTitle()));
         return names;
     }
+
+    @Override
+    public List<Song> getAllSongs() throws java.rmi.RemoteException {
+        return songDAO.getAllSongs();
+    }
 }
 
