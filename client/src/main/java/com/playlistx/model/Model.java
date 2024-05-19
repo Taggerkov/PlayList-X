@@ -44,4 +44,5 @@ public interface Model {
     Playlist getPlaylist(int id) throws RemoteException;
     List<Playlist> getAllPlaylists() throws RemoteException;
     List<String> getPlaylistNames() throws RemoteException;
+    List<Song> getAllSongs() throws RemoteException;
 }
