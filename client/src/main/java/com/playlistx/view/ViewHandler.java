@@ -154,13 +154,16 @@ public class ViewHandler {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(controller);
             loader.setLocation(getClass().getResource(controller.getFXML()));
-            controller.init(new Scene(loader.load()));
-            if (controller != HomeController.get()) {
-                Tab tab = new Tab(loader.load());
+            if (controller != HomeController.get() & controller != LoginController.get()) {
+
+                Tab tab = loader.load();
                 HomeController.get().injectTab(tab);
                 tabs.put(controller, tab);
+            } else {
+                controller.init(new Scene(loader.load()));
             }
         } catch (IOException | IllegalStateException e) {
+            e.printStackTrace();
             popUp(Notify.ACCESS, "Failed loading " + controller.getClass().getName() + " FXML!");
             System.exit(0);
         }
