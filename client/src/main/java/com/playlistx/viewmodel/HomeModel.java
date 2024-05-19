@@ -19,9 +19,13 @@ public class HomeModel {
     private HomeModel() throws RemoteException, NotBoundException {
     }
 
-    public static @NotNull HomeModel get() throws NotBoundException, RemoteException {
-        if (instance == null) return instance = new HomeModel();
-        else return instance;
+    public static @NotNull HomeModel get() {
+        try {
+            if (instance == null) return instance = new HomeModel();
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+        return instance;
     }
 
     public @NotNull List<Playlist> getPlaylistsAll() {

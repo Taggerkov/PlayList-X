@@ -20,11 +20,10 @@ public class SongListModel {
     public static @NotNull SongListModel get() {
         try {
             if (instance == null) return instance = new SongListModel();
-            else return instance;
         } catch (RemoteException | NotBoundException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
-            throw new RuntimeException(e);
         }
+        return instance;
     }
 
     public @NotNull List<Song> getSongsAll() {

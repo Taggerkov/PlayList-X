@@ -1,23 +1,33 @@
 package com.playlistx.view;
 
+import com.playlistx.model.paths.CSS;
 import com.playlistx.model.paths.FXMLs;
+import com.playlistx.viewmodel.HomeModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class HomeController implements Controller {
     private static HomeController instance;
+    private final HomeModel model = HomeModel.get();
     private Scene scene;
     @FXML
-    private VBox goTo;
+    private VBox settings, goTo;
     @FXML
     private TabPane viewSwitch;
     @FXML
     private ScrollPane favouritesDisplay;
+    @FXML
+    private ChoiceBox<CSS> themeSelector;
 
     private HomeController() {
     }
@@ -30,6 +40,7 @@ public class HomeController implements Controller {
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
+        themeSelector.setItems(FXCollections.observableArrayList(CSS.LIGHT, CSS.DARK));
     }
 
     @Override
@@ -48,8 +59,8 @@ public class HomeController implements Controller {
     }
 
     @FXML
-    private void openSettings() {
-        Views.SETTINGS.show();
+    private void toggleSettings() {
+        settings.setVisible(!settings.isVisible());
     }
 
     @FXML
@@ -60,6 +71,12 @@ public class HomeController implements Controller {
     @FXML
     private void toggleFavorites() {
         favouritesDisplay.setVisible(!favouritesDisplay.isVisible());
+    }
+
+    @FXML
+    private void confirmTheme() {
+        CSS.setCSS(themeSelector.getSelectionModel().getSelectedItem());
+        settings.setVisible(false);
     }
 
     @FXML
