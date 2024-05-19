@@ -37,7 +37,7 @@ public class ViewHandler {
         display(Views.LOGIN);
         WINDOW.setResizable(true);
         WINDOW.setMinWidth(680);
-        WINDOW.setMinHeight(450);
+        WINDOW.setMinHeight(490);
     }
 
     public static @Nullable ViewHandler get() {
