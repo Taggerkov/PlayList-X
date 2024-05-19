@@ -6,11 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
 public class HomeController implements Controller {
     private static HomeController instance;
     private Scene scene;
+    @FXML
+    private VBox goTo;
     @FXML
     private TabPane viewSwitch;
     @FXML
@@ -41,17 +44,37 @@ public class HomeController implements Controller {
 
     @FXML
     private void refresh() {
-
+        Views.HOME.show();
     }
 
     @FXML
     private void openSettings() {
+        Views.SETTINGS.show();
+    }
 
+    @FXML
+    private void toggleGoTo() {
+        goTo.setVisible(!goTo.isVisible());
     }
 
     @FXML
     private void toggleFavorites() {
         favouritesDisplay.setVisible(!favouritesDisplay.isVisible());
+    }
+
+    @FXML
+    private void goToHome() {
+        Views.HOME.show();
+    }
+
+    @FXML
+    private void goToAllSongs() {
+        Views.SONGLIST.show();
+    }
+
+    @FXML
+    private void goToPlaylists() {
+        Views.ALL_PLAYLISTS.show();
     }
 
     public void injectTab(Tab tab) {

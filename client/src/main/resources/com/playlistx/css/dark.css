@@ -28,7 +28,7 @@ Version: 3.1
 }
 
 /* BackgroundColor Items */
-.background, .tab-pane > .tab-header-area > .tab-header-background, .menu-bar, .scroll-pane, .thumb {
+.background, .tab-pane > .tab-header-area > .tab-header-background, .menu-bar, .scroll-pane, .thumb, .hiddenMenuBtn:hover {
     -fx-background-color: -backgroundColor;
 }
 
@@ -38,7 +38,7 @@ Version: 3.1
 }
 
 /* ActiveColor Items */
-.quick-icon:pressed, .songListSelector:pressed {
+.quick-icon:pressed, .songListSelector:pressed, .hiddenMenuBtn:pressed {
     -fx-background-color: -activeColor;
 }
 
@@ -114,7 +114,7 @@ Version: 3.1
 }
 
 /* Button Config */
-.quick-icon {
+.quick-icon, .hiddenMenuBtn {
     -fx-background-radius: 14em;
 }
 
