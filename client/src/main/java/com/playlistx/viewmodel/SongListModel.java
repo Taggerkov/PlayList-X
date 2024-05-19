@@ -37,6 +37,10 @@ public class SongListModel {
     }
 
     public void addToPlaylist(int selectPlaylistID, Song song) {
-        model.addSongToPlaylist(selectPlaylistID, song);
+        try {
+            model.addSongToPlaylist(selectPlaylistID, song);
+        } catch (RemoteException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
     }
 }

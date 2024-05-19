@@ -43,7 +43,7 @@ public class SongListController implements Controller {
 
     @Override
     public String getFXML() {
-        return FXMLs.login;
+        return FXMLs.songList;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SongListController implements Controller {
         songs.sort(titleComparator);
         songList.getChildren().clear();
         for (Song song : songs) {
-            HBox songItem = new HBox();
+            HBox songItem;
             try {
                 songItem = Objects.requireNonNull(ViewHandler.get()).loadSongItems();
             } catch (NullPointerException e) {
