@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    private String url = "jdbc:mysql://localhost:3306/yourDatabase";
-    private String username = "username";
-    private String password = "password";
+    private String url = "jdbc:postgresql://localhost:5432/yourDatabase"; // change to PostgreSQL JDBC URL
+    private String username = "postgres";
+    private String password = "vis";
 
     public DatabaseConnector() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // ensure the JDBC driver is loaded
+            Class.forName("org.postgresql.Driver"); // ensure the PostgreSQL JDBC driver is loaded
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
