@@ -1,4 +1,42 @@
 package com.playlistx.viewmodel;
 
+import com.playlistx.model.Model;
+import com.playlistx.model.music.Song;
+import com.playlistx.view.ViewHandler;
+import org.jetbrains.annotations.NotNull;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SongListModel {
+    private static SongListModel instance;
+    private final Model model = Model.get();
+
+    private SongListModel() throws RemoteException, NotBoundException {
+    }
+
+    public static @NotNull SongListModel get() {
+        try {
+            if (instance == null) return instance = new SongListModel();
+            else return instance;
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public @NotNull List<Song> getSongsAll() {
+        try {
+            return model.getAllSongs();
+        } catch (RemoteException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            return new ArrayList<>();
+        }
+    }
+
+    public void addToPlaylist(int selectPlaylistID, Song song) {
+        model.addSongToPlaylist(selectPlaylistID, song);
+    }
 }

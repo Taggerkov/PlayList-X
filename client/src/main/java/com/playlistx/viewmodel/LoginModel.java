@@ -25,9 +25,14 @@ public class LoginModel implements PropertyChangeListener {
         user.addListener(this);
     }
 
-    public static LoginModel get() throws RemoteException, NotBoundException {
-        if (instance == null) instance = new LoginModel();
-        return instance;
+    public static LoginModel get() {
+        try {
+            if (instance == null) instance = new LoginModel();
+            return instance;
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException("RMI Connection Error!");
+        }
     }
 
     public void login(String userName, String password) {

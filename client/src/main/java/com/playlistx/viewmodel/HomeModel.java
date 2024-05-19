@@ -44,7 +44,7 @@ public class HomeModel {
 
     public @NotNull List<Song> getSongsAll() {
         try {
-            return model.getSongsAll();
+            return model.getAllSongs();
         } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
             return new ArrayList<>();

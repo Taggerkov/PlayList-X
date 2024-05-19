@@ -127,7 +127,7 @@
                      </VBox.margin></Label>
                </children>
             </VBox>
-            <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="0.0" tabMaxWidth="0.0" HBox.hgrow="ALWAYS">
+            <TabPane fx:id="viewSwitch" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="0.0" tabMaxWidth="0.0" HBox.hgrow="ALWAYS">
               <tabs>
                 <Tab closable="false" style="visibility: true;" text="Home">
                      <content>
@@ -214,7 +214,7 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#addSong" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
                                        <children>
                                           <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
                                              <image>
@@ -252,7 +252,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
                                        <children>
-                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
+                                          <Label fx:id="sortTitle" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -261,7 +261,7 @@
                                              </padding>
                                           </Label>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
+                                          <Label fx:id="sortYear" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -270,7 +270,7 @@
                                              </padding>
                                           </Label>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
+                                          <Label fx:id="sortArtist" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -279,7 +279,7 @@
                                              </padding>
                                           </Label>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
+                                          <Label fx:id="sortGenre" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -288,7 +288,7 @@
                                              </padding>
                                           </Label>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
+                                          <Label fx:id="sortAlbum" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -297,7 +297,7 @@
                                              </padding>
                                           </Label>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
+                                          <Label fx:id="sortDuration" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -312,7 +312,7 @@
                                     </HBox>
                                     <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                                        <content>
-                                          <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                          <VBox fx:id="songList" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                              <children>
                                                 <HBox alignment="CENTER" style="-fx-background-color: -secondaryColor; -fx-background-radius: 25;" VBox.vgrow="NEVER">
                                                    <children>

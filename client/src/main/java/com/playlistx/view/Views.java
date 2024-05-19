@@ -3,7 +3,7 @@ package com.playlistx.view;
 import java.util.Objects;
 
 public enum Views {
-    LOGIN, HOME, PLAYLISTS, SONGLIST, USER, SETTINGS;
+    LOGIN, HOME, ALL_PLAYLISTS, PLAYLIST , SONGLIST, SONGLIST_SELECT , USER, SETTINGS;
 
     public void show() {
         try {
