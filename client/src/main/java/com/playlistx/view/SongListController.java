@@ -65,7 +65,7 @@ public class SongListController implements Controller {
         for (Song song : songs) {
             HBox songItem;
             try {
-                songItem = Objects.requireNonNull(ViewHandler.get()).loadSongItems();
+                songItem = ViewHandler.get().loadSongItems();
             } catch (NullPointerException e) {
                 ViewHandler.popUp(ViewHandler.Notify.FILE, "Files for Song List couldn't be loaded!");
                 throw new RuntimeException(e);
@@ -82,11 +82,6 @@ public class SongListController implements Controller {
             });
             songList.getChildren().add(songItem);
         }
-    }
-
-    @FXML
-    private void addSong() {
-        ViewHandler.popUp(ViewHandler.Notify.ACCESS, "Feature still in Work! Contact us through email.");
     }
 
     @FXML
@@ -169,5 +164,10 @@ public class SongListController implements Controller {
 
     private void clearVisualSelection() {
         activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
+    }
+
+    @FXML
+    private void addSong() {
+        model.addSong();
     }
 }

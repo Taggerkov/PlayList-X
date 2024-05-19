@@ -28,7 +28,7 @@ public class ViewHandler {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
     private final User user = User.get();
-    private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get()};
+    private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get(), PlayListsController.get()};
     private final HashMap<Controller, Tab> tabs = new HashMap<>();
     private int selectPlaylistID;
 
@@ -39,14 +39,13 @@ public class ViewHandler {
         WINDOW.setMinHeight(490);
     }
 
-    public static @Nullable ViewHandler get() {
+    public static @NotNull ViewHandler get() {
         try {
             if (instance == null) instance = new ViewHandler();
-            return instance;
         } catch (RemoteException | NotBoundException e) {
             popUp(Notify.ACCESS, "RMI Connection Error!");
-            return null;
         }
+        return instance;
     }
 
     public static boolean popUp(@NotNull Notify type, String msg) {
@@ -130,11 +129,12 @@ public class ViewHandler {
             case ALL_PLAYLISTS -> {
                 scene = PlayListsController.get().getScene();
                 HomeController.get().switchTab(tabs.get(SongListController.get()));
-                SongListController.get().isSelect(true, selectPlaylistID);
-                setTitle("SongList");
+                setTitle("PlayLists");
             }
             case PLAYLIST -> {
-
+                scene = PlayListsController.get().getScene();
+                HomeController.get().switchTab(tabs.get(SongListController.get()));
+                setTitle("SongList");
             }
             default -> popUp(Notify.ACCESS, "This 'View' doesn't exist or is not available!");
         }
@@ -190,6 +190,18 @@ public class ViewHandler {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.songItem));
+            loader.setController(SongListController.get());
+            return loader.load();
+        } catch (IOException e) {
+            popUp(Notify.ACCESS, "Failed loading song list resources!");
+        }
+        return null;
+    }
+
+    public @Nullable HBox loadPlaylistItems() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(FXMLs.playlistItem));
             loader.setController(SongListController.get());
             return loader.load();
         } catch (IOException e) {

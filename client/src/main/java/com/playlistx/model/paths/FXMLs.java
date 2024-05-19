@@ -6,4 +6,6 @@ public record FXMLs() {
     public static final String chooseUser = "/com/playlistx/fxml/chooseUser.fxml";
     public static final String songList = "/com/playlistx/fxml/songList.fxml";
     public static final String songItem = "/com/playlistx/fxml/items/songItem.fxml";
+    public static final String playlists = "/com/playlistx/fxml/playlists.fxml";
+    public static final String playlistItem = "/com/playlistx/fxml/items/playlistItem.fxml";
 }
