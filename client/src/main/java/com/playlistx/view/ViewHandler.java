@@ -36,17 +36,19 @@ public class ViewHandler {
         loadAllControllers();
         display(Views.LOGIN);
         WINDOW.setResizable(true);
+        WINDOW.setMinWidth(680);
+        WINDOW.setMinHeight(430);
         WINDOW.widthProperty().addListener((o, oldValue, newValue)->{
-            if(newValue.intValue() < 670) {
+            if(newValue.intValue() < 680) {
                 WINDOW.setResizable(false);
-                WINDOW.setWidth(670);
+                WINDOW.setWidth(680);
                 WINDOW.setResizable(true);
             }
         });
         WINDOW.heightProperty().addListener((o, oldValue, newValue)->{
             if(newValue.intValue() < 430) {
                 WINDOW.setResizable(false);
-                WINDOW.setWidth(430);
+                WINDOW.setHeight(430);
                 WINDOW.setResizable(true);
             }
         });
