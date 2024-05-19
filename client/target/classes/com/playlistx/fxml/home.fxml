@@ -11,6 +11,8 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -36,11 +38,10 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#addUser" text="Add User" />
                   <MenuItem mnemonicParsing="false" onAction="#removeUser" text="Remove User" />
-                  <MenuItem mnemonicParsing="false" onAction="#changeAdmin" text="Change Admin" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#clearChat" text="Clear Chat" />
-                  <MenuItem mnemonicParsing="false" onAction="#leaveChat" text="Leave Chat" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteChat" text="Delete Chat" />
+                  <MenuItem mnemonicParsing="false" onAction="#clearChat" text="Clear" />
+                  <MenuItem mnemonicParsing="false" onAction="#leaveChat" text="Leave" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteChat" text="Delete" />
                </items>
             </Menu>
          </menus>
@@ -128,7 +129,7 @@
             </VBox>
             <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="0.0" tabMaxWidth="0.0" HBox.hgrow="ALWAYS">
               <tabs>
-                <Tab closable="false" text="Home">
+                <Tab closable="false" style="visibility: true;" text="Home">
                      <content>
                         <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
                            <children>
@@ -148,34 +149,34 @@
                                     <ColorAdjust />
                                  </effect>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <ScrollPane id="homeScroll" fitToWidth="true" hbarPolicy="NEVER" minWidth="100.0" style="-fx-background-color: green;" VBox.vgrow="ALWAYS">
+                              <ScrollPane id="homeScroll" fitToWidth="true" hbarPolicy="NEVER" minWidth="100.0" prefWidth="886.0" style="-fx-background-radius: 30 0 0 0; -fx-background-color: -mainViewsColor;" styleClass="viewScroll" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" focusTraversable="true" hgap="75.0" prefWidth="885.0" prefWrapLength="0.0" rowValignment="TOP" style="-fx-background-color: red;">
+                                    <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" focusTraversable="true" hgap="75.0" prefWidth="885.0" prefWrapLength="0.0" rowValignment="TOP">
                                        <children>
-                                          <VBox alignment="TOP_CENTER" prefWidth="324.0" spacing="10.0">
+                                          <VBox alignment="TOP_CENTER" maxWidth="700.0" prefWidth="324.0" spacing="10.0">
                                              <children>
                                                 <Label text="LATEST PLAYLIST">
                                                    <font>
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <ScrollPane maxHeight="250.0" minHeight="130.0" prefHeight="180.0" styleClass="latestScroll" VBox.vgrow="ALWAYS" />
+                                                <ScrollPane hbarPolicy="NEVER" maxHeight="250.0" minHeight="130.0" prefHeight="250.0" styleClass="latestScroll" VBox.vgrow="ALWAYS" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="20.0" />
                                              </padding>
                                           </VBox>
-                                          <VBox alignment="TOP_CENTER" prefWidth="324.0" spacing="10.0">
+                                          <VBox alignment="TOP_CENTER" maxWidth="700.0" prefWidth="324.0" spacing="10.0">
                                              <children>
                                                 <Label text="LATEST PLAYLIST">
                                                    <font>
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <ScrollPane maxHeight="250.0" minHeight="130.0" prefHeight="250.0" styleClass="latestScroll" VBox.vgrow="ALWAYS" />
+                                                <ScrollPane hbarPolicy="NEVER" maxHeight="250.0" minHeight="130.0" prefHeight="250.0" styleClass="latestScroll" VBox.vgrow="ALWAYS" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="20.0" />
@@ -187,7 +188,759 @@
                                        </padding>
                                     </FlowPane>
                                  </content>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
                               </ScrollPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" style="visibility: true;" text="SongList">
+                     <content>
+                        <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
+                           <children>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Song List">
+                                             <font>
+                                                <Font size="53.0" />
+                                             </font>
+                                             <effect>
+                                                <ColorAdjust />
+                                             </effect>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                                       <children>
+                                          <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
+                                             <image>
+                                                <Image url="@../img/add.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets right="15.0" />
+                                 </padding>
+                              </HBox>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="All songs we provide. We accept suggestions!" textAlignment="CENTER" textOverrun="CLIP" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Sylfaen" size="24.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust />
+                                 </effect>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="80.0" />
+                                 </padding>
+                              </Label>
+                              <VBox prefHeight="568.0" prefWidth="875.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
+                                       <children>
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                             <children>
+                                                <HBox alignment="CENTER" style="-fx-background-color: -secondaryColor; -fx-background-radius: 25;" VBox.vgrow="NEVER">
+                                                   <children>
+                                                      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Title">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxHeight="-Infinity" minWidth="30.0" prefWidth="50.0" HBox.hgrow="SOMETIMES">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Year">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="00">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Artist">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Genre">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Album">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Duration">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" style="visibility: true;" text="PlayLists">
+                     <content>
+                        <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
+                           <children>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Playlists">
+                                             <font>
+                                                <Font size="53.0" />
+                                             </font>
+                                             <effect>
+                                                <ColorAdjust />
+                                             </effect>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                                       <children>
+                                          <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
+                                             <image>
+                                                <Image url="@../img/add.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets right="15.0" />
+                                 </padding>
+                              </HBox>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="All playlists you have access!" textAlignment="CENTER" textOverrun="CLIP" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Sylfaen" size="24.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust />
+                                 </effect>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="90.0" />
+                                 </padding>
+                              </Label>
+                              <VBox prefHeight="568.0" prefWidth="875.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
+                                       <children>
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Author">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Access">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                             <children>
+                                                <HBox alignment="CENTER" style="-fx-background-color: -secondaryColor; -fx-background-radius: 25;" VBox.vgrow="NEVER">
+                                                   <children>
+                                                      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Title">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxHeight="-Infinity" minWidth="30.0" prefWidth="50.0" HBox.hgrow="SOMETIMES">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Year">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="00">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Author">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="60.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Acces">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Duration">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" style="visibility: true;" text="PlayListView">
+                     <content>
+                        <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
+                           <children>
+                              <HBox alignment="CENTER" VBox.vgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <TextField alignment="CENTER" style="-fx-control-inner-background: -backgroundColor; -fx-background-color: -backgorundColor;" text="&quot;" VBox.vgrow="NEVER">
+                                             <font>
+                                                <Font size="53.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </VBox>
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                                       <children>
+                                          <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
+                                             <image>
+                                                <Image url="@../img/add.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </AnchorPane>
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                                       <children>
+                                          <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
+                                             <image>
+                                                <Image url="@../img/share.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets right="15.0" />
+                                 </padding>
+                              </HBox>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="The music of your choice!" textAlignment="CENTER" textOverrun="CLIP" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Sylfaen" size="24.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust />
+                                 </effect>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets right="160.0" />
+                                 </padding>
+                              </Label>
+                              <TextArea maxHeight="150.0" minHeight="-Infinity" prefHeight="50.0" style="-fx-control-inner-background: -backgroundColor; -fx-highlight-fill: red;" text="&quot;" VBox.vgrow="ALWAYS" />
+                              <VBox prefHeight="568.0" prefWidth="875.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
+                                       <children>
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                             <children>
+                                                <HBox alignment="CENTER" style="-fx-background-color: -secondaryColor; -fx-background-radius: 25;" VBox.vgrow="NEVER">
+                                                   <children>
+                                                      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Title">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxHeight="-Infinity" minWidth="30.0" prefWidth="50.0" HBox.hgrow="SOMETIMES">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Year">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="00">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Artist">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Genre">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Album">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                         <children>
+                                                            <Label style="-fx-background-radius: 10px;" text="Duration">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                               <padding>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </padding>
+                                                            </Label>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                      </content>
