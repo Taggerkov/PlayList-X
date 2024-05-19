@@ -52,7 +52,8 @@ public class SongListController implements Controller {
     }
 
     public void isSelect(boolean isSelect, int selectPlaylistID) {
-        refresh(new SongTitleComparator());
+        refresh(new SongYearComparator());
+        activeSort = sortYear;
         this.isSelect = isSelect;
         this.selectPlaylistID = selectPlaylistID;
     }
@@ -89,10 +90,11 @@ public class SongListController implements Controller {
     }
 
     @FXML
-    private void toggleSort(@NotNull ActionEvent evt) {
+    private void toggleSort(@NotNull MouseEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
         if (evt.getSource() == sortTitle) {
             clearVisualSelection();
+            activeSort = sortTitle;
             if (isSortReverse){
                 refresh(new SongTitleComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");
@@ -104,16 +106,18 @@ public class SongListController implements Controller {
             }
         } else if (evt.getSource() == sortYear) {
             clearVisualSelection();
+            activeSort = sortYear;
             if (isSortReverse) {
                 refresh(new SongYearComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");
             }
             else {
-                refresh(new SongYearComparator());
+               refresh(new SongYearComparator());
                 isSortReverse = false;
                 sortTitle.setText(sortTitle.getText() + " ▼");
             }
         } else if (evt.getSource() == sortArtist) {
+            activeSort = sortArtist;
             clearVisualSelection();
             if (isSortReverse) {
                 refresh(new SongArtistComparator().reversed());
@@ -126,6 +130,7 @@ public class SongListController implements Controller {
             }
         } else if (evt.getSource() == sortGenre) {
             clearVisualSelection();
+            activeSort = sortGenre;
             if (isSortReverse) {
                 refresh(new SongGenreComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");
@@ -137,6 +142,7 @@ public class SongListController implements Controller {
             }
         } else if (evt.getSource() == sortAlbum) {
             clearVisualSelection();
+            activeSort = sortGenre;
             if (isSortReverse) {
                 refresh(new SongAlbumComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");
@@ -148,6 +154,7 @@ public class SongListController implements Controller {
             }
         } else if (evt.getSource() == sortDuration) {
             clearVisualSelection();
+            activeSort = sortDuration;
             if (isSortReverse) {
                 refresh(new SongDurationComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");

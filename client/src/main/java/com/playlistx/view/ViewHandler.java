@@ -35,11 +35,8 @@ public class ViewHandler {
     private ViewHandler() throws NotBoundException, RemoteException {
         loadAllControllers();
         display(Views.LOGIN);
-        WINDOW.setResizable(true);
         WINDOW.setMinWidth(680);
         WINDOW.setMinHeight(490);
-        WINDOW.setWidth(1200);
-        WINDOW.setHeight(700);
     }
 
     public static @Nullable ViewHandler get() {
@@ -97,11 +94,15 @@ public class ViewHandler {
 
         switch (view) {
             case LOGIN -> {
+                WINDOW.setResizable(false);
                 scene = LoginController.get().getScene();
                 WINDOW.setOnCloseRequest(event -> System.exit(0));
                 setTitle("Login");
             }
             case HOME_INIT -> {
+                WINDOW.setResizable(true);
+                WINDOW.setWidth(1200);
+                WINDOW.setHeight(700);
                 scene = HomeController.get().getScene();
                 WINDOW.setOnCloseRequest(event -> {
                     user.logout();
@@ -137,13 +138,13 @@ public class ViewHandler {
             }
             default -> popUp(Notify.ACCESS, "This 'View' doesn't exist or is not available!");
         }
-
-        assert scene != null;
-        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
-        WINDOW.getIcons().add(new Image(CSS.logo()));
-        WINDOW.setScene(scene);
-        WINDOW.show();
-        WINDOW.toFront();
+        if (view == Views.LOGIN || view == Views.HOME_INIT) {
+            scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+            WINDOW.getIcons().add(new Image(CSS.logo()));
+            WINDOW.setScene(scene);
+            WINDOW.show();
+            WINDOW.toFront();
+        }
     }
 
     public void showChooseUser(ChoiceType type, int chatID) throws IOException, NotBoundException {
