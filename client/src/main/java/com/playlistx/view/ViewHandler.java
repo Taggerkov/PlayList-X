@@ -35,7 +35,21 @@ public class ViewHandler {
     private ViewHandler() throws NotBoundException, RemoteException {
         loadAllControllers();
         display(Views.LOGIN);
-        WINDOW.setResizable(false);
+        WINDOW.setResizable(true);
+        WINDOW.widthProperty().addListener((o, oldValue, newValue)->{
+            if(newValue.intValue() < 670) {
+                WINDOW.setResizable(false);
+                WINDOW.setWidth(670);
+                WINDOW.setResizable(true);
+            }
+        });
+        WINDOW.heightProperty().addListener((o, oldValue, newValue)->{
+            if(newValue.intValue() < 430) {
+                WINDOW.setResizable(false);
+                WINDOW.setWidth(430);
+                WINDOW.setResizable(true);
+            }
+        });
     }
 
     public static @Nullable ViewHandler get() {
