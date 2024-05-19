@@ -16,6 +16,7 @@ public class HomeModel {
     private final Model model = Model.get();
 
     private HomeModel() throws RemoteException, NotBoundException {
+
     }
 
     public static @NotNull HomeModel get() throws NotBoundException, RemoteException {
@@ -143,5 +144,9 @@ public class HomeModel {
         public int compare(@NotNull Song song1, @NotNull Song song2) {
             return song1.getYear() - song2.getYear();
         }
+
+
     }
+
+
 }

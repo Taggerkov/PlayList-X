@@ -182,5 +182,7 @@ public class ModelManager implements Model, PropertyChangeListener {
     public List<Song> getAllSongs() throws java.rmi.RemoteException {
         return songDAO.getAllSongs();
     }
+
+
 }
 
