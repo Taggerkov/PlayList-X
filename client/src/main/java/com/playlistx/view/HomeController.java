@@ -65,16 +65,19 @@ public class HomeController implements Controller {
     @FXML
     private void goToHome() {
         Views.HOME.show();
+        goTo.setVisible(false);
     }
 
     @FXML
     private void goToAllSongs() {
         Views.SONGLIST.show();
+        goTo.setVisible(false);
     }
 
     @FXML
     private void goToPlaylists() {
         Views.ALL_PLAYLISTS.show();
+        goTo.setVisible(false);
     }
 
     public void injectTab(Tab tab) {

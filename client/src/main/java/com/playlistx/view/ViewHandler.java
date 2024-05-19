@@ -97,19 +97,21 @@ public class ViewHandler {
 
         switch (view) {
             case LOGIN -> {
-                Controller login = LoginController.get();
-                scene = login.getScene();
+                scene = LoginController.get().getScene();
                 WINDOW.setOnCloseRequest(event -> System.exit(0));
                 setTitle("Login");
             }
-            case HOME -> {
-                Controller home = HomeController.get();
-                scene = home.getScene();
+            case HOME_INIT -> {
+                scene = HomeController.get().getScene();
                 WINDOW.setOnCloseRequest(event -> {
                     user.logout();
                     System.exit(0);
                 });
                 setTitle("Home");
+            }
+            case HOME -> {
+                HomeController.get().switchTab(tabs.get(HomeController.get()));
+                setTitle("SongList");
             }
             case SONGLIST -> {
                 HomeController.get().switchTab(tabs.get(SongListController.get()));
