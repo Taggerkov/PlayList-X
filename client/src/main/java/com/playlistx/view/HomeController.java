@@ -85,6 +85,7 @@ public class HomeController implements Controller {
     }
 
     public void switchTab(Tab tab) {
+        if (tab == null)  viewSwitch.getSelectionModel().select(0);
         viewSwitch.getSelectionModel().select(tab);
     }
 }

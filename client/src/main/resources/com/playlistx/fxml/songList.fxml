@@ -128,7 +128,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>

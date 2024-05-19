@@ -38,7 +38,7 @@ public class LoginModel implements PropertyChangeListener {
     public void login(String userName, String password) {
         if (user.login(userName, password)) {
             signal.firePropertyChange("EXIT", null, null);
-            Views.HOME.show();
+            Views.HOME_INIT.show();
         }
     }
 

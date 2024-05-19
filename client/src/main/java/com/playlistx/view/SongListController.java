@@ -52,6 +52,7 @@ public class SongListController implements Controller {
     }
 
     public void isSelect(boolean isSelect, int selectPlaylistID) {
+        refresh();
         this.isSelect = isSelect;
         this.selectPlaylistID = selectPlaylistID;
     }

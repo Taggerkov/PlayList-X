@@ -110,21 +110,27 @@ public class ViewHandler {
                 setTitle("Home");
             }
             case HOME -> {
-                HomeController.get().switchTab(tabs.get(HomeController.get()));
+                scene = HomeController.get().getScene();
+                HomeController.get().switchTab(null);
                 setTitle("SongList");
             }
             case SONGLIST -> {
+                scene = SongListController.get().getScene();
                 HomeController.get().switchTab(tabs.get(SongListController.get()));
                 SongListController.get().isSelect(false, 0);
                 setTitle("SongList");
             }
             case SONGLIST_SELECT -> {
+                scene = SongListController.get().getScene();
                 HomeController.get().switchTab(tabs.get(SongListController.get()));
                 SongListController.get().isSelect(true, selectPlaylistID);
                 setTitle("SongList");
             }
             case ALL_PLAYLISTS -> {
-
+                scene = PlayListsController.get().getScene();
+                HomeController.get().switchTab(tabs.get(SongListController.get()));
+                SongListController.get().isSelect(true, selectPlaylistID);
+                setTitle("SongList");
             }
             case PLAYLIST -> {
 

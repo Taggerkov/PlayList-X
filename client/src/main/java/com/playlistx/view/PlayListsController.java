@@ -13,10 +13,10 @@ public class PlayListsController implements Controller {
     private final LoginModel model = LoginModel.get();
     private Scene scene;
 
-    private PlayListsController() throws NotBoundException, RemoteException {
+    private PlayListsController() {
     }
 
-    public static PlayListsController get() throws NotBoundException, RemoteException {
+    public static PlayListsController get() {
         if (instance == null) return instance = new PlayListsController();
         return instance;
     }
