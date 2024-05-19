@@ -3,7 +3,7 @@ package com.playlistx.view;
 import com.playlistx.model.music.Song;
 import com.playlistx.model.paths.FXMLs;
 import com.playlistx.viewmodel.SongListModel;
-import com.playlistx.viewmodel.comparators.SongTitleComparator;
+import com.playlistx.viewmodel.comparators.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -13,15 +13,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 public class SongListController implements Controller {
     private static SongListController instance;
     private final SongListModel model = SongListModel.get();
-    private final SongTitleComparator titleComparator = new SongTitleComparator();
     private Scene scene;
-    private boolean isSortReverse, isSelect;
+    private boolean isSortReverse = false, isSelect;
     private int selectPlaylistID;
     @FXML
     private VBox songList;
@@ -31,7 +31,7 @@ public class SongListController implements Controller {
     private SongListController() {
     }
 
-    public static SongListController get()  {
+    public static SongListController get() {
         if (instance == null) return instance = new SongListController();
         return instance;
     }
@@ -52,14 +52,14 @@ public class SongListController implements Controller {
     }
 
     public void isSelect(boolean isSelect, int selectPlaylistID) {
-        refresh();
+        refresh(new SongTitleComparator());
         this.isSelect = isSelect;
         this.selectPlaylistID = selectPlaylistID;
     }
 
-    private void refresh() {
+    private void refresh(Comparator<Song> comparator) {
         List<Song> songs = model.getSongsAll();
-        songs.sort(titleComparator);
+        songs.sort(comparator);
         songList.getChildren().clear();
         for (Song song : songs) {
             HBox songItem;
@@ -85,25 +85,82 @@ public class SongListController implements Controller {
 
     @FXML
     private void addSong() {
-
+        ViewHandler.popUp(ViewHandler.Notify.ACCESS, "Feature still in Work! Contact us through email.");
     }
 
     @FXML
     private void toggleSort(@NotNull ActionEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
         if (evt.getSource() == sortTitle) {
-
-
+            clearVisualSelection();
+            if (isSortReverse){
+                refresh(new SongTitleComparator().reversed());
+                sortTitle.setText(sortTitle.getText() + " ▲");
+            }
+            else {
+                refresh(new SongTitleComparator());
+                isSortReverse = false;
+                sortTitle.setText(sortTitle.getText() + " ▼");
+            }
         } else if (evt.getSource() == sortYear) {
-
+            clearVisualSelection();
+            if (isSortReverse) {
+                refresh(new SongYearComparator().reversed());
+                sortTitle.setText(sortTitle.getText() + " ▲");
+            }
+            else {
+                refresh(new SongYearComparator());
+                isSortReverse = false;
+                sortTitle.setText(sortTitle.getText() + " ▼");
+            }
         } else if (evt.getSource() == sortArtist) {
-
+            clearVisualSelection();
+            if (isSortReverse) {
+                refresh(new SongArtistComparator().reversed());
+                sortTitle.setText(sortTitle.getText() + " ▲");
+            }
+            else {
+                refresh(new SongArtistComparator());
+                isSortReverse = false;
+                sortTitle.setText(sortTitle.getText() + " ▼");
+            }
         } else if (evt.getSource() == sortGenre) {
-
+            clearVisualSelection();
+            if (isSortReverse) {
+                refresh(new SongGenreComparator().reversed());
+                sortTitle.setText(sortTitle.getText() + " ▲");
+            }
+            else {
+                refresh(new SongGenreComparator());
+                isSortReverse = false;
+                sortTitle.setText(sortTitle.getText() + " ▼");
+            }
         } else if (evt.getSource() == sortAlbum) {
-
+            clearVisualSelection();
+            if (isSortReverse) {
+                refresh(new SongAlbumComparator().reversed());
+                sortTitle.setText(sortTitle.getText() + " ▲");
+            }
+            else {
+                refresh(new SongAlbumComparator());
+                isSortReverse = false;
+                sortTitle.setText(sortTitle.getText() + " ▼");
+            }
         } else if (evt.getSource() == sortDuration) {
-
+            clearVisualSelection();
+            if (isSortReverse) {
+                refresh(new SongDurationComparator().reversed());
+                sortTitle.setText(sortTitle.getText() + " ▲");
+            }
+            else {
+                refresh(new SongDurationComparator());
+                isSortReverse = false;
+                sortTitle.setText(sortTitle.getText() + " ▼");
+            }
         }
+    }
+
+    private void clearVisualSelection() {
+        activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
     }
 }

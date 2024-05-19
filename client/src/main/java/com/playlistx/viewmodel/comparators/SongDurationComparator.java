@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class SongTitleComparator implements Comparator<Song> {
+public class SongDurationComparator implements Comparator<Song> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,
      * zero, or a positive integer as the first argument is less than, equal
@@ -43,10 +43,7 @@ public class SongTitleComparator implements Comparator<Song> {
      */
     @Override
     public int compare(@NotNull Song firstSong, @NotNull Song secondSong) {
-        String[] comparator = {firstSong.getTitle(), secondSong.getTitle()};
-        Arrays.sort(comparator);
-        if (comparator[0].equalsIgnoreCase(firstSong.getTitle())) return -1;
-        else return 1;
+        return firstSong.getDuration() - secondSong.getDuration();
     }
 
     /**
