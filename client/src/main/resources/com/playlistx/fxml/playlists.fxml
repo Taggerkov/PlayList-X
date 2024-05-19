@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Tab closable="false" style="visibility: true;" text="PlayLists" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Tab closable="false" style="visibility: true;" text="PlayLists" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
          <children>
@@ -70,7 +70,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
                      <children>
-                        <Label fx:id="sortTitle" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title ▼">
+                        <Label fx:id="sortTitle" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title ▼">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -79,7 +79,7 @@
                            </padding>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label fx:id="sortYear" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year">
+                        <Label fx:id="sortYear" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -88,7 +88,7 @@
                            </padding>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label fx:id="sortAuthor" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Author">
+                        <Label fx:id="sortAuthor" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Author">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -97,7 +97,7 @@
                            </padding>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label fx:id="sortAccess" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Access">
+                        <Label fx:id="sortAccess" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Access">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -106,7 +106,7 @@
                            </padding>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label fx:id="sortSongCount" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Song Count">
+                        <Label fx:id="sortSongCount" onMouseClicked="#toggleSort" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Song Count">
                            <font>
                               <Font size="14.0" />
                            </font>

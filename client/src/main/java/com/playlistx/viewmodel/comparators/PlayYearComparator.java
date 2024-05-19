@@ -3,6 +3,9 @@ package com.playlistx.viewmodel.comparators;
 import com.playlistx.model.music.Playlist;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -44,9 +47,13 @@ public class PlayYearComparator implements Comparator<Playlist> {
      */
     @Override
     public int compare(@NotNull Playlist firstPlay, @NotNull Playlist secondPlay) {
-        if (firstPlay.getCreationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(secondPlay.getCreationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()))
+        if (convert(firstPlay).isAfter(convert(secondPlay)))
             return 1;
         else return -1;
+    }
+
+    private LocalDateTime convert(@NotNull Playlist playlist) {
+        return Instant.ofEpochMilli(playlist.getCreationDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**

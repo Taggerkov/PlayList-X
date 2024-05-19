@@ -87,8 +87,8 @@ public class SongListController implements Controller {
     @FXML
     private void toggleSort(@NotNull MouseEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
+        clearVisualSelection();
         if (evt.getSource() == sortTitle) {
-            clearVisualSelection();
             activeSort = sortTitle;
             if (isSortReverse){
                 refresh(new SongTitleComparator().reversed());
@@ -100,64 +100,59 @@ public class SongListController implements Controller {
                 sortTitle.setText(sortTitle.getText() + " ▼");
             }
         } else if (evt.getSource() == sortYear) {
-            clearVisualSelection();
             activeSort = sortYear;
             if (isSortReverse) {
                 refresh(new SongYearComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortYear.setText(sortYear.getText() + " ▲");
             }
             else {
                refresh(new SongYearComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortYear.setText(sortYear.getText() + " ▼");
             }
         } else if (evt.getSource() == sortArtist) {
             activeSort = sortArtist;
-            clearVisualSelection();
             if (isSortReverse) {
                 refresh(new SongArtistComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortArtist.setText(sortArtist.getText() + " ▲");
             }
             else {
                 refresh(new SongArtistComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortArtist.setText(sortArtist.getText() + " ▼");
             }
         } else if (evt.getSource() == sortGenre) {
-            clearVisualSelection();
             activeSort = sortGenre;
             if (isSortReverse) {
                 refresh(new SongGenreComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortGenre.setText(sortGenre.getText() + " ▲");
             }
             else {
                 refresh(new SongGenreComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortGenre.setText(sortGenre.getText() + " ▼");
             }
         } else if (evt.getSource() == sortAlbum) {
-            clearVisualSelection();
-            activeSort = sortGenre;
+            activeSort = sortAlbum;
             if (isSortReverse) {
                 refresh(new SongAlbumComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortAlbum.setText(sortAlbum.getText() + " ▲");
             }
             else {
                 refresh(new SongAlbumComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortAlbum.setText(sortAlbum.getText() + " ▼");
             }
         } else if (evt.getSource() == sortDuration) {
-            clearVisualSelection();
             activeSort = sortDuration;
             if (isSortReverse) {
                 refresh(new SongDurationComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortDuration.setText(sortDuration.getText() + " ▲");
             }
             else {
                 refresh(new SongDurationComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortDuration.setText(sortDuration.getText() + " ▼");
             }
         }
     }

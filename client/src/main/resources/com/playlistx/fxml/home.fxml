@@ -35,7 +35,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#refresh" text="Refresh" />
                         <MenuItem mnemonicParsing="false" onAction="#toggleFavorites" text="Hide Favorites" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="Settings" />
+                        <MenuItem mnemonicParsing="false" onAction="#toggleSettings" text="Settings" />
                      </items>
                   </Menu>
                </menus>
@@ -65,7 +65,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </AnchorPane>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#openSettings" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#toggleSettings" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
                            <children>
                               <ImageView fitHeight="65.0" fitWidth="55.0" layoutX="13.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="10.0">
                                  <image>
@@ -525,7 +525,7 @@
                </font>
             </Label>
             <ChoiceBox fx:id="themeSelector" prefWidth="150.0" />
-            <AnchorPane onMouseClicked="#openSettings" prefHeight="88.0" prefWidth="141.0" VBox.vgrow="NEVER">
+            <AnchorPane prefHeight="88.0" prefWidth="141.0" VBox.vgrow="NEVER">
                <children>
                   <ImageView fitHeight="34.0" fitWidth="25.0" layoutX="116.0" layoutY="-5.0" onMouseClicked="#confirmTheme" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
                      <image>

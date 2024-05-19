@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
@@ -38,6 +39,9 @@ public class PlayListsController implements Controller {
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
+    }
+
+    public void refresh() {
         refresh(new PlayTitleComparator());
         activeSort = sortTitle;
     }
@@ -52,7 +56,7 @@ public class PlayListsController implements Controller {
         return scene;
     }
 
-    public void refresh(Comparator<Playlist> comparator) {
+    private void refresh(Comparator<Playlist> comparator) {
         List<Playlist> playlists = model.getAllPlayLists();
         playlists.sort(comparator);
         playlistList.getChildren().clear();
@@ -65,7 +69,7 @@ public class PlayListsController implements Controller {
                 throw new RuntimeException(e);
             }
             playTitle.setText(playlist.getTitle());
-            playYear.setText(String.valueOf(playlist.getCreationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()).substring(2));
+            playYear.setText(String.valueOf(Instant.ofEpochMilli(playlist.getCreationDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate().getYear()).substring(2));
             playAuthor.setText(playlist.getOwner());
             if (playlist.isPublic()) {
                 playAccess.setText("Public");
@@ -83,8 +87,8 @@ public class PlayListsController implements Controller {
     @FXML
     private void toggleSort(@NotNull MouseEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
+        clearVisualSelection();
         if (evt.getSource() == sortTitle) {
-            clearVisualSelection();
             activeSort = sortTitle;
             if (isSortReverse){
                 refresh(new PlayTitleComparator().reversed());
@@ -96,52 +100,48 @@ public class PlayListsController implements Controller {
                 sortTitle.setText(sortTitle.getText() + " ▼");
             }
         } else if (evt.getSource() == sortYear) {
-            clearVisualSelection();
             activeSort = sortYear;
             if (isSortReverse) {
                 refresh(new PlayYearComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortYear.setText(sortYear.getText() + " ▲");
             }
             else {
                 refresh(new PlayYearComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortYear.setText(sortYear.getText() + " ▼");
             }
         } else if (evt.getSource() == sortAuthor) {
             activeSort = sortAuthor;
-            clearVisualSelection();
             if (isSortReverse) {
                 refresh(new PlayAuthorComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortAuthor.setText(sortAuthor.getText() + " ▲");
             }
             else {
                 refresh(new PlayAuthorComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortAuthor.setText(sortAuthor.getText() + " ▼");
             }
         } else if (evt.getSource() == sortAccess) {
-            clearVisualSelection();
             activeSort = sortAccess;
             if (isSortReverse) {
                 refresh(new PlayAccessComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortAccess.setText(sortAccess.getText() + " ▲");
             }
             else {
                 refresh(new PlayAccessComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortAccess.setText(sortAccess.getText() + " ▼");
             }
         } else if (evt.getSource() == sortSongCount) {
-            clearVisualSelection();
             activeSort = sortSongCount;
             if (isSortReverse) {
                 refresh(new PlaySongCountComparator().reversed());
-                sortTitle.setText(sortTitle.getText() + " ▲");
+                sortSongCount.setText(sortSongCount.getText() + " ▲");
             }
             else {
                 refresh(new PlaySongCountComparator());
                 isSortReverse = false;
-                sortTitle.setText(sortTitle.getText() + " ▼");
+                sortSongCount.setText(sortSongCount.getText() + " ▼");
             }
         }
     }

@@ -128,7 +128,8 @@ public class ViewHandler {
             }
             case ALL_PLAYLISTS -> {
                 scene = PlayListsController.get().getScene();
-                HomeController.get().switchTab(tabs.get(SongListController.get()));
+                PlayListsController.get().refresh();
+                HomeController.get().switchTab(tabs.get(PlayListsController.get()));
                 setTitle("PlayLists");
             }
             case PLAYLIST -> {
@@ -202,7 +203,7 @@ public class ViewHandler {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.playlistItem));
-            loader.setController(SongListController.get());
+            loader.setController(PlayListsController.get());
             return loader.load();
         } catch (IOException e) {
             popUp(Notify.ACCESS, "Failed loading song list resources!");
