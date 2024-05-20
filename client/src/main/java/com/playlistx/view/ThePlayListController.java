@@ -101,7 +101,7 @@ public class ThePlayListController implements Controller, PropertyChangeListener
                     thePlayList.removeSong(song);
                     refresh(comparator);
                 }
-                model.play();
+                model.play("https://www.youtube.com/embed/utUPth77L_o?autoplay=1");
             });
             songList.getChildren().add(songItem);
         }

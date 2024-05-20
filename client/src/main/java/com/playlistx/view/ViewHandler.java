@@ -236,7 +236,11 @@ public class ViewHandler {
         videoStage.getIcons().add(new Image(CSS.logo()));
         videoStage.initOwner(WINDOW);
         WebView webview = new WebView();
-        webview.getEngine().load("http://www.youtube.com/embed/utUPth77L_o?autoplay=1");
+        try {
+            webview.getEngine().load(linkYT);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         webview.setPrefSize(640, 390);
         videoStage.setScene(new Scene(webview));
         videoStage.initModality(Modality.WINDOW_MODAL);
