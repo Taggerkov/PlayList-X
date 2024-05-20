@@ -41,7 +41,7 @@ public class HomeController implements Controller, PropertyChangeListener {
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
-        themeSelector.setItems(FXCollections.observableArrayList(CSS.LIGHT, CSS.DARK, CSS.CHERRY));
+        themeSelector.setItems(FXCollections.observableArrayList(model.getCSS()));
     }
 
     @Override

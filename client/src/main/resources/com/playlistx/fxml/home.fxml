@@ -23,8 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -124,7 +123,7 @@
                   </VBox>
                   <TabPane fx:id="viewSwitch" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="0.0" tabMaxWidth="0.0" HBox.hgrow="ALWAYS">
                     <tabs>
-                      <Tab closable="false" text="Home">
+                      <Tab closable="false" style="visibility: false;" text="Home">
                            <content>
                               <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
                                  <children>
@@ -191,7 +190,7 @@
                               </VBox>
                            </content>
                         </Tab>
-                        <Tab closable="false" style="visibility: true;" text="PlayListView">
+                        <Tab closable="false" style="visibility: false;" text="PlayListView">
                            <content>
                               <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
                                  <children>

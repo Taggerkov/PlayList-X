@@ -8,6 +8,7 @@ import com.playlistx.view.ViewHandler;
 import com.playlistx.viewmodel.comparators.PlayYearComparator;
 import com.playlistx.viewmodel.comparators.SongYearComparator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -74,8 +75,12 @@ public class HomeModel implements PropertyChangeListener {
         return songs.subList(0, index);
     }
 
-    public void setCSS(CSS css) {
-        CSS.setCSS(css);
+    public CSS[] getCSS() {
+        return CSS.values();
+    }
+
+    public void setCSS(@Nullable CSS css) {
+        if (css != null) CSS.setCSS(css);
     }
 
     public void addListener(PropertyChangeListener pcl) {

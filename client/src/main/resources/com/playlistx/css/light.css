@@ -1,0 +1,136 @@
+/*
+Author: Sergiu Chirap
+Design: Author
+Version: 3.1
+*/
+
+/* PlatList-X CSS: Dark */
+
+* { /* Modify here! */
+    /* Base Colors */
+    -backgroundColor: #d1cfcf;
+    -contrastColor: #1b1b1b;
+    -secondaryColor: grey;
+    -mainViewsColor: grey;
+    -activeColor: #1b1b1b;
+    /* Login Vars */
+    -loginInputColor: black;
+    -loginInputDropShadow: #8d8686;
+    /* Others */
+    -hiddenVisibility: false;
+    -staticViewPortColor: transparent;
+    -hoverViewPortColor: -secondaryColor;
+}
+
+/* Hidden Items */
+.tab, .hidden {
+    visibility: -hiddenVisibility;
+}
+
+/* BackgroundColor Items */
+.background, .tab-pane > .tab-header-area > .tab-header-background, .menu-bar, .scroll-pane, .thumb, .hiddenMenuBtn:hover {
+    -fx-background-color: -backgroundColor;
+}
+
+/* SecondaryColor Items */
+.menu-bar:hover, #chatScroll .thumb, .quick-icon:hover, .songListSelector:hover {
+    -fx-background-color: -secondaryColor;
+}
+
+/* ActiveColor Items */
+.quick-icon:pressed, .songListSelector:pressed, .hiddenMenuBtn:pressed {
+    -fx-background-color: -activeColor;
+}
+
+/* ContrastColor TextFill */
+.background > .text, .label, .tab > .label {
+    -fx-fill: -contrastColor;
+    -fx-text-fill: -contrastColor;
+}
+
+/* !-> Login GUI | Specific Items */
+/* Button Config */
+.loginButton {
+    -fx-background-color: -secondaryColor;
+    -fx-border-color: -secondaryColor;
+    -fx-text-fill: -contrastColor;
+    -fx-effect: dropshadow(three-pass-box, -secondaryColor, 14.1, 0, 0, 2.0);
+}
+
+/* TextField Config */
+.loginField {
+    -fx-background-color: -loginInputColor;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-effect: dropshadow(three-pass-box, -loginInputDropShadow, 14.1, 0, 0, 2.0);
+    -fx-text-fill: -contrastColor;
+}
+
+/* !-> Menu GUI | Specific Items */
+/* Active Text Config */
+.menu-bar:hover > .container > .menu-button > .label, .menu-item > .label, .hyperlink, .hyperlink:visited {
+    -fx-text-fill: -contrastColor;
+}
+
+/* Text Config */
+.menu-bar > .container > .menu-button > .label, .menu-bar > .container > .menu-button:hover > .label, .menu-bar > .container > .menu-button:pressed > .label, .menu-bar > .container > .menu-button:showing > .label, .menu-item:hover > .label {
+    -fx-text-fill: -backgroundColor;
+}
+
+/* Focus Config */
+.menu-item:focused, .menu-item:focused > .label {
+    -fx-background-color: -contrastColor;
+    -fx-text-fill: -backgroundColor;
+}
+
+/* Hover Config */
+.menu-bar > .container > .menu-button:hover, .menu-bar > .container > .menu-button:pressed, .menu-bar > .container > .menu-button:showing, .menu-item:focused, .menu-item:hover {
+    -fx-background-radius: 10px;
+    -fx-background-color: -contrastColor;
+}
+
+/* Context Config */
+.context-menu {
+    -fx-background-color: -secondaryColor;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em;
+}
+
+/* !-> SideBar GUI | Specific Items */
+/* ViewPort Config */
+.scroll-pane > .viewport {
+    -fx-background-color: -staticViewPortColor;
+}
+/* ViewPort Hover Config */
+.scroll-pane:hover > .viewport {
+    -fx-background-color: -hoverViewPortColor;
+    -fx-background-radius: 15;
+}
+
+/* ScrollBar Config */
+.scroll-bar, .viewScroll:hover > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Button Config */
+.quick-icon, .hiddenMenuBtn {
+    -fx-background-radius: 14em;
+}
+
+/* !-> Home GUI | Specific Items */
+/* Entry Config */
+.latestScroll {
+    -fx-background-radius: 15;
+}
+
+/* Home Config */
+.viewScroll {
+    -fx-background-color: -mainViewsColor;
+}
+
+
+/*
+innerHorizontalFlowPane.prefWidthProperty().bind(
+      Bindings.add(-50, stage.widthProperty()))
+*/

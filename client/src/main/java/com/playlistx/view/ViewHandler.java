@@ -25,6 +25,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
+import static javafx.application.Application.setUserAgentStylesheet;
+
 
 public class ViewHandler implements PropertyChangeListener {
     public static final Stage WINDOW = new Stage();
@@ -35,7 +37,7 @@ public class ViewHandler implements PropertyChangeListener {
     private int selectPlaylistID;
 
     private ViewHandler() throws NotBoundException, RemoteException {
-        CSS.addListener(this);
+        CSS.addListener(instance);
         loadAllControllers();
         display(Views.LOGIN);
         WINDOW.setMinWidth(680);
@@ -214,6 +216,13 @@ public class ViewHandler implements PropertyChangeListener {
         return null;
     }
 
+    public void reloadCSS() {
+        Scene scene = WINDOW.getScene();
+        scene.getStylesheets().clear();
+        setUserAgentStylesheet(null);
+        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+    }
+
     /**
      * This method gets called when a bound property is changed.
      *
@@ -222,10 +231,20 @@ public class ViewHandler implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(@NotNull PropertyChangeEvent evt) {
+
         if (evt.getPropertyName().equalsIgnoreCase("CSS")) {
+            System.out.println("ohh da");
             Scene scene = HomeController.get().getScene();
             scene.getStylesheets().clear();
+            setUserAgentStylesheet(null);
             scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+
+            scene.getStylesheets().clear();
+            setUserAgentStylesheet(null);
+            scene.getStylesheets()
+                    .add(getClass()
+                            .getResource(CSS.getCSS().getPath())
+                            .toExternalForm());
         }
     }
 
