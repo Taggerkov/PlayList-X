@@ -1,9 +1,9 @@
 package com.playlistx.view;
 
+import com.playlistx.model.ModelManager;
 import com.playlistx.model.login.User;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.model.paths.FXMLs;
-import com.playlistx.view.ChooseUserController.ChoiceType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,6 +12,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -23,12 +24,14 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
+import static javafx.application.Application.setUserAgentStylesheet;
+
 
 public class ViewHandler {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
     private final User user = User.get();
-    private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get(), PlayListsController.get()};
+    private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get(), PlayListsController.get(), ThePlayListController.get()};
     private final HashMap<Controller, Tab> tabs = new HashMap<>();
     private int selectPlaylistID;
 
@@ -112,7 +115,7 @@ public class ViewHandler {
             case HOME -> {
                 scene = HomeController.get().getScene();
                 HomeController.get().switchTab(null);
-                setTitle("SongList");
+                setTitle("Home");
             }
             case SONGLIST -> {
                 scene = SongListController.get().getScene();
@@ -133,9 +136,16 @@ public class ViewHandler {
                 setTitle("PlayLists");
             }
             case PLAYLIST -> {
-                scene = PlayListsController.get().getScene();
-                HomeController.get().switchTab(tabs.get(SongListController.get()));
-                setTitle("SongList");
+                scene = ThePlayListController.get().getScene();
+                ThePlayListController.get().setPlayList(selectPlaylistID);
+                ThePlayListController.get().refresh();
+                HomeController.get().switchTab(tabs.get(ThePlayListController.get()));
+                try {
+                    setTitle(ModelManager.get().getPlaylist(selectPlaylistID).getTitle());
+                } catch (RemoteException | NotBoundException e) {
+                    popUp(Notify.ACCESS, "RMI Connection Error!");
+                    throw new RuntimeException(e);
+                }
             }
             default -> popUp(Notify.ACCESS, "This 'View' doesn't exist or is not available!");
         }
@@ -148,19 +158,30 @@ public class ViewHandler {
         }
     }
 
-    public void showChooseUser(ChoiceType type, int chatID) throws IOException, NotBoundException {
-        Controller chooseUser = ChooseUserController.get(type, chatID);
-        Stage chooseStage = new Stage();
-        chooseStage.setTitle("PlayListX: Choose User");
-        chooseStage.getIcons().add(new Image(CSS.logo()));
-        chooseStage.initOwner(WINDOW);
-        Scene scene = chooseUser.getScene();
-        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
-        scene.setFill(Color.TRANSPARENT);
-        chooseStage.setScene(scene);
-        chooseStage.initModality(Modality.APPLICATION_MODAL);
-        chooseStage.initStyle(StageStyle.TRANSPARENT);
-        chooseStage.show();
+    public void showChooseUser(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLs.chooseUser));
+            ChooseUserController chooseUser = ChooseUserController.get(selectPlaylistID);
+            loader.setController(chooseUser);
+            chooseUser.init(new Scene(loader.load()));
+            Stage chooseStage = new Stage();
+            chooseUser.setStage(chooseStage);
+            chooseStage.setTitle("PlayListX: Choose User");
+            chooseStage.getIcons().add(new Image(CSS.logo()));
+            chooseStage.initOwner(WINDOW);
+            Scene scene = chooseUser.getScene();
+            scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+            scene.setFill(Color.TRANSPARENT);
+            chooseStage.setScene(scene);
+            chooseStage.initModality(Modality.APPLICATION_MODAL);
+            chooseStage.initStyle(StageStyle.TRANSPARENT);
+            chooseStage.show();
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void loadController(@NotNull Controller controller) {
@@ -187,11 +208,11 @@ public class ViewHandler {
         for (Controller controller : controllers) loadController(controller);
     }
 
-    public @Nullable HBox loadSongItems() {
+    protected @Nullable HBox loadSongItems(Controller controller) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.songItem));
-            loader.setController(SongListController.get());
+            loader.setController(controller);
             return loader.load();
         } catch (IOException e) {
             popUp(Notify.ACCESS, "Failed loading song list resources!");
@@ -199,7 +220,7 @@ public class ViewHandler {
         return null;
     }
 
-    public @Nullable HBox loadPlaylistItems() {
+    protected @Nullable HBox loadPlaylistItems() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.playlistItem));
@@ -209,6 +230,30 @@ public class ViewHandler {
             popUp(Notify.ACCESS, "Failed loading song list resources!");
         }
         return null;
+    }
+
+    public void reloadCSS() {
+        Scene scene = WINDOW.getScene();
+        scene.getStylesheets().clear();
+        setUserAgentStylesheet(null);
+        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+    }
+
+    public void playVideoYT(String linkYT) {
+        Stage videoStage = new Stage();
+        videoStage.setTitle("PlayVideoYT");
+        videoStage.getIcons().add(new Image(CSS.logo()));
+        videoStage.initOwner(WINDOW);
+        WebView webview = new WebView();
+        try {
+            webview.getEngine().load(linkYT);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        webview.setPrefSize(640, 390);
+        videoStage.setScene(new Scene(webview));
+        videoStage.initModality(Modality.WINDOW_MODAL);
+        videoStage.show();
     }
 
     public enum Notify {

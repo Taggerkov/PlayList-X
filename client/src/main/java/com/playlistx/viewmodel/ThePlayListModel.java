@@ -1,10 +1,8 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.Model;
-import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.paths.CSS;
-import com.playlistx.view.PlayListsController;
 import com.playlistx.view.ViewHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,54 +11,56 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-public class PlayListsModel implements PropertyChangeListener {
-    private static PlayListsModel instance;
+public class ThePlayListModel implements PropertyChangeListener {
+    private static ThePlayListModel instance;
     private final Model model = Model.get();
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    private PlayListsModel() throws RemoteException, NotBoundException {
+    private ThePlayListModel() throws RemoteException, NotBoundException {
         CSS.addListener(this);
         model.addListener(this);
     }
 
-    public static @NotNull PlayListsModel get() {
+    public static @NotNull ThePlayListModel get() {
         try {
-            if (instance == null) return instance = new PlayListsModel();
-            else return instance;
+            if (instance == null) return instance = new ThePlayListModel();
         } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+        return instance;
+    }
+
+    public Playlist getPlayList(int playListID) {
+        try {
+            return model.getPlaylist(playListID);
+        } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
             throw new RuntimeException(e);
         }
     }
 
-    public @NotNull List<Playlist> getAllPlayLists() {
+    public void newTitle(int playlistID, String newTitle) {
         try {
-            return model.getAllPlaylists();
+            model.getPlaylist(playlistID).setTitle(newTitle);
         } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
-            return new ArrayList<>();
         }
     }
 
-    public void createNewPlayList() {
-        Random random = new Random();
+    public void newDesc(int playlistID, String newDesc){
+        ViewHandler.popUp(ViewHandler.Notify.ACCESS, "Feature Unavailable!");
+    }
+
+    public void isPublic(int playlistID, boolean temp) {
         try {
-            model.createPlaylist(LocalDateTime.now().getNano() + random.nextInt(5000, 10000), User.get().getUsername() + "'s PlayList of " + LocalDateTime.now().truncatedTo(ChronoUnit.HOURS),
-                    User.get().getUsername(), new ArrayList<>(), Date.valueOf(LocalDate.now()), 0, false);
-        } catch (RemoteException | NotBoundException e) {
+            model.getPlaylist(playlistID).setPublic(!temp);
+        } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
         }
     }
 
-    public void addListener(PropertyChangeListener pcl) {
+    public void addListener(@NotNull PropertyChangeListener pcl) {
         pcs.addPropertyChangeListener(pcl);
     }
 
@@ -71,7 +71,7 @@ public class PlayListsModel implements PropertyChangeListener {
      *            and the property that has changed.
      */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(@NotNull PropertyChangeEvent evt) {
         pcs.firePropertyChange(evt);
     }
 }

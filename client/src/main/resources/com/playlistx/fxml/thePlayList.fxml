@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Tab closable="false" style="visibility: false;" text="PlayListView" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <VBox alignment="TOP_CENTER" minWidth="520.0" prefWidth="720.0" styleClass="background">
+         <children>
+            <HBox alignment="CENTER" VBox.vgrow="NEVER">
+               <children>
+                  <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="screenTitle" alignment="CENTER" onAction="#saveTitle" style="-fx-control-inner-background: -backgroundColor; -fx-border-color: -backgroundColor; -fx-border-width: 2px; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="NEVER">
+                           <font>
+                              <Font size="53.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#addSong" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
+                           <image>
+                              <Image url="@../img/add.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#share" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
+                           <image>
+                              <Image url="@../img/share.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </AnchorPane>
+                  <Text fx:id="isPublic" onMouseClicked="#toggleVisibility" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: -contrastColor;" text="&quot;">
+                     <font>
+                        <Font name="Ebrima Bold" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="The music of your choice!" textAlignment="CENTER" textOverrun="CLIP" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Sylfaen" size="24.0" />
+               </font>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets right="160.0" />
+               </padding>
+            </Label>
+            <TextArea fx:id="screenDesc" maxHeight="150.0" minHeight="-Infinity" onKeyPressed="#saveDesc" prefHeight="50.0" style="-fx-control-inner-background: -backgroundColor; -fx-highlight-fill: -activeColor; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="ALWAYS" />
+            <VBox prefHeight="568.0" prefWidth="875.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="sortTitle" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="sortYear" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="sortArtist" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="sortGenre" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="sortAlbum" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="sortDuration" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox fx:id="songList" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+</Tab>

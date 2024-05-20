@@ -10,6 +10,7 @@ module app.chatty {
     requires remoteobserver;
     requires java.net.http;
     requires java.sql;
+    requires javafx.web;
 
     opens com.playlistx to javafx.fxml;
     opens com.playlistx.view to javafx.fxml;

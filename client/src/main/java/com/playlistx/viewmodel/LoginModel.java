@@ -1,6 +1,7 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.login.*;
+import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
 import com.playlistx.view.ViewHandler.*;
 import com.playlistx.view.Views;
@@ -22,6 +23,7 @@ public class LoginModel implements PropertyChangeListener {
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
 
     private LoginModel() throws RemoteException, NotBoundException {
+        CSS.addListener(this);
         user.addListener(this);
     }
 

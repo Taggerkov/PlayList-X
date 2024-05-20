@@ -1,44 +1,53 @@
 package com.playlistx.view;
 
+import com.playlistx.model.music.Playlist;
 import com.playlistx.model.music.Song;
 import com.playlistx.model.paths.FXMLs;
-import com.playlistx.viewmodel.SongListModel;
+import com.playlistx.viewmodel.ThePlayListModel;
 import com.playlistx.viewmodel.comparators.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-public class SongListController implements Controller, PropertyChangeListener {
-    private static SongListController instance;
-    private final SongListModel model = SongListModel.get();
+
+public class ThePlayListController implements Controller, PropertyChangeListener {
+    private static ThePlayListController instance;
+    private final ThePlayListModel model = ThePlayListModel.get();
+    private int playlistId;
+    private boolean isSortReverse = false;
     private Scene scene;
-    private boolean isSortReverse = false, isSelect;
-    private int selectPlaylistID;
+    private boolean isOnClick, isOnShift;
     @FXML
     private VBox songList;
     @FXML
-    private Label songTitle, sortTitle, songYear, sortYear, songArtist, sortArtist, songGenre, sortGenre, songAlbum, sortAlbum, songDuration, sortDuration, activeSort;
+    private Label sortTitle, songTitle, sortYear, songYear, sortArtist, songArtist, sortGenre, songGenre, sortAlbum, songAlbum, sortDuration, songDuration, activeSort;
+    @FXML
+    private TextField screenTitle;
+    @FXML
+    private TextArea screenDesc;
+    @FXML
+    private Text isPublic;
 
-    private SongListController() {
+    private ThePlayListController() {
         model.addListener(this);
     }
 
-    public static SongListController get() {
-        if (instance == null) return instance = new SongListController();
-        return instance;
+    public static ThePlayListController get() {
+        if (instance == null) return instance = new ThePlayListController();
+        else return instance;
     }
 
     @Override
@@ -48,7 +57,7 @@ public class SongListController implements Controller, PropertyChangeListener {
 
     @Override
     public String getFXML() {
-        return FXMLs.songList;
+        return FXMLs.thePlaylist;
     }
 
     @Override
@@ -56,19 +65,36 @@ public class SongListController implements Controller, PropertyChangeListener {
         return scene;
     }
 
-    public void isSelect(boolean isSelect, int selectPlaylistID) {
-        refresh(new SongYearComparator());
-        activeSort = sortYear;
-        this.isSelect = isSelect;
-        this.selectPlaylistID = selectPlaylistID;
+    public void setPlayList(int playlistId) {
+        this.playlistId = playlistId;
+    }
+
+    public void refresh() {
+        if (activeSort == null) {
+            refresh(new SongYearComparator());
+            activeSort = sortYear;
+        }
+        //noinspection DuplicatedCode
+        if (activeSort.equals(sortTitle)) refresh(new SongTitleComparator());
+        else if (activeSort.equals(sortYear)) refresh(new SongYearComparator());
+        else if (activeSort.equals(sortArtist)) refresh(new SongArtistComparator());
+        else if (activeSort.equals(sortGenre)) refresh(new SongGenreComparator());
+        else if (activeSort.equals(sortAlbum)) refresh(new SongAlbumComparator());
+        else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
     }
 
     @SuppressWarnings("DuplicatedCode")
     private void refresh(Comparator<Song> comparator) {
-        List<Song> songs = model.getSongsAll();
+        Playlist thePlayList = model.getPlayList(playlistId);
+        screenTitle.setText(thePlayList.getTitle());
+        // screenDesc.setText(thePlayList.getDescription());
+        if (thePlayList.isPublic()) isPublic.setText("Pu");
+        else isPublic.setText("Pr");
+        List<Song> songs = thePlayList.getSongs();
         songs.sort(comparator);
         songList.getChildren().clear();
         for (Song song : songs) {
+            System.out.println("Song: " + song.getTitle());
             HBox songItem;
             try {
                 songItem = ViewHandler.get().loadSongItems(this);
@@ -84,12 +110,11 @@ public class SongListController implements Controller, PropertyChangeListener {
             songDuration.setText(String.valueOf(song.getDuration()));
             assert songItem != null;
             songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
-                if (evt.getButton().equals(MouseButton.PRIMARY))
-                    if (!isSelect) ViewHandler.get().playVideoYT(song.getLink());
-                    else {
-                        model.addToPlaylist(selectPlaylistID, song);
-                        Views.PLAYLIST.show();
-                    }
+                if (evt.getButton().equals(MouseButton.PRIMARY)) ViewHandler.get().playVideoYT(song.getLink());
+                else if (evt.getButton().equals(MouseButton.SECONDARY)) {
+                    thePlayList.removeSong(song);
+                    refresh(comparator);
+                }
             });
             songList.getChildren().add(songItem);
         }
@@ -168,8 +193,31 @@ public class SongListController implements Controller, PropertyChangeListener {
     }
 
     @FXML
+    private void saveTitle() {
+        model.newTitle(playlistId, screenTitle.getText());
+    }
+
+    @FXML
+    private void saveDesc() {
+        model.newDesc(playlistId, screenDesc.getText());
+    }
+
+    @FXML
     private void addSong() {
-        model.addSong();
+        Views.SONGLIST_SELECT.show();
+    }
+
+    @FXML
+    private void share() {
+        ViewHandler.get().showChooseUser();
+    }
+
+    @FXML
+    private void toggleVisibility() {
+        boolean temp = isPublic.getText().equalsIgnoreCase("PU");
+        model.isPublic(playlistId, temp);
+        if (temp) isPublic.setText("Pr");
+        else isPublic.setText("Pu");
     }
 
     /**
@@ -180,14 +228,6 @@ public class SongListController implements Controller, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("REFRESH")) {
-            //noinspection DuplicatedCode
-            if (activeSort.equals(sortTitle)) refresh(new SongTitleComparator());
-            else if (activeSort.equals(sortYear)) refresh(new SongYearComparator());
-            else if (activeSort.equals(sortArtist)) refresh(new SongArtistComparator());
-            else if (activeSort.equals(sortGenre)) refresh(new SongGenreComparator());
-            else if (activeSort.equals(sortAlbum)) refresh(new SongAlbumComparator());
-            else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
-        }
+        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

@@ -1,22 +1,34 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.Model;
+import com.playlistx.model.login.LoginException;
+import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.music.Song;
+import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
+import com.playlistx.viewmodel.comparators.PlayYearComparator;
 import com.playlistx.viewmodel.comparators.SongYearComparator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class HomeModel {
+public class HomeModel implements PropertyChangeListener {
     private static HomeModel instance;
     private final Model model = Model.get();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     private HomeModel() throws RemoteException, NotBoundException {
+        CSS.addListener(this);
+        model.addListener(this);
     }
 
     public static @NotNull HomeModel get() {
@@ -40,7 +52,7 @@ public class HomeModel {
     public @NotNull List<Playlist> getPlaylistsLatest() {
         List<Playlist> playlists = getPlaylistsAll();
         if (playlists.size() <= 1) return playlists;
-        playlists.sort(new PlayListComparator());
+        playlists.sort(new PlayYearComparator());
         int index;
         if (playlists.size() > 15) index = 14;
         else index = playlists.size() - 1;
@@ -66,45 +78,59 @@ public class HomeModel {
         return songs.subList(0, index);
     }
 
-    private static class PlayListComparator implements java.util.Comparator<Playlist> {
+    public boolean changeUsername(String newUsername, String password) {
+        boolean awr = false;
+        try {
+            awr = User.get().changeUsername(newUsername, password);
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        } catch (LoginException e) {
+            return false;
+        }
+        return awr;
+    }
 
-        /**
-         * Compares its two arguments for order.  Returns a negative integer,
-         * zero, or a positive integer as the first argument is less than, equal
-         * to, or greater than the second.<p>
-         * <p>
-         * The implementor must ensure that {@link Integer#signum
-         * signum}{@code (compare(x, y)) == -signum(compare(y, x))} for
-         * all {@code x} and {@code y}.  (This implies that {@code
-         * compare(x, y)} must throw an exception if and only if {@code
-         * compare(y, x)} throws an exception.)<p>
-         * <p>
-         * The implementor must also ensure that the relation is transitive:
-         * {@code ((compare(x, y)>0) && (compare(y, z)>0))} implies
-         * {@code compare(x, z)>0}.<p>
-         * <p>
-         * Finally, the implementor must ensure that {@code compare(x,
-         * y)==0} implies that {@code signum(compare(x,
-         * z))==signum(compare(y, z))} for all {@code z}.
-         *
-         * @param list1 the first Playlist to be compared.
-         * @param list2 the second Playlist to be compared.
-         * @return a negative integer, zero, or a positive integer as the
-         * first argument is less than, equal to, or greater than the
-         * second.
-         * @throws NullPointerException if an argument is null and this
-         *                              comparator does not permit null arguments
-         * @throws ClassCastException   if the arguments' types prevent them from
-         *                              being compared by this comparator.
-         * @apiNote It is generally the case, but <i>not</i> strictly required that
-         * {@code (compare(x, y)==0) == (x.equals(y))}.  Generally speaking,
-         * any comparator that violates this condition should clearly indicate
-         * this fact.  The recommended language is "Note: this comparator
-         * imposes orderings that are inconsistent with equals."
-         */
-        @Override
-        public int compare(@NotNull Playlist list1, @NotNull Playlist list2) {
-            return list1.getSongsCount() - list2.getSongsCount();
+    public boolean changePassword(String oldPassword, String newPassword) {
+        boolean awr = false;
+        try {
+            awr = User.get().changePassword(oldPassword, newPassword);
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+        return awr;
+    }
+
+    public CSS[] getCSS() {
+        return CSS.values();
+    }
+
+    public void setCSS(@Nullable CSS css) {
+        if (css != null) CSS.setCSS(css);
+    }
+
+    public void addListener(PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        pcs.firePropertyChange(evt);
+    }
+
+    public void close() {
+        if (ViewHandler.popUp(ViewHandler.Notify.CONFIRM, "Are you sure?")) {
+            try {
+                User.get().logout();
+                System.exit(0);
+            } catch (RemoteException | NotBoundException e) {
+                ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            }
         }
     }
 }

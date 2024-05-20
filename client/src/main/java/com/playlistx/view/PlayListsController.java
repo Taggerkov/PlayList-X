@@ -12,13 +12,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class PlayListsController implements Controller {
+public class PlayListsController implements Controller, PropertyChangeListener {
     private static PlayListsController instance;
     private final PlayListsModel model = PlayListsModel.get();
     private Scene scene;
@@ -29,6 +31,7 @@ public class PlayListsController implements Controller {
     private Label sortTitle, playTitle, sortYear, playYear, sortAuthor, playAuthor, sortAccess, playAccess, sortSongCount, playSongCount, activeSort;
 
     private PlayListsController() {
+        model.addListener(this);
     }
 
     public static PlayListsController get() {
@@ -90,11 +93,10 @@ public class PlayListsController implements Controller {
         clearVisualSelection();
         if (evt.getSource() == sortTitle) {
             activeSort = sortTitle;
-            if (isSortReverse){
+            if (isSortReverse) {
                 refresh(new PlayTitleComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayTitleComparator());
                 isSortReverse = false;
                 sortTitle.setText(sortTitle.getText() + " ▼");
@@ -104,8 +106,7 @@ public class PlayListsController implements Controller {
             if (isSortReverse) {
                 refresh(new PlayYearComparator().reversed());
                 sortYear.setText(sortYear.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayYearComparator());
                 isSortReverse = false;
                 sortYear.setText(sortYear.getText() + " ▼");
@@ -115,8 +116,7 @@ public class PlayListsController implements Controller {
             if (isSortReverse) {
                 refresh(new PlayAuthorComparator().reversed());
                 sortAuthor.setText(sortAuthor.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayAuthorComparator());
                 isSortReverse = false;
                 sortAuthor.setText(sortAuthor.getText() + " ▼");
@@ -126,8 +126,7 @@ public class PlayListsController implements Controller {
             if (isSortReverse) {
                 refresh(new PlayAccessComparator().reversed());
                 sortAccess.setText(sortAccess.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayAccessComparator());
                 isSortReverse = false;
                 sortAccess.setText(sortAccess.getText() + " ▼");
@@ -137,8 +136,7 @@ public class PlayListsController implements Controller {
             if (isSortReverse) {
                 refresh(new PlaySongCountComparator().reversed());
                 sortSongCount.setText(sortSongCount.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlaySongCountComparator());
                 isSortReverse = false;
                 sortSongCount.setText(sortSongCount.getText() + " ▼");
@@ -154,5 +152,16 @@ public class PlayListsController implements Controller {
     private void createPlaylist() {
         model.createNewPlayList();
         refresh(new PlayTitleComparator());
+    }
+
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Random;
 
 /* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 3.48h */
@@ -56,6 +57,15 @@ class UserName implements Serializable {
      */
     private static final String ERROR_LENGTH = "username length should be within 3 and 100 characters!";
     private static Model model;
+
+    static {
+        try {
+            model = Model.get();
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This class is used for the random factor of the 'username' generator.
      */
@@ -74,11 +84,6 @@ class UserName implements Serializable {
      */
     private UserName(String username) {
         this.username = username;
-        try {
-            model = Model.get();
-        } catch (IOException | NotBoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
