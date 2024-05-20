@@ -84,6 +84,11 @@ class UserName implements Serializable {
      */
     private UserName(String username) {
         this.username = username;
+        try {
+            model = Model.get();
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -100,8 +105,8 @@ class UserName implements Serializable {
         if (username == null || username.isEmpty()) {
             String generatedName = generateName();
             try {
-                while (!model.isAvailable(generatedName)) generatedName = generateName();
-            } catch (IOException e) {
+                while (!Model.get().isAvailable(generatedName)) generatedName = generateName();
+            } catch (IOException | NotBoundException e) {
                 throw new LoginException(e.getMessage());
             }
             return new UserName(generatedName);
