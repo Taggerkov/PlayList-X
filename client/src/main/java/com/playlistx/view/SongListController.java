@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -83,17 +84,19 @@ public class SongListController implements Controller, PropertyChangeListener {
             songDuration.setText(String.valueOf(song.getDuration()));
             assert songItem != null;
             songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
-                if (!isSelect)  ViewHandler.get().playVideoYT(song.getLink());
-                else {
-                    model.addToPlaylist(selectPlaylistID, song);
-                    Views.PLAYLIST.show();
-                }
+                if (evt.getButton().equals(MouseButton.PRIMARY))
+                    if (!isSelect) ViewHandler.get().playVideoYT(song.getLink());
+                    else {
+                        model.addToPlaylist(selectPlaylistID, song);
+                        Views.PLAYLIST.show();
+                    }
             });
             songList.getChildren().add(songItem);
         }
     }
 
-    @FXML @SuppressWarnings("DuplicatedCode")
+    @FXML
+    @SuppressWarnings("DuplicatedCode")
     private void toggleSort(@NotNull MouseEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
         clearVisualSelection();

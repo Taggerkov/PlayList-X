@@ -8,12 +8,12 @@ import com.playlistx.viewmodel.comparators.*;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -33,6 +33,10 @@ public class ThePlayListController implements Controller, PropertyChangeListener
     private VBox songList;
     @FXML
     private Label sortTitle, songTitle, sortYear, songYear, sortArtist, songArtist, sortGenre, songGenre, sortAlbum, songAlbum, sortDuration, songDuration, activeSort;
+    @FXML
+    private TextArea screenTitle, screenDesc;
+    @FXML
+    private Text isPublic;
 
     private ThePlayListController() {
         model.addListener(this);
@@ -79,6 +83,10 @@ public class ThePlayListController implements Controller, PropertyChangeListener
     @SuppressWarnings("DuplicatedCode")
     private void refresh(Comparator<Song> comparator) {
         Playlist thePlayList = model.getPlayList(playlistId);
+        screenTitle.setText(thePlayList.getTitle());
+        // screenDesc.setText(thePlayList.getDescription());
+        if (thePlayList.isPublic()) isPublic.setText("Pu");
+        else isPublic.setText("Pr");
         List<Song> songs = thePlayList.getSongs();
         songs.sort(comparator);
         songList.getChildren().clear();
@@ -179,6 +187,34 @@ public class ThePlayListController implements Controller, PropertyChangeListener
 
     private void clearVisualSelection() {
         activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
+    }
+
+    @FXML
+    private void saveTitle() {
+        model.newTitle(playlistId, screenTitle.getText());
+    }
+
+    @FXML
+    private void saveDesc() {
+        model.newDesc(playlistId, screenDesc.getText());
+    }
+
+    @FXML
+    private void addSong() {
+        Views.SONGLIST_SELECT.show();
+    }
+
+    @FXML
+    private void share() {
+        ViewHandler.get().showChooseUser();
+    }
+
+    @FXML
+    private void toggleVisibility() {
+        boolean temp = isPublic.getText().equalsIgnoreCase("PU");
+        model.isPublic(playlistId, temp);
+        if (temp) isPublic.setText("Pr");
+        else isPublic.setText("Pu");
     }
 
     /**

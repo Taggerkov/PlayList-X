@@ -4,7 +4,6 @@ import com.playlistx.model.ModelManager;
 import com.playlistx.model.login.User;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.model.paths.FXMLs;
-import com.playlistx.view.ChooseUserController.ChoiceType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -20,8 +19,6 @@ import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -161,19 +158,24 @@ public class ViewHandler {
         }
     }
 
-    public void showChooseUser(ChoiceType type, int chatID) throws IOException, NotBoundException {
-        Controller chooseUser = ChooseUserController.get(type, chatID);
-        Stage chooseStage = new Stage();
-        chooseStage.setTitle("PlayListX: Choose User");
-        chooseStage.getIcons().add(new Image(CSS.logo()));
-        chooseStage.initOwner(WINDOW);
-        Scene scene = chooseUser.getScene();
-        scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
-        scene.setFill(Color.TRANSPARENT);
-        chooseStage.setScene(scene);
-        chooseStage.initModality(Modality.APPLICATION_MODAL);
-        chooseStage.initStyle(StageStyle.TRANSPARENT);
-        chooseStage.show();
+    public void showChooseUser(){
+        try {
+            Controller chooseUser = ChooseUserController.get(selectPlaylistID);
+            Stage chooseStage = new Stage();
+            chooseStage.setTitle("PlayListX: Choose User");
+            chooseStage.getIcons().add(new Image(CSS.logo()));
+            chooseStage.initOwner(WINDOW);
+            Scene scene = chooseUser.getScene();
+            scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+            scene.setFill(Color.TRANSPARENT);
+            chooseStage.setScene(scene);
+            chooseStage.initModality(Modality.APPLICATION_MODAL);
+            chooseStage.initStyle(StageStyle.TRANSPARENT);
+            chooseStage.show();
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException(e);
+        }
     }
 
     private void loadController(@NotNull Controller controller) {
@@ -190,7 +192,6 @@ public class ViewHandler {
                 controller.init(new Scene(loader.load()));
             }
         } catch (IOException | IllegalStateException e) {
-            e.printStackTrace();
             popUp(Notify.ACCESS, "Failed loading " + controller.getClass().getName() + " FXML!");
             System.exit(0);
         }

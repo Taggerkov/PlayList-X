@@ -2,7 +2,6 @@ package com.playlistx.viewmodel;
 
 import com.playlistx.model.Model;
 import com.playlistx.model.music.Playlist;
-import com.playlistx.model.music.Song;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
 import org.jetbrains.annotations.NotNull;
@@ -12,8 +11,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ThePlayListModel implements PropertyChangeListener {
     private static ThePlayListModel instance;
@@ -34,10 +31,6 @@ public class ThePlayListModel implements PropertyChangeListener {
         return instance;
     }
 
-    public void addListener(@NotNull PropertyChangeListener pcl) {
-        pcs.addPropertyChangeListener(pcl);
-    }
-
     public Playlist getPlayList(int playListID) {
         try {
             return model.getPlaylist(playListID);
@@ -45,6 +38,30 @@ public class ThePlayListModel implements PropertyChangeListener {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
             throw new RuntimeException(e);
         }
+    }
+
+    public void newTitle(int playlistID, String newTitle) {
+        try {
+            model.getPlaylist(playlistID).setTitle(newTitle);
+        } catch (RemoteException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+    }
+
+    public void newDesc(int playlistID, String newDesc){
+        ViewHandler.popUp(ViewHandler.Notify.ACCESS, "Feature Unavailable!");
+    }
+
+    public void isPublic(int playlistID, boolean temp) {
+        try {
+            model.getPlaylist(playlistID).setPublic(!temp);
+        } catch (RemoteException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+    }
+
+    public void addListener(@NotNull PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
     }
 
     /**

@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Tab closable="false" style="visibility: false;" text="PlayListView" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <content>
@@ -24,14 +25,14 @@
                <children>
                   <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                      <children>
-                        <TextField alignment="CENTER" style="-fx-control-inner-background: -backgroundColor; -fx-border-color: -backgroundColor; -fx-border-width: 2px; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="NEVER">
+                        <TextField fx:id="screenTitle" alignment="CENTER" onAction="#saveTitle" style="-fx-control-inner-background: -backgroundColor; -fx-border-color: -backgroundColor; -fx-border-width: 2px; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="NEVER">
                            <font>
                               <Font size="53.0" />
                            </font>
                         </TextField>
                      </children>
                   </VBox>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#addSong" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
                      <children>
                         <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
                            <image>
@@ -46,7 +47,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </AnchorPane>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#share" prefHeight="75.0" prefWidth="80.0" styleClass="quick-icon">
                      <children>
                         <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="16.0">
                            <image>
@@ -61,6 +62,17 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </AnchorPane>
+                  <Text fx:id="isPublic" onMouseClicked="#toggleVisibility" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: -contrastColor;" text="&quot;">
+                     <font>
+                        <Font name="Ebrima Bold" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Text>
                </children>
                <padding>
                   <Insets right="15.0" />
@@ -80,7 +92,7 @@
                   <Insets right="160.0" />
                </padding>
             </Label>
-            <TextArea maxHeight="150.0" minHeight="-Infinity" prefHeight="50.0" style="-fx-control-inner-background: -backgroundColor; -fx-highlight-fill: -activeColor; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="screenDesc" maxHeight="150.0" minHeight="-Infinity" onKeyPressed="#saveDesc" prefHeight="50.0" style="-fx-control-inner-background: -backgroundColor; -fx-highlight-fill: -activeColor; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="ALWAYS" />
             <VBox prefHeight="568.0" prefWidth="875.0" VBox.vgrow="ALWAYS">
                <children>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
