@@ -70,7 +70,7 @@ public class SongListController implements Controller, PropertyChangeListener {
         for (Song song : songs) {
             HBox songItem;
             try {
-                songItem = ViewHandler.get().loadSongItems();
+                songItem = ViewHandler.get().loadSongItems(this);
             } catch (NullPointerException e) {
                 ViewHandler.popUp(ViewHandler.Notify.FILE, "Files for Song List couldn't be loaded!");
                 throw new RuntimeException(e);
@@ -82,9 +82,12 @@ public class SongListController implements Controller, PropertyChangeListener {
             songAlbum.setText(song.getAlbumName());
             songDuration.setText(String.valueOf(song.getDuration()));
             assert songItem != null;
-            if (isSelect) songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
-                model.addToPlaylist(selectPlaylistID, song);
-                Views.PLAYLIST.show();
+            songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
+                if (!isSelect)  ViewHandler.get().playVideoYT(song.getLink());
+                else {
+                    model.addToPlaylist(selectPlaylistID, song);
+                    Views.PLAYLIST.show();
+                }
             });
             songList.getChildren().add(songItem);
         }

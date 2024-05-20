@@ -8,34 +8,22 @@ import com.playlistx.viewmodel.comparators.*;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 
 public class ThePlayListController implements Controller, PropertyChangeListener {
-    private static final HashMap<Integer, Boolean> pressedKeys = new HashMap<>();
     private static ThePlayListController instance;
-
-    static {
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(event -> {
-            synchronized (ThePlayListController.class) {
-                if (event.getID() == KeyEvent.KEY_PRESSED) pressedKeys.put(event.getKeyCode(), true);
-                else if (event.getID() == KeyEvent.KEY_RELEASED) pressedKeys.put(event.getKeyCode(), false);
-                return false;
-            }
-        });
-    }
-
     private final ThePlayListModel model = ThePlayListModel.get();
     private int playlistId;
     private boolean isSortReverse = false;
@@ -58,7 +46,6 @@ public class ThePlayListController implements Controller, PropertyChangeListener
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
-        refresh(new SongYearComparator());
     }
 
     @Override
@@ -75,6 +62,20 @@ public class ThePlayListController implements Controller, PropertyChangeListener
         this.playlistId = playlistId;
     }
 
+    public void refresh() {
+        if (activeSort == null) {
+            refresh(new SongYearComparator());
+            activeSort = sortYear;
+        }
+        //noinspection DuplicatedCode
+        if (activeSort.equals(sortTitle)) refresh(new SongTitleComparator());
+        else if (activeSort.equals(sortYear)) refresh(new SongYearComparator());
+        else if (activeSort.equals(sortArtist)) refresh(new SongArtistComparator());
+        else if (activeSort.equals(sortGenre)) refresh(new SongGenreComparator());
+        else if (activeSort.equals(sortAlbum)) refresh(new SongAlbumComparator());
+        else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
+    }
+
     @SuppressWarnings("DuplicatedCode")
     private void refresh(Comparator<Song> comparator) {
         Playlist thePlayList = model.getPlayList(playlistId);
@@ -82,9 +83,10 @@ public class ThePlayListController implements Controller, PropertyChangeListener
         songs.sort(comparator);
         songList.getChildren().clear();
         for (Song song : songs) {
+            System.out.println("Song: " + song.getTitle());
             HBox songItem;
             try {
-                songItem = ViewHandler.get().loadSongItems();
+                songItem = ViewHandler.get().loadSongItems(this);
             } catch (NullPointerException e) {
                 ViewHandler.popUp(ViewHandler.Notify.FILE, "Files for Song List couldn't be loaded!");
                 throw new RuntimeException(e);
@@ -97,11 +99,11 @@ public class ThePlayListController implements Controller, PropertyChangeListener
             songDuration.setText(String.valueOf(song.getDuration()));
             assert songItem != null;
             songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
-                if (isKeyPressed(KeyEvent.VK_SHIFT)) {
+                if (evt.getButton().equals(MouseButton.PRIMARY)) ViewHandler.get().playVideoYT(song.getLink());
+                else if (evt.getButton().equals(MouseButton.SECONDARY)) {
                     thePlayList.removeSong(song);
                     refresh(comparator);
                 }
-                model.play("https://www.youtube.com/embed/utUPth77L_o?autoplay=1");
             });
             songList.getChildren().add(songItem);
         }
@@ -179,10 +181,6 @@ public class ThePlayListController implements Controller, PropertyChangeListener
         activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
     }
 
-    public static boolean isKeyPressed(int keyCode) {
-        return pressedKeys.getOrDefault(keyCode, false);
-    }
-
     /**
      * This method gets called when a bound property is changed.
      *
@@ -191,12 +189,6 @@ public class ThePlayListController implements Controller, PropertyChangeListener
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //noinspection DuplicatedCode
-        if (activeSort.equals(sortTitle)) refresh(new SongTitleComparator());
-        else if (activeSort.equals(sortYear)) refresh(new SongYearComparator());
-        else if (activeSort.equals(sortArtist)) refresh(new SongArtistComparator());
-        else if (activeSort.equals(sortGenre)) refresh(new SongGenreComparator());
-        else if (activeSort.equals(sortAlbum)) refresh(new SongAlbumComparator());
-        else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
+        refresh();
     }
 }

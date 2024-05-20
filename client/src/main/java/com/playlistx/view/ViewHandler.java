@@ -141,6 +141,7 @@ public class ViewHandler {
             case PLAYLIST -> {
                 scene = ThePlayListController.get().getScene();
                 ThePlayListController.get().setPlayList(selectPlaylistID);
+                ThePlayListController.get().refresh();
                 HomeController.get().switchTab(tabs.get(ThePlayListController.get()));
                 try {
                     setTitle(ModelManager.get().getPlaylist(selectPlaylistID).getTitle());
@@ -199,11 +200,11 @@ public class ViewHandler {
         for (Controller controller : controllers) loadController(controller);
     }
 
-    public @Nullable HBox loadSongItems() {
+    protected @Nullable HBox loadSongItems(Controller controller) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.songItem));
-            loader.setController(SongListController.get());
+            loader.setController(controller);
             return loader.load();
         } catch (IOException e) {
             popUp(Notify.ACCESS, "Failed loading song list resources!");
@@ -211,7 +212,7 @@ public class ViewHandler {
         return null;
     }
 
-    public @Nullable HBox loadPlaylistItems() {
+    protected @Nullable HBox loadPlaylistItems() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.playlistItem));
@@ -244,7 +245,6 @@ public class ViewHandler {
         webview.setPrefSize(640, 390);
         videoStage.setScene(new Scene(webview));
         videoStage.initModality(Modality.WINDOW_MODAL);
-        videoStage.initStyle(StageStyle.TRANSPARENT);
         videoStage.show();
     }
 

@@ -47,10 +47,6 @@ public class ThePlayListModel implements PropertyChangeListener {
         }
     }
 
-    public void play(String linkYT) {
-        ViewHandler.get().playVideoYT(linkYT);
-    }
-
     /**
      * This method gets called when a bound property is changed.
      *
