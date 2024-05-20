@@ -4,7 +4,6 @@ import com.playlistx.model.paths.CSS;
 import com.playlistx.model.paths.FXMLs;
 import com.playlistx.viewmodel.HomeModel;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -14,9 +13,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class HomeController implements Controller {
+public class HomeController implements Controller, PropertyChangeListener {
     private static HomeController instance;
     private final HomeModel model = HomeModel.get();
     private Scene scene;
@@ -30,6 +30,7 @@ public class HomeController implements Controller {
     private ChoiceBox<CSS> themeSelector;
 
     private HomeController() {
+        model.addListener(this);
     }
 
     public static HomeController get() {
@@ -40,7 +41,7 @@ public class HomeController implements Controller {
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
-        themeSelector.setItems(FXCollections.observableArrayList(CSS.LIGHT, CSS.DARK));
+        themeSelector.setItems(FXCollections.observableArrayList(CSS.LIGHT, CSS.DARK, CSS.CHERRY));
     }
 
     @Override
@@ -75,7 +76,7 @@ public class HomeController implements Controller {
 
     @FXML
     private void confirmTheme() {
-        CSS.setCSS(themeSelector.getSelectionModel().getSelectedItem());
+        model.setCSS(themeSelector.getSelectionModel().getSelectedItem());
         settings.setVisible(false);
     }
 
@@ -104,5 +105,16 @@ public class HomeController implements Controller {
     public void switchTab(Tab tab) {
         if (tab == null)  viewSwitch.getSelectionModel().select(0);
         viewSwitch.getSelectionModel().select(tab);
+    }
+
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

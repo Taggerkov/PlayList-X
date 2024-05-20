@@ -13,11 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class SongListController implements Controller {
+public class SongListController implements Controller, PropertyChangeListener {
     private static SongListController instance;
     private final SongListModel model = SongListModel.get();
     private Scene scene;
@@ -29,6 +31,7 @@ public class SongListController implements Controller {
     private Label songTitle, sortTitle, songYear, sortYear, songArtist, sortArtist, songGenre, sortGenre, songAlbum, sortAlbum, songDuration, sortDuration, activeSort;
 
     private SongListController() {
+        model.addListener(this);
     }
 
     public static SongListController get() {
@@ -164,5 +167,16 @@ public class SongListController implements Controller {
     @FXML
     private void addSong() {
         model.addSong();
+    }
+
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

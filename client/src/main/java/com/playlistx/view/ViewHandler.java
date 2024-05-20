@@ -18,13 +18,15 @@ import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
 
-public class ViewHandler {
+public class ViewHandler implements PropertyChangeListener {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
     private final User user = User.get();
@@ -33,6 +35,7 @@ public class ViewHandler {
     private int selectPlaylistID;
 
     private ViewHandler() throws NotBoundException, RemoteException {
+        CSS.addListener(this);
         loadAllControllers();
         display(Views.LOGIN);
         WINDOW.setMinWidth(680);
@@ -209,6 +212,21 @@ public class ViewHandler {
             popUp(Notify.ACCESS, "Failed loading song list resources!");
         }
         return null;
+    }
+
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(@NotNull PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equalsIgnoreCase("CSS")) {
+            Scene scene = HomeController.get().getScene();
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
+        }
     }
 
     public enum Notify {
