@@ -160,8 +160,12 @@ public class ViewHandler {
 
     public void showChooseUser(){
         try {
-            Controller chooseUser = ChooseUserController.get(selectPlaylistID);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLs.chooseUser));
+            ChooseUserController chooseUser = ChooseUserController.get(selectPlaylistID);
+            loader.setController(chooseUser);
+            chooseUser.init(new Scene(loader.load()));
             Stage chooseStage = new Stage();
+            chooseUser.setStage(chooseStage);
             chooseStage.setTitle("PlayListX: Choose User");
             chooseStage.getIcons().add(new Image(CSS.logo()));
             chooseStage.initOwner(WINDOW);
@@ -174,6 +178,8 @@ public class ViewHandler {
             chooseStage.show();
         } catch (RemoteException | NotBoundException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -192,6 +198,7 @@ public class ViewHandler {
                 controller.init(new Scene(loader.load()));
             }
         } catch (IOException | IllegalStateException e) {
+            e.printStackTrace();
             popUp(Notify.ACCESS, "Failed loading " + controller.getClass().getName() + " FXML!");
             System.exit(0);
         }

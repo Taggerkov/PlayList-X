@@ -180,12 +180,14 @@ public class SongListController implements Controller, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //noinspection DuplicatedCode
-        if (activeSort.equals(sortTitle)) refresh(new SongTitleComparator());
-        else if (activeSort.equals(sortYear)) refresh(new SongYearComparator());
-        else if (activeSort.equals(sortArtist)) refresh(new SongArtistComparator());
-        else if (activeSort.equals(sortGenre)) refresh(new SongGenreComparator());
-        else if (activeSort.equals(sortAlbum)) refresh(new SongAlbumComparator());
-        else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
+        if (evt.getPropertyName().equals("REFRESH")) {
+            //noinspection DuplicatedCode
+            if (activeSort.equals(sortTitle)) refresh(new SongTitleComparator());
+            else if (activeSort.equals(sortYear)) refresh(new SongYearComparator());
+            else if (activeSort.equals(sortArtist)) refresh(new SongArtistComparator());
+            else if (activeSort.equals(sortGenre)) refresh(new SongGenreComparator());
+            else if (activeSort.equals(sortAlbum)) refresh(new SongAlbumComparator());
+            else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
+        }
     }
 }

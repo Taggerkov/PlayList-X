@@ -14,8 +14,8 @@ Version: 3.1
     -mainViewsColor: grey;
     -activeColor: #1b1b1b;
     /* Login Vars */
-    -loginInputColor: black;
-    -loginInputDropShadow: #8d8686;
+    -loginInputColor: #d1cfcf;
+    -loginInputDropShadow: #1b1b1b;
     /* Others */
     -hiddenVisibility: false;
     -staticViewPortColor: transparent;
@@ -102,6 +102,7 @@ Version: 3.1
 .scroll-pane > .viewport {
     -fx-background-color: -staticViewPortColor;
 }
+
 /* ViewPort Hover Config */
 .scroll-pane:hover > .viewport {
     -fx-background-color: -hoverViewPortColor;

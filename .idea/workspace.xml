@@ -5,13 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="0.8 - Testing">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/login/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/login/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/ChooseUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/ChooseUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/PlayListsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/PlayListsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/SongListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/SongListController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/ThePlayListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/ThePlayListController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/ViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/ViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/Views.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/Views.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ChooseUserModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ChooseUserModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/HomeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/HomeModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/cherry.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/cherry.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/light.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/light.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/pinky.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/pinky.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/thunder.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/css/thunder.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/fxml/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/com/playlistx/fxml/home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/fxml/chooseUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/fxml/chooseUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/fxml/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/fxml/home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ChooseUserController$ChoiceType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ChooseUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ChooseUserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/SongListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/SongListController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ViewHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ViewHandler$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ViewHandler$Notify.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ViewHandler$Notify.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ViewHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/ViewHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/Views.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/view/Views.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/viewmodel/ChooseUserModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/viewmodel/ChooseUserModel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,33 +73,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.Entry.executor": "Run",
-    "Application.PlayListX.executor": "Run",
-    "Application.Server.executor": "Run",
-    "Application.TESTER.executor": "Run",
-    "Application.TESTER2.executor": "Run",
-    "Application.TEWST.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Sergiu",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Tagge/IdeaProjects/playlist-x/client/src/main/resources/com/playlistx/css",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "editor.preferences.gutterIcons",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Entry.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PlayListX.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TESTER.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TESTER2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TEWST.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Sergiu&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Tagge/IdeaProjects/playlist-x/client/src/main/resources/com/playlistx/css&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.gutterIcons&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\css" />
@@ -98,7 +115,8 @@
   <component name="RunManager" selected="Application.PlayListX">
     <configuration name="PlayListX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.playlistx.PlayListX" />
-      <module name="playlistx-client" />
+      <module name="client" />
+      <option name="VM_PARAMETERS" value="--add-exports javafx.base/com.sun.javafx.event=org.controlsfx.controls" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.playlistx.*" />
@@ -111,7 +129,7 @@
     </configuration>
     <configuration name="Server" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.playlistx.Entry" />
-      <module name="playlistx-server" />
+      <module name="server" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.playlistx.*" />
@@ -122,6 +140,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.PlayListX" />
+      <item itemvalue="Application.Server" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.PlayListX" />
@@ -436,6 +458,7 @@
     <MESSAGE value="0.7 - UI Advance" />
     <MESSAGE value="0.7 - Testing" />
     <MESSAGE value="0.8 - Testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="0.8 - Testing" />
+    <MESSAGE value="0.9 - Almost There Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.9 - Almost There Update" />
   </component>
 </project>

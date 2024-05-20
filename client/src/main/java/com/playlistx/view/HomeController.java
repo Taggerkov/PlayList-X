@@ -93,11 +93,24 @@ public class HomeController implements Controller, PropertyChangeListener {
     @FXML
     private void newUsername(@NotNull ActionEvent evt) {
         if (evt.getSource() == nameAtn)
-            if (!model.changeUsername(newName.getText(), oldPass.getText())) oldPass.setStyle(STYLE_RED);
-            else oldPass.setStyle("");
+            if (!model.changeUsername(newName.getText(), oldPass.getText())) {
+                ViewHandler.popUp(ViewHandler.Notify.FILE, "Wrong Password or Invalid Username");
+                oldPass.setStyle(STYLE_RED);
+                newName.setStyle(STYLE_RED);
+            } else {
+                oldPass.setStyle("");
+                newName.setStyle("");
+            }
         else {
-            if (!model.changeUsername(menuNewName.getText(), menuOldPass.getText())) menuOldPass.setStyle(STYLE_RED);
-            else menuOldPass.setStyle("");
+            //noinspection DuplicatedCode
+            if (!model.changeUsername(menuNewName.getText(), menuOldPass.getText())) {
+                ViewHandler.popUp(ViewHandler.Notify.FILE, "Wrong Password or Invalid Username");
+                menuOldPass.setStyle(STYLE_RED);
+                menuNewName.setStyle(STYLE_RED);
+            } else {
+                menuOldPass.setStyle("");
+                menuNewName.setStyle("");
+            }
         }
         cleanProfile();
     }
@@ -105,11 +118,24 @@ public class HomeController implements Controller, PropertyChangeListener {
     @FXML
     private void newPassword(@NotNull ActionEvent evt) {
         if (evt.getSource() == passAtn)
-            if (!model.changePassword(oldPass.getText(), newPass.getText())) oldPass.setStyle(STYLE_RED);
-            else oldPass.setStyle("");
+            if (!model.changePassword(oldPass.getText(), newPass.getText())) {
+                ViewHandler.popUp(ViewHandler.Notify.FILE, "Wrong Password or Invalid Password!");
+                oldPass.setStyle(STYLE_RED);
+                newPass.setStyle(STYLE_RED);
+            } else {
+                oldPass.setStyle("");
+                newPass.setStyle("");
+            }
         else {
-            if (!model.changePassword(menuOldPass.getText(), menuNewPass.getText())) menuOldPass.setStyle(STYLE_RED);
-            else menuOldPass.setStyle("");
+            //noinspection DuplicatedCode
+            if (!model.changePassword(menuOldPass.getText(), menuNewPass.getText())) {
+                ViewHandler.popUp(ViewHandler.Notify.FILE, "Wrong Password or Invalid Password!");
+                menuOldPass.setStyle(STYLE_RED);
+                menuNewPass.setStyle(STYLE_RED);
+            } else {
+                menuOldPass.setStyle("");
+                menuNewPass.setStyle("");
+            }
         }
         cleanProfile();
     }
@@ -169,6 +195,6 @@ public class HomeController implements Controller, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        refresh();
+        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

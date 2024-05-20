@@ -93,11 +93,10 @@ public class PlayListsController implements Controller, PropertyChangeListener {
         clearVisualSelection();
         if (evt.getSource() == sortTitle) {
             activeSort = sortTitle;
-            if (isSortReverse){
+            if (isSortReverse) {
                 refresh(new PlayTitleComparator().reversed());
                 sortTitle.setText(sortTitle.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayTitleComparator());
                 isSortReverse = false;
                 sortTitle.setText(sortTitle.getText() + " ▼");
@@ -107,8 +106,7 @@ public class PlayListsController implements Controller, PropertyChangeListener {
             if (isSortReverse) {
                 refresh(new PlayYearComparator().reversed());
                 sortYear.setText(sortYear.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayYearComparator());
                 isSortReverse = false;
                 sortYear.setText(sortYear.getText() + " ▼");
@@ -118,8 +116,7 @@ public class PlayListsController implements Controller, PropertyChangeListener {
             if (isSortReverse) {
                 refresh(new PlayAuthorComparator().reversed());
                 sortAuthor.setText(sortAuthor.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayAuthorComparator());
                 isSortReverse = false;
                 sortAuthor.setText(sortAuthor.getText() + " ▼");
@@ -129,8 +126,7 @@ public class PlayListsController implements Controller, PropertyChangeListener {
             if (isSortReverse) {
                 refresh(new PlayAccessComparator().reversed());
                 sortAccess.setText(sortAccess.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlayAccessComparator());
                 isSortReverse = false;
                 sortAccess.setText(sortAccess.getText() + " ▼");
@@ -140,8 +136,7 @@ public class PlayListsController implements Controller, PropertyChangeListener {
             if (isSortReverse) {
                 refresh(new PlaySongCountComparator().reversed());
                 sortSongCount.setText(sortSongCount.getText() + " ▲");
-            }
-            else {
+            } else {
                 refresh(new PlaySongCountComparator());
                 isSortReverse = false;
                 sortSongCount.setText(sortSongCount.getText() + " ▼");
@@ -167,6 +162,6 @@ public class PlayListsController implements Controller, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        refresh();
+        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

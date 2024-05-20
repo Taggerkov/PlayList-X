@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -34,7 +35,9 @@ public class ThePlayListController implements Controller, PropertyChangeListener
     @FXML
     private Label sortTitle, songTitle, sortYear, songYear, sortArtist, songArtist, sortGenre, songGenre, sortAlbum, songAlbum, sortDuration, songDuration, activeSort;
     @FXML
-    private TextArea screenTitle, screenDesc;
+    private TextField screenTitle;
+    @FXML
+    private TextArea screenDesc;
     @FXML
     private Text isPublic;
 
@@ -225,6 +228,6 @@ public class ThePlayListController implements Controller, PropertyChangeListener
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        refresh();
+        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

@@ -49,13 +49,14 @@ class ChooseUserController implements Controller {
         return scene;
     }
 
-    protected void setStage(Stage stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
     @FXML
     private void confirm() {
         model.addUser(chosenUser.getText());
+        stage.close();
     }
 
     @FXML

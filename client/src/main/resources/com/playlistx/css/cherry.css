@@ -14,8 +14,8 @@ Version: 3.1
     -mainViewsColor: #882020;
     -activeColor: red;
     /* Login Vars */
-    -loginInputColor: black;
-    -loginInputDropShadow: #8d8686;
+    -loginInputColor: #b31b1b;;
+    -loginInputDropShadow: red;
     /* Others */
     -hiddenVisibility: false;
     -staticViewPortColor: transparent;

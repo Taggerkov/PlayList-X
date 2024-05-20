@@ -1,6 +1,7 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.Model;
+import com.playlistx.model.login.LoginException;
 import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.music.Song;
@@ -18,6 +19,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeModel implements PropertyChangeListener {
     private static HomeModel instance;
@@ -82,6 +84,8 @@ public class HomeModel implements PropertyChangeListener {
             awr = User.get().changeUsername(newUsername, password);
         } catch (RemoteException | NotBoundException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        } catch (LoginException e) {
+            return false;
         }
         return awr;
     }
