@@ -17,7 +17,11 @@ public class SongDAO {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs WHERE playlist_id =?");
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT song.* FROM song " +
+                            "JOIN songList ON song.id = songList.song_id " +
+                            "WHERE songList.playlist_id = ?"
+            );
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -29,7 +33,7 @@ public class SongDAO {
                         resultSet.getString("title"),
                         resultSet.getString("albumName"),
                         resultSet.getString("link"),
-                        resultSet.getString("featuredArtists")
+                        resultSet.getString("featuredartist")
                 );
                 songs.add(song);
             }
@@ -40,11 +44,13 @@ public class SongDAO {
         return songs;
     }
 
+
     public int getSongsCount(int playlistId) {
         int count = 0;
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM songs WHERE playlist_id = ?");
+            // Replace "playlist_id" with the correct column name
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM playlist WHERE Songscount = ?");
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -61,7 +67,7 @@ public class SongDAO {
         List<String> collaborators = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT username FROM collaborators WHERE playlist_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT username FROM collaborator WHERE playlist_id = ?");
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -78,7 +84,7 @@ public class SongDAO {
         Playlist playlist = null;
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM playlists WHERE id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM playlist WHERE id = ?");
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -87,8 +93,6 @@ public class SongDAO {
                         this,
                         resultSet.getString("title"),
                         resultSet.getString("owner"),
-                        // You need to implement getCollaborators method
-                        getCollaborators(playlistId),
                         resultSet.getDate("creationDate"),
                         // You need to implement getSongsCount method
                         getSongsCount(playlistId),
@@ -108,7 +112,7 @@ public class SongDAO {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs WHERE playlist_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song WHERE playlist_id = ?");
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -125,7 +129,7 @@ public class SongDAO {
     public void addSongToPlaylist(int playlistId, Song song) {
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO songs (playlist_id, artist, year, genre, title, albumName, link, featuredArtists) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO song (playlist_id, artist, year, genre, title, albumName, link, featuredArtists) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             statement.setInt(1, playlistId);
             statement.setString(2, song.getArtist());
             statement.setInt(3, song.getYear());
@@ -144,7 +148,7 @@ public class SongDAO {
     public void removeSongFromPlaylist(int playlistId, Song song) {
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM songs WHERE playlist_id = ? AND id = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM song WHERE playlist_id = ? AND id = ?");
             statement.setInt(1, playlistId);
             statement.setInt(2, song.getId());
             statement.executeUpdate();
@@ -158,7 +162,7 @@ public class SongDAO {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs ORDER BY likes DESC");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song ORDER BY likes DESC");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Song song = new Song(resultSet.getInt("id"), resultSet.getString("artist"), resultSet.getInt("year"), resultSet.getString("genre"), resultSet.getString("title"), resultSet.getString("albumName"), resultSet.getString("link"), resultSet.getString("featuredArtists"));
@@ -175,7 +179,7 @@ public class SongDAO {
         int playlistId = -1;
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT id FROM playlists WHERE name = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT id FROM playlist WHERE name = ?");
             statement.setString(1, playlistName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -192,7 +196,7 @@ public class SongDAO {
         List<SongList> songLists = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT s.title as song_title, p.name as playlist_name FROM songList sl JOIN songs s ON sl.song_id = s.id JOIN playlists p ON sl.playlist_id = p.id");
+            PreparedStatement statement = connection.prepareStatement("SELECT s.title as song_title, p.name as playlist_name FROM songList sl JOIN song s ON sl.song_id = s.id JOIN playlist p ON sl.playlist_id = p.id");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 SongList songList = new SongList(resultSet.getString("song_title"), resultSet.getString("playlist_name"), this);
@@ -210,7 +214,7 @@ public class SongDAO {
         int songId = -1;
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT id FROM songs WHERE title = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT id FROM song WHERE title = ?");
             statement.setString(1, songTitle);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -227,7 +231,7 @@ public class SongDAO {
         Song song = null;
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs WHERE title = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song WHERE title = ?");
             statement.setString(1, songTitle);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -274,5 +278,75 @@ public class SongDAO {
         }
         return songs;
     }
+
+    public List<String> getAllGenres() {
+        List<String> genres = new ArrayList<>();
+        try {
+            Connection connection = dbConnector.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT DISTINCT genre FROM song");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                genres.add(resultSet.getString("genre"));
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return genres;
+    }
+
+    public List<Song> getTopLikedSongsByGenre(String genre, int limit) {
+        List<Song> songs = new ArrayList<>();
+        try {
+            Connection connection = dbConnector.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song WHERE genre = ? ORDER BY likes DESC LIMIT ?");
+            statement.setString(1, genre);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Song song = new Song(
+                        resultSet.getInt("id"),
+                        resultSet.getString("artist"),
+                        resultSet.getInt("year"),
+                        resultSet.getString("genre"),
+                        resultSet.getString("title"),
+                        resultSet.getString("albumName"),
+                        resultSet.getString("link"),
+                        resultSet.getString("featuredArtists")
+                );
+                songs.add(song);
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return songs;
+    }
+    public List<Playlist> getAllPlaylists() {
+        List<Playlist> playlists = new ArrayList<>();
+        try {
+            Connection connection = dbConnector.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"playlist\"");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Playlist playlist = new Playlist(
+                        resultSet.getInt("id"),
+                        this,
+                        resultSet.getString("title"),
+                        resultSet.getString("ownerid"), // replace with the correct column name
+                        resultSet.getDate("creationDate"),
+                        getSongsCount(resultSet.getInt("id")), // ensure getSongsCount method uses correct table name
+                        resultSet.getBoolean("isPublic")
+                );
+                playlists.add(playlist);
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return playlists;
+    }
+
+
 
 }

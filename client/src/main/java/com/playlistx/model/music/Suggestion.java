@@ -13,16 +13,27 @@ public class Suggestion implements SongSuggester {
         this.songDAO = songDAO;
     }
 
-    // existing constructors, getters, and setters...
-
+    public String getLabel() {
+        return label;
+    }
     @Override
-    public Song suggestSong(Playlist playlist) {
-        // Fetch the most liked songs from the database
-        List<Song> songs = songDAO.getMostLikedSongs();
+    public java.util.List<Song> suggestSong(Playlist playlist) {
+        // Fetch all unique genres from the database
+        List<String> genres = songDAO.getAllGenres();
+        if (genres.isEmpty()) {
+            return null; // or throw an exception
+        }
+
+        // Randomly select a genre
+        String selectedGenre = genres.get(random.nextInt(genres.size()));
+
+        // Fetch the top 3 liked songs from the selected genre
+        List<Song> songs = songDAO.getTopLikedSongsByGenre(selectedGenre, 3);
         if (songs.isEmpty()) {
             return null; // or throw an exception
         }
-        int randomIndex = random.nextInt(songs.size());
-        return songs.get(randomIndex);
+
+        // Return the top 3 songs from the selected genre
+        return songs;
     }
 }
