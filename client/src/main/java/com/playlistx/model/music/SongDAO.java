@@ -253,7 +253,7 @@ public class SongDAO {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM songs");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"song\""); // changed "song" to "Song"
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Song song = new Song(
@@ -264,7 +264,7 @@ public class SongDAO {
                         resultSet.getString("title"),
                         resultSet.getString("albumName"),
                         resultSet.getString("link"),
-                        resultSet.getString("featuredArtists")
+                        resultSet.getString("featuredartist")
                 );
                 songs.add(song);
             }

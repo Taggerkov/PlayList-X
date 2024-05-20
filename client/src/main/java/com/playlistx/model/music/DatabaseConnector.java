@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    private String url = "jdbc:postgresql://localhost:5432/yourDatabase"; // change to PostgreSQL JDBC URL
+    private String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=playlistx"; // the database URL
     private String username = "postgres";
-    private String password = "vis";
+    private String password = "10123432";
 
     public DatabaseConnector() {
         try {
