@@ -1,10 +1,10 @@
 package com.playlistx.view;
 
+import com.playlistx.model.music.Playlist;
 import com.playlistx.model.music.Song;
 import com.playlistx.model.paths.FXMLs;
-import com.playlistx.viewmodel.SongListModel;
+import com.playlistx.viewmodel.ThePlayListModel;
 import com.playlistx.viewmodel.comparators.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -13,41 +13,57 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-public class SongListController implements Controller, PropertyChangeListener {
-    private static SongListController instance;
-    private final SongListModel model = SongListModel.get();
+
+public class ThePlayListController implements Controller, PropertyChangeListener {
+    private static final HashMap<Integer, Boolean> pressedKeys = new HashMap<>();
+    private static ThePlayListController instance;
+
+    static {
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(event -> {
+            synchronized (ThePlayListController.class) {
+                if (event.getID() == KeyEvent.KEY_PRESSED) pressedKeys.put(event.getKeyCode(), true);
+                else if (event.getID() == KeyEvent.KEY_RELEASED) pressedKeys.put(event.getKeyCode(), false);
+                return false;
+            }
+        });
+    }
+
+    private final ThePlayListModel model = ThePlayListModel.get();
+    private int playlistId;
+    private boolean isSortReverse = false;
     private Scene scene;
-    private boolean isSortReverse = false, isSelect;
-    private int selectPlaylistID;
+    private boolean isOnClick, isOnShift;
     @FXML
     private VBox songList;
     @FXML
-    private Label songTitle, sortTitle, songYear, sortYear, songArtist, sortArtist, songGenre, sortGenre, songAlbum, sortAlbum, songDuration, sortDuration, activeSort;
+    private Label sortTitle, songTitle, sortYear, songYear, sortArtist, songArtist, sortGenre, songGenre, sortAlbum, songAlbum, sortDuration, songDuration, activeSort;
 
-    private SongListController() {
+    private ThePlayListController() {
         model.addListener(this);
     }
 
-    public static SongListController get() {
-        if (instance == null) return instance = new SongListController();
-        return instance;
+    public static ThePlayListController get() {
+        if (instance == null) return instance = new ThePlayListController();
+        else return instance;
     }
 
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
+        refresh(new SongYearComparator());
     }
 
     @Override
     public String getFXML() {
-        return FXMLs.songList;
+        return FXMLs.thePlaylist;
     }
 
     @Override
@@ -55,16 +71,14 @@ public class SongListController implements Controller, PropertyChangeListener {
         return scene;
     }
 
-    public void isSelect(boolean isSelect, int selectPlaylistID) {
-        refresh(new SongYearComparator());
-        activeSort = sortYear;
-        this.isSelect = isSelect;
-        this.selectPlaylistID = selectPlaylistID;
+    public void setPlayList(int playlistId) {
+        this.playlistId = playlistId;
     }
 
     @SuppressWarnings("DuplicatedCode")
     private void refresh(Comparator<Song> comparator) {
-        List<Song> songs = model.getSongsAll();
+        Playlist thePlayList = model.getPlayList(playlistId);
+        List<Song> songs = thePlayList.getSongs();
         songs.sort(comparator);
         songList.getChildren().clear();
         for (Song song : songs) {
@@ -82,15 +96,19 @@ public class SongListController implements Controller, PropertyChangeListener {
             songAlbum.setText(song.getAlbumName());
             songDuration.setText(String.valueOf(song.getDuration()));
             assert songItem != null;
-            if (isSelect) songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
-                model.addToPlaylist(selectPlaylistID, song);
-                Views.PLAYLIST.show();
+            songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
+                if (isKeyPressed(KeyEvent.VK_SHIFT)) {
+                    thePlayList.removeSong(song);
+                    refresh(comparator);
+                }
+                model.play();
             });
             songList.getChildren().add(songItem);
         }
     }
 
-    @FXML @SuppressWarnings("DuplicatedCode")
+    @FXML
+    @SuppressWarnings("DuplicatedCode")
     private void toggleSort(@NotNull MouseEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
         clearVisualSelection();
@@ -161,9 +179,8 @@ public class SongListController implements Controller, PropertyChangeListener {
         activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
     }
 
-    @FXML
-    private void addSong() {
-        model.addSong();
+    public static boolean isKeyPressed(int keyCode) {
+        return pressedKeys.getOrDefault(keyCode, false);
     }
 
     /**

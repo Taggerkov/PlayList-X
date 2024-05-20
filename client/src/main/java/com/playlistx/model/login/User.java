@@ -347,7 +347,4 @@ public class User {
         }
         return md.digest(password.getBytes(StandardCharsets.UTF_8));
     }
-
-    public void addSharedPlaylist(com.playlistx.model.music.Playlist playlist) {
-    }
 }

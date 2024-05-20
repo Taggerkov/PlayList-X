@@ -1,6 +1,7 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.Model;
+import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.music.Song;
 import com.playlistx.model.paths.CSS;
@@ -75,6 +76,26 @@ public class HomeModel implements PropertyChangeListener {
         return songs.subList(0, index);
     }
 
+    public boolean changeUsername(String newUsername, String password) {
+        boolean awr = false;
+        try {
+            awr = User.get().changeUsername(newUsername, password);
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+        return awr;
+    }
+
+    public boolean changePassword(String oldPassword, String newPassword) {
+        boolean awr = false;
+        try {
+            awr = User.get().changePassword(oldPassword, newPassword);
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+        }
+        return awr;
+    }
+
     public CSS[] getCSS() {
         return CSS.values();
     }
@@ -96,5 +117,16 @@ public class HomeModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         pcs.firePropertyChange(evt);
+    }
+
+    public void close() {
+        if (ViewHandler.popUp(ViewHandler.Notify.CONFIRM, "Are you sure?")) {
+            try {
+                User.get().logout();
+                System.exit(0);
+            } catch (RemoteException | NotBoundException e) {
+                ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
+            }
+        }
     }
 }

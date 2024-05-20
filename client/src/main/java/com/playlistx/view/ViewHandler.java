@@ -1,5 +1,6 @@
 package com.playlistx.view;
 
+import com.playlistx.model.ModelManager;
 import com.playlistx.model.login.User;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.model.paths.FXMLs;
@@ -12,6 +13,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -28,16 +30,15 @@ import java.util.HashMap;
 import static javafx.application.Application.setUserAgentStylesheet;
 
 
-public class ViewHandler implements PropertyChangeListener {
+public class ViewHandler {
     public static final Stage WINDOW = new Stage();
     private static ViewHandler instance;
     private final User user = User.get();
-    private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get(), PlayListsController.get()};
+    private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get(), PlayListsController.get(), ThePlayListController.get()};
     private final HashMap<Controller, Tab> tabs = new HashMap<>();
     private int selectPlaylistID;
 
     private ViewHandler() throws NotBoundException, RemoteException {
-        CSS.addListener(instance);
         loadAllControllers();
         display(Views.LOGIN);
         WINDOW.setMinWidth(680);
@@ -117,7 +118,7 @@ public class ViewHandler implements PropertyChangeListener {
             case HOME -> {
                 scene = HomeController.get().getScene();
                 HomeController.get().switchTab(null);
-                setTitle("SongList");
+                setTitle("Home");
             }
             case SONGLIST -> {
                 scene = SongListController.get().getScene();
@@ -138,9 +139,15 @@ public class ViewHandler implements PropertyChangeListener {
                 setTitle("PlayLists");
             }
             case PLAYLIST -> {
-                scene = PlayListsController.get().getScene();
-                HomeController.get().switchTab(tabs.get(SongListController.get()));
-                setTitle("SongList");
+                scene = ThePlayListController.get().getScene();
+                ThePlayListController.get().setPlayList(selectPlaylistID);
+                HomeController.get().switchTab(tabs.get(ThePlayListController.get()));
+                try {
+                    setTitle(ModelManager.get().getPlaylist(selectPlaylistID).getTitle());
+                } catch (RemoteException | NotBoundException e) {
+                    popUp(Notify.ACCESS, "RMI Connection Error!");
+                    throw new RuntimeException(e);
+                }
             }
             default -> popUp(Notify.ACCESS, "This 'View' doesn't exist or is not available!");
         }
@@ -223,29 +230,18 @@ public class ViewHandler implements PropertyChangeListener {
         scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
     }
 
-    /**
-     * This method gets called when a bound property is changed.
-     *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
-     */
-    @Override
-    public void propertyChange(@NotNull PropertyChangeEvent evt) {
-
-        if (evt.getPropertyName().equalsIgnoreCase("CSS")) {
-            System.out.println("ohh da");
-            Scene scene = HomeController.get().getScene();
-            scene.getStylesheets().clear();
-            setUserAgentStylesheet(null);
-            scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
-
-            scene.getStylesheets().clear();
-            setUserAgentStylesheet(null);
-            scene.getStylesheets()
-                    .add(getClass()
-                            .getResource(CSS.getCSS().getPath())
-                            .toExternalForm());
-        }
+    public void playVideoYT(String linkYT) {
+        Stage videoStage = new Stage();
+        videoStage.setTitle("PlayVideoYT");
+        videoStage.getIcons().add(new Image(CSS.logo()));
+        videoStage.initOwner(WINDOW);
+        WebView webview = new WebView();
+        webview.getEngine().load("http://www.youtube.com/embed/utUPth77L_o?autoplay=1");
+        webview.setPrefSize(640, 390);
+        videoStage.setScene(new Scene(webview));
+        videoStage.initModality(Modality.WINDOW_MODAL);
+        videoStage.initStyle(StageStyle.TRANSPARENT);
+        videoStage.show();
     }
 
     public enum Notify {

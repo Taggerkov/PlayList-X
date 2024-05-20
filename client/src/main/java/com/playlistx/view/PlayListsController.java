@@ -167,6 +167,6 @@ public class PlayListsController implements Controller, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        refresh();
     }
 }

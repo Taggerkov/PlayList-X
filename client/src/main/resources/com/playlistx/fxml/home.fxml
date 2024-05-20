@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -35,6 +35,26 @@
                         <MenuItem mnemonicParsing="false" onAction="#toggleFavorites" text="Hide Favorites" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#toggleSettings" text="Settings" />
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Profile">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newUsername" text="Name Change">
+                           <graphic>
+                              <TextField fx:id="menuNewName" prefHeight="25.0" prefWidth="91.0" promptText="New Name" styleClass="loginField" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#newPassword" text="Pass Change">
+                           <graphic>
+                              <TextField fx:id="menuOldPass" prefHeight="25.0" prefWidth="91.0" promptText="Password" styleClass="loginField" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#newPassword" text="Pass Change">
+                           <graphic>
+                              <TextField fx:id="menuNewPass" prefHeight="25.0" prefWidth="91.0" promptText="New Password" styleClass="loginField" />
+                           </graphic>
+                        </MenuItem>
                      </items>
                   </Menu>
                </menus>
@@ -198,7 +218,7 @@
                                        <children>
                                           <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <TextField alignment="CENTER" style="-fx-control-inner-background: -backgroundColor; -fx-background-color: -backgorundColor;" text="&quot;" VBox.vgrow="NEVER">
+                                                <TextField alignment="CENTER" style="-fx-control-inner-background: -backgroundColor; -fx-border-color: -backgroundColor; -fx-border-width: 2px; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="NEVER">
                                                    <font>
                                                       <Font size="53.0" />
                                                    </font>
@@ -254,12 +274,12 @@
                                           <Insets right="160.0" />
                                        </padding>
                                     </Label>
-                                    <TextArea maxHeight="150.0" minHeight="-Infinity" prefHeight="50.0" style="-fx-control-inner-background: -backgroundColor; -fx-highlight-fill: red;" text="&quot;" VBox.vgrow="ALWAYS" />
+                                    <TextArea maxHeight="150.0" minHeight="-Infinity" prefHeight="50.0" style="-fx-control-inner-background: -backgroundColor; -fx-highlight-fill: -activeColor; -fx-text-fill: -contrastColor;" text="&quot;" VBox.vgrow="ALWAYS" />
                                     <VBox prefHeight="568.0" prefWidth="875.0" VBox.vgrow="ALWAYS">
                                        <children>
                                           <HBox alignment="CENTER" prefHeight="33.0" prefWidth="361.0" spacing="10.0">
                                              <children>
-                                                <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
+                                                <Label fx:id="sortTitle" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Title">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -268,7 +288,7 @@
                                                    </padding>
                                                 </Label>
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
+                                                <Label fx:id="sortYear" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Year ▼">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -277,7 +297,7 @@
                                                    </padding>
                                                 </Label>
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
+                                                <Label fx:id="sortArtist" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Artist">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -286,7 +306,7 @@
                                                    </padding>
                                                 </Label>
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
+                                                <Label fx:id="sortGenre" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Genre">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -295,7 +315,7 @@
                                                    </padding>
                                                 </Label>
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
+                                                <Label fx:id="sortAlbum" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Album">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -304,7 +324,7 @@
                                                    </padding>
                                                 </Label>
                                                 <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                <Label style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
+                                                <Label fx:id="sortDuration" style="-fx-background-radius: 10px;" styleClass="songListSelector" text="Duration">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -319,7 +339,7 @@
                                           </HBox>
                                           <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="546.0" prefWidth="886.0" style="-fx-background-color: -mainViewsColor; -fx-background-radius: 30 0 0 0;" styleClass="viewScroll" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                                              <content>
-                                                <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                                <VBox fx:id="songList" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                                    <children>
                                                       <HBox alignment="CENTER" style="-fx-background-color: -secondaryColor; -fx-background-radius: 25;" VBox.vgrow="NEVER">
                                                          <children>
@@ -333,7 +353,7 @@
                                                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                      </padding>
                                                                   </Label>
-                                                                  <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                                  <Label fx:id="songTitle" style="-fx-background-radius: 10px;" text="&quot;">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
@@ -353,7 +373,7 @@
                                                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                      </padding>
                                                                   </Label>
-                                                                  <Label style="-fx-background-radius: 10px;" text="00">
+                                                                  <Label fx:id="songYear" style="-fx-background-radius: 10px;" text="00">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
@@ -373,7 +393,7 @@
                                                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                      </padding>
                                                                   </Label>
-                                                                  <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                                  <Label fx:id="songArtist" style="-fx-background-radius: 10px;" text="&quot;">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
@@ -393,7 +413,7 @@
                                                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                      </padding>
                                                                   </Label>
-                                                                  <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                                  <Label fx:id="songGenre" style="-fx-background-radius: 10px;" text="&quot;">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
@@ -413,7 +433,7 @@
                                                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                      </padding>
                                                                   </Label>
-                                                                  <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                                  <Label fx:id="songAlbum" style="-fx-background-radius: 10px;" text="&quot;">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
@@ -433,7 +453,7 @@
                                                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                      </padding>
                                                                   </Label>
-                                                                  <Label style="-fx-background-radius: 10px;" text="&quot;">
+                                                                  <Label fx:id="songDuration" style="-fx-background-radius: 10px;" text="&quot;">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
@@ -523,12 +543,47 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="themeSelector" prefWidth="150.0" />
+            <ChoiceBox fx:id="themeSelector" prefWidth="150.0" styleClass="loginField" />
             <AnchorPane prefHeight="88.0" prefWidth="141.0" VBox.vgrow="NEVER">
                <children>
                   <ImageView fitHeight="34.0" fitWidth="25.0" layoutX="116.0" layoutY="-5.0" onMouseClicked="#confirmTheme" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
                      <image>
                         <Image url="@../img/tick.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="profile" alignment="TOP_CENTER" fillWidth="false" layoutX="23.0" layoutY="119.0" prefHeight="95.0" prefWidth="161.0" spacing="15.0" style="-fx-background-color: -secondaryColor; -fx-background-radius: 15px; visibility: false;">
+         <children>
+            <Label text="Profile:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="newName" promptText="New Username" styleClass="loginField" />
+            <TextField fx:id="oldPass" promptText="Password" styleClass="loginField" />
+            <TextField fx:id="newPass" promptText="New Password" styleClass="loginField" />
+            <AnchorPane prefHeight="88.0" prefWidth="141.0" VBox.vgrow="NEVER">
+               <children>
+                  <ImageView fx:id="nameAtn" fitHeight="34.0" fitWidth="25.0" layoutX="116.0" layoutY="-5.0" onMouseClicked="#newUsername" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
+                     <image>
+                        <Image url="@../img/username.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <ImageView fx:id="passAtn" fitHeight="34.0" fitWidth="25.0" layoutX="92.0" layoutY="-5.0" onMouseClicked="#newPassword" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/password.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
