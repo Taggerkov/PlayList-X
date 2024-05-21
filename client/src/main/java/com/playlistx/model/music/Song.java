@@ -136,4 +136,8 @@ public class Song {
                 ", featuredArtists='" + featuredArtists + '\'' +
                 '}';
     }
+
+    public String getFeaturedArtist() {
+        return featuredArtists;
+    }
 }

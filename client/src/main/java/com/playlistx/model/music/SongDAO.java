@@ -67,7 +67,11 @@ public class SongDAO {
         List<String> collaborators = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT username FROM collaborator WHERE playlist_id = ?");
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT Listener.username FROM collaborator " +
+                            "JOIN Listener ON collaborator.listener_id = Listener.id " +
+                            "WHERE collaborator.playlist_id = ?"
+            );
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -80,43 +84,30 @@ public class SongDAO {
         return collaborators;
     }
 
-    public Playlist getPlaylistById(int playlistId) {
-        Playlist playlist = null;
-        try {
-            Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM playlist WHERE id = ?");
-            statement.setInt(1, playlistId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                playlist = new Playlist(
-                        resultSet.getInt("id"),
-                        this,
-                        resultSet.getString("title"),
-                        resultSet.getString("owner"),
-                        resultSet.getDate("creationDate"),
-                        // You need to implement getSongsCount method
-                        getSongsCount(playlistId),
-                        resultSet.getBoolean("isPublic")
-                );
-                // You need to implement getSongsFromPlaylist method
-                playlist.setSongs(getSongsFromPlaylist(playlistId));
-            }
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return playlist;
-    }
+
 
     public List<Song> getAllSongsFromPlaylist(int playlistId) {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song WHERE playlist_id = ?");
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT song.* FROM song " +
+                            "JOIN songList ON song.id = songList.song_id " +
+                            "WHERE songList.playlist_id = ?"
+            );
             statement.setInt(1, playlistId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Song song = new Song(resultSet.getInt("id"), resultSet.getString("artist"), resultSet.getInt("year"), resultSet.getString("genre"), resultSet.getString("title"), resultSet.getString("albumName"), resultSet.getString("link"), resultSet.getString("featuredArtists"));
+                Song song = new Song(
+                        resultSet.getInt("id"),
+                        resultSet.getString("artist"),
+                        resultSet.getInt("year"),
+                        resultSet.getString("genre"),
+                        resultSet.getString("title"),
+                        resultSet.getString("albumName"),
+                        resultSet.getString("link"),
+                        resultSet.getString("featuredArtist") // corrected from "featuredArtists" to "featuredArtist"
+                );
                 songs.add(song);
             }
             connection.close();
@@ -129,26 +120,46 @@ public class SongDAO {
     public void addSongToPlaylist(int playlistId, Song song) {
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO song (playlist_id, artist, year, genre, title, albumName, link, featuredArtists) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            // Insert the song into the song table
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO song (artist, year, genre, title, albumName, link, featuredArtist) VALUES (?, ?, ?, ?, ?, ?, ?)", java.sql.Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, song.getArtist());
+            statement.setInt(2, song.getYear());
+            statement.setString(3, song.getGenre());
+            statement.setString(4, song.getTitle());
+            statement.setString(5, song.getAlbumName());
+            statement.setString(6, song.getLink());
+            statement.setString(7, song.getFeaturedArtist());
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new java.sql.SQLException("Creating song failed, no rows affected.");
+            }
+
+            // Retrieve the ID of the inserted song
+            int songId;
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    songId = generatedKeys.getInt(1);
+                } else {
+                    throw new java.sql.SQLException("Creating song failed, no ID obtained.");
+                }
+            }
+
+            // Insert the song and playlist relationship into the songList table
+            statement = connection.prepareStatement("INSERT INTO songList (playlist_id, song_id) VALUES (?, ?)");
             statement.setInt(1, playlistId);
-            statement.setString(2, song.getArtist());
-            statement.setInt(3, song.getYear());
-            statement.setString(4, song.getGenre());
-            statement.setString(5, song.getTitle());
-            statement.setString(6, song.getAlbumName());
-            statement.setString(7, song.getLink());
-            statement.setString(8, song.getFeaturedArtists());
+            statement.setInt(2, songId);
             statement.executeUpdate();
+
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public void removeSongFromPlaylist(int playlistId, Song song) {
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM song WHERE playlist_id = ? AND id = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM songList WHERE playlist_id = ? AND song_id = ?");
             statement.setInt(1, playlistId);
             statement.setInt(2, song.getId());
             statement.executeUpdate();
@@ -157,15 +168,28 @@ public class SongDAO {
             e.printStackTrace();
         }
     }
-
     public List<Song> getMostLikedSongs() {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song ORDER BY likes DESC");
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT song.*, COUNT(likes.song_id) as likes_count " +
+                            "FROM song LEFT JOIN likes ON song.id = likes.song_id " +
+                            "GROUP BY song.id " +
+                            "ORDER BY likes_count DESC"
+            );
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Song song = new Song(resultSet.getInt("id"), resultSet.getString("artist"), resultSet.getInt("year"), resultSet.getString("genre"), resultSet.getString("title"), resultSet.getString("albumName"), resultSet.getString("link"), resultSet.getString("featuredArtists"));
+                Song song = new Song(
+                        resultSet.getInt("id"),
+                        resultSet.getString("artist"),
+                        resultSet.getInt("year"),
+                        resultSet.getString("genre"),
+                        resultSet.getString("title"),
+                        resultSet.getString("albumName"),
+                        resultSet.getString("link"),
+                        resultSet.getString("featuredArtist") // corrected from "featuredArtists" to "featuredArtist"
+                );
                 songs.add(song);
             }
             connection.close();
@@ -179,7 +203,7 @@ public class SongDAO {
         int playlistId = -1;
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT id FROM playlist WHERE name = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT id FROM playlist WHERE title = ?");
             statement.setString(1, playlistName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -299,7 +323,14 @@ public class SongDAO {
         List<Song> songs = new ArrayList<>();
         try {
             Connection connection = dbConnector.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM song WHERE genre = ? ORDER BY likes DESC LIMIT ?");
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT song.*, COUNT(likes.song_id) as likes_count " +
+                            "FROM song LEFT JOIN likes ON song.id = likes.song_id " +
+                            "WHERE song.genre = ? " +
+                            "GROUP BY song.id " +
+                            "ORDER BY likes_count DESC " +
+                            "LIMIT ?"
+            );
             statement.setString(1, genre);
             statement.setInt(2, limit);
             ResultSet resultSet = statement.executeQuery();
@@ -312,7 +343,7 @@ public class SongDAO {
                         resultSet.getString("title"),
                         resultSet.getString("albumName"),
                         resultSet.getString("link"),
-                        resultSet.getString("featuredArtists")
+                        resultSet.getString("featuredArtist") // corrected from "featuredArtists" to "featuredArtist"
                 );
                 songs.add(song);
             }

@@ -8,6 +8,7 @@ CREATE TABLE Song(
     albumName varchar(50),
     featuredArtist varchar,
     duration int,
+
     genre varchar,
     link varchar,
     CONSTRAINT year_check check (year > 0 AND year <= 2024)
