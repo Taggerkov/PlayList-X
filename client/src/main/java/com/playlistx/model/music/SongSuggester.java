@@ -1,5 +1,5 @@
 package com.playlistx.model.music;
 
 public interface SongSuggester {
-    Song suggestSong(Playlist playlist);
+    java.util.List<Song> suggestSong(com.playlistx.model.music.Playlist playlist);
 }

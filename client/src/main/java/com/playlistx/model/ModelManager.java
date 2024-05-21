@@ -39,7 +39,8 @@ public class ModelManager implements Model, PropertyChangeListener {
         session = (Session) registry.lookup("session");
         client = (Client) registry.lookup(session.getClient());
         remoteListener = new RemoteListener(this, session);
-        songDAO = new SongDAO(); // Initialize the SongDAO
+        songDAO = new SongDAO();
+        loadPreCreatedPlaylists();// Initialize the SongDAO
     }
 
     public static Model get() throws RemoteException, NotBoundException {
@@ -153,8 +154,14 @@ public class ModelManager implements Model, PropertyChangeListener {
 
     @Override
     public void createPlaylist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
-        Playlist newPlaylist = new Playlist(id, songDAO, title, owner, collaborators, creationDate, songsCount, isPublic); // Pass the SongDAO to the Playlist constructor
+        Playlist newPlaylist = new Playlist(id, songDAO, title, owner, creationDate, songsCount, isPublic); // Pass the SongDAO to the Playlist constructor
         playlists.put(id, newPlaylist);
+    }
+    public void loadPreCreatedPlaylists() throws RemoteException {
+        List<Playlist> preCreatedPlaylists = songDAO.getAllPlaylists();
+        for (Playlist playlist : preCreatedPlaylists) {
+            playlists.put(playlist.getId(), playlist);
+        }
     }
     @Override
     public void deletePlaylist(int id) throws RemoteException {

@@ -12,7 +12,7 @@ import com.playlistx.model.login.User;
 public class Playlist {
     private int id;
     private String title;
-    private String owner;
+    private String ownerid;
     private List<String> collaborators;
     private Date creationDate;
     private int songsCount;
@@ -25,18 +25,16 @@ public class Playlist {
      *
      * @param id the unique identifier for the playlist
      * @param title the title of the playlist
-     * @param owner the owner of the playlist
-     * @param collaborators a list of collaborators who have access to the playlist
+     * @param ownerid the owner of the playlist
      * @param creationDate the date the playlist was created
      * @param songsCount the count of songs currently in the playlist
      * @param isPublic a flag indicating if the playlist is public or private
      */
-    public Playlist(int id, SongDAO songDAO, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) {
+    public Playlist(int id, SongDAO songDAO, String title, String ownerid, Date creationDate, int songsCount, boolean isPublic) {
         this.id = id;
         this.songDAO = songDAO;
         this.title = title;
-        this.owner = owner;
-        this.collaborators = collaborators;
+        this.ownerid = ownerid;
         this.creationDate = creationDate;
         this.songsCount = songsCount;
         this.isPublic = isPublic;
@@ -70,11 +68,11 @@ public class Playlist {
     }
 
     public String getOwner() {
-        return owner;
+        return ownerid;
     }
 
     public void setOwner(String owner) {
-        this.owner = owner;
+        this.ownerid = owner;
     }
 
     public List<String> getCollaborators() {
