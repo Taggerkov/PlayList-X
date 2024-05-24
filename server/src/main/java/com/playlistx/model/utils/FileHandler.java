@@ -42,12 +42,14 @@ public abstract class FileHandler {
         if (path.endsWith(".txt")) {
             PrintWriter convertToFile = null;
             try {
-                FileOutputStream fileOut = new FileOutputStream(path, !overwrite);
+                File file = new File(path);
+                file.getParentFile().mkdirs(); // Create directories if they do not exist
+                FileOutputStream fileOut = new FileOutputStream(file, !overwrite);
                 convertToFile = new PrintWriter(fileOut);
                 convertToFile.println(text);
             } catch (FileNotFoundException e) {
                 e.getStackTrace();
-                System.out.println("Path error!");
+                System.out.println("Path error!"+e.getMessage());
             } finally {
                 if (convertToFile != null) {
                     convertToFile.close();
@@ -127,15 +129,17 @@ public abstract class FileHandler {
         if (path.endsWith(".bin")) {
             ObjectOutputStream convertToFile = null;
             try {
-                FileOutputStream fileOut = new FileOutputStream(path);
+                File file = new File(path);
+                file.getParentFile().mkdirs(); // Create directories if they do not exist
+                FileOutputStream fileOut = new FileOutputStream(file);
                 convertToFile = new ObjectOutputStream(fileOut);
                 convertToFile.writeObject(obj);
             } catch (FileNotFoundException e) {
                 e.getStackTrace();
-                System.out.println("Path error!");
+                System.out.println("Path error!"+e.getMessage());
             } catch (IOException e) {
                 e.getStackTrace();
-                System.out.println("I/O error!");
+                System.out.println("I/O error!"+e.getMessage());
             } finally {
                 if (convertToFile != null) {
                     try {

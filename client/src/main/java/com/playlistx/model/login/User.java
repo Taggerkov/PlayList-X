@@ -55,6 +55,7 @@ public class User {
      * This class is responsible for the 'username' proper application.
      */
     private UserName username;
+    private int ownerid;
 
     /**
      * Initializes a new 'user', which will carry non initialized credentials.
@@ -346,5 +347,9 @@ public class User {
             throw new LoginException(ERROR_HASH);
         }
         return md.digest(password.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public int getOwnerId() {
+        return this.ownerid;
     }
 }

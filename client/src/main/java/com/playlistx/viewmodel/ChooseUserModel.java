@@ -25,9 +25,11 @@ public class ChooseUserModel {
         try {
             List<String> users = new ArrayList<>(List.of(model.getAllUsers()));
             pl = model.getPlaylist(playlistID);
-            List<String> temp = pl.getCollaborators();
-            temp.add(pl.getOwner());
-            users.removeAll(temp);
+            if (pl != null) {
+                List<String> temp = pl.getCollaborators();
+                temp.add(pl.getOwner());
+                users.removeAll(temp);
+            }
             return users;
         } catch (RemoteException e) {
             throw new RuntimeException(e);

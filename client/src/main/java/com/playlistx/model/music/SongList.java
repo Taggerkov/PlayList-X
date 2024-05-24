@@ -1,7 +1,7 @@
 package com.playlistx.model.music;
 
 public class SongList {
-    private SongDAO songDAO;  // The SongDAO to interact with the database.
+    private com.playlistx.model.database.SongDAO songDAO;  // The SongDAO to interact with the database.
     private int songId;  // The unique identifier for a song.
     private int playlistId;  // The unique identifier for a playlist.
 
@@ -11,10 +11,10 @@ public class SongList {
      * @param songTitle    the title of the song in the relationship.
      * @param playlistName the name of the playlist in the relationship.
      */
-    public SongList(String songTitle, String playlistName, com.playlistx.model.music.SongDAO songDAO) {
+    public SongList(String songTitle, String playlistName, com.playlistx.model.database.SongDAO songDAO) {
         this.songDAO = songDAO;
         this.songId = songDAO.getSongId(songTitle);
-        this.playlistId = songDAO.getPlaylistId(playlistName);
+        this.playlistId = playlistId;
     }
 
     /**
@@ -23,16 +23,11 @@ public class SongList {
      * @return the ID of the song.
      */
     public int getSongId() {
-        return songId;
+        return songDAO.getSongIdBySongListId(songId);
     }
 
-    /**
-     * Gets the playlist ID.
-     *
-     * @return the ID of the playlist.
-     */
     public int getPlaylistId() {
-        return playlistId;
+        return songDAO.getPlaylistIdBySongListId(playlistId);
     }
 
     /**

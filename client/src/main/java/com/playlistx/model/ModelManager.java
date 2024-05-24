@@ -21,9 +21,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import com.playlistx.model.music.SongDAO;
-
-
+import com.playlistx.model.database.SongDAO;
+import com.playlistx.model.music.Suggestion;
+import com.playlistx.model.music.SongList;
+import com.playlistx.model.music.Listener;
+import com.playlistx.model.database.PlaylistDAO;
 
 public class ModelManager implements Model, PropertyChangeListener {
     private static ModelManager instance;
@@ -32,7 +34,9 @@ public class ModelManager implements Model, PropertyChangeListener {
     private final RemoteListener remoteListener;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Map<Integer, Playlist> playlists = new HashMap<>();
-    private SongDAO songDAO; // Add a SongDAO to interact with the database
+    private final Suggestion suggestion;
+    private SongDAO songDAO;
+    private PlaylistDAO playlistDAO = new PlaylistDAO();
 
     private ModelManager() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(1099);
@@ -40,7 +44,8 @@ public class ModelManager implements Model, PropertyChangeListener {
         client = (Client) registry.lookup(session.getClient());
         remoteListener = new RemoteListener(this, session);
         songDAO = new SongDAO();
-        loadPreCreatedPlaylists();// Initialize the SongDAO
+        this.suggestion = new Suggestion(songDAO);
+        loadPreCreatedPlaylists();
     }
 
     public static Model get() throws RemoteException, NotBoundException {
@@ -50,6 +55,9 @@ public class ModelManager implements Model, PropertyChangeListener {
         return instance;
     }
 
+    public Suggestion getSuggestion() {
+        return suggestion;
+    }
 
     @Override
     public String login(String string, byte[] hashWord) throws RemoteException, LoginException {
@@ -118,51 +126,45 @@ public class ModelManager implements Model, PropertyChangeListener {
         client.close();
     }
 
-    /**
-     * This method gets called when a bound property is changed.
-     *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
-     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         support.firePropertyChange(evt);
     }
 
-    // Playlist and song management implementations:
     @Override
-    public void addSongToPlaylist(int playlistId, Song song) throws RemoteException {
+    public void addSongToPlaylist(int playlistId, Song song) {
         Playlist playlist = playlists.get(playlistId);
         if (playlist != null) {
             playlist.addSong(song);
         }
     }
-
     @Override
-    public void removeSongFromPlaylist(int playlistId, Song song) throws RemoteException {
+    public void removeSongFromPlaylist(int playlistId, Song song) {
         Playlist playlist = playlists.get(playlistId);
         if (playlist != null) {
             playlist.removeSong(song);
         }
     }
 
+
     @Override
-    public List<Song> getAllSongsFromPlaylist(int playlistId) throws RemoteException {
+    public List<Song> getAllSongsFromPlaylist(int playlistId) {
         Playlist playlist = playlists.get(playlistId);
         return playlist != null ? new ArrayList<>(playlist.getSongs()) : new ArrayList<>();
     }
-
     @Override
-    public void createPlaylist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
-        Playlist newPlaylist = new Playlist(id, songDAO, title, owner, creationDate, songsCount, isPublic); // Pass the SongDAO to the Playlist constructor
+    public void createPlaylist(int id, String title, int ownerid, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
+        Playlist newPlaylist = new Playlist(id, songDAO, playlistDAO, title, ownerid, creationDate, songsCount, isPublic);
         playlists.put(id, newPlaylist);
     }
+
     public void loadPreCreatedPlaylists() throws RemoteException {
-        List<Playlist> preCreatedPlaylists = songDAO.getAllPlaylists();
+        List<Playlist> preCreatedPlaylists = playlistDAO.getAllPlaylists();
         for (Playlist playlist : preCreatedPlaylists) {
             playlists.put(playlist.getId(), playlist);
         }
     }
+
     @Override
     public void deletePlaylist(int id) throws RemoteException {
         playlists.remove(id);
@@ -190,6 +192,52 @@ public class ModelManager implements Model, PropertyChangeListener {
         return songDAO.getAllSongs();
     }
 
+    public List<Song> getSongsFromPlaylist(int playlistId) {
+        return songDAO.getSongsFromPlaylist(playlistId);
+    }
 
+    public int getSongsCount(int playlistId) {
+        return songDAO.getSongsCount(playlistId);
+    }
+
+    public List<String> getCollaborators(int playlistId) {
+        return songDAO.getCollaborators(playlistId);
+    }
+
+
+    public List<Song> getMostLikedSongs() {
+        return songDAO.getMostLikedSongs();
+    }
+
+    public int getPlaylistId(String playlistName) {
+        return playlistDAO.getPlaylistId(playlistName);
+    }
+
+    public List<SongList> getSongList() {
+        return songDAO.getSongList();
+    }
+
+    public int getSongId(String songTitle) {
+        return songDAO.getSongId(songTitle);
+    }
+
+    public Song getSongByTitle(String songTitle) {
+        return songDAO.getSongByTitle(songTitle);
+    }
+
+    public List<String> getAllGenres() {
+        return songDAO.getAllGenres();
+    }
+
+    public List<Song> getTopLikedSongsByGenre(String genre, int limit) {
+        return songDAO.getTopLikedSongsByGenre(genre, limit);
+    }
+
+    public List<Playlist> getTopLikedPlaylistsByGenre(String genre, int limit) {
+        return playlistDAO.getTopLikedPlaylistsByGenre(genre, limit);
+    }
+
+    public Listener getListenerById(int id) {
+        return songDAO.getListenerById(id);
+    }
 }
-

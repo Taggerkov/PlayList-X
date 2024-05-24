@@ -25,6 +25,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import static javafx.application.Application.setUserAgentStylesheet;
+import com.playlistx.model.music.Playlist;
 
 
 public class ViewHandler {
@@ -135,13 +136,19 @@ public class ViewHandler {
                 HomeController.get().switchTab(tabs.get(PlayListsController.get()));
                 setTitle("PlayLists");
             }
+
             case PLAYLIST -> {
                 scene = ThePlayListController.get().getScene();
                 ThePlayListController.get().setPlayList(selectPlaylistID);
                 ThePlayListController.get().refresh();
                 HomeController.get().switchTab(tabs.get(ThePlayListController.get()));
                 try {
-                    setTitle(ModelManager.get().getPlaylist(selectPlaylistID).getTitle());
+                    Playlist playlist = ModelManager.get().getPlaylist(selectPlaylistID);
+                    if (playlist != null) {
+                        setTitle(playlist.getTitle());
+                    } else {
+                        setTitle("Playlist not found");
+                    }
                 } catch (RemoteException | NotBoundException e) {
                     popUp(Notify.ACCESS, "RMI Connection Error!");
                     throw new RuntimeException(e);

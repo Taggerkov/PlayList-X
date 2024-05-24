@@ -54,7 +54,7 @@ public class PlayListsModel implements PropertyChangeListener {
         Random random = new Random();
         try {
             model.createPlaylist(LocalDateTime.now().getNano() + random.nextInt(5000, 10000), User.get().getUsername() + "'s PlayList of " + LocalDateTime.now().truncatedTo(ChronoUnit.HOURS),
-                    User.get().getUsername(), new ArrayList<>(), Date.valueOf(LocalDate.now()), 0, false);
+                    User.get().getOwnerId(), new ArrayList<>(), Date.valueOf(LocalDate.now()), 0, false); // pass ownerid as int
         } catch (RemoteException | NotBoundException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
         }

@@ -2,161 +2,118 @@ package com.playlistx.model.music;
 
 import java.util.Date;
 import java.util.List;
-import com.playlistx.model.music.Song;
-import com.playlistx.model.login.User;
+import com.playlistx.model.database.SongDAO;
+import com.playlistx.model.database.PlaylistDAO;
+import com.playlistx.model.database.UserDAO;
 
-/**
- * Represents a playlist in the music system. It includes metadata about the playlist
- * such as its title, owner, collaborators, and the list of songs it contains.
- */
 public class Playlist {
     private int id;
     private String title;
-    private String ownerid;
+    private int ownerid;
     private List<String> collaborators;
     private Date creationDate;
     private int songsCount;
     private boolean isPublic;
     private List<Song> songs;
-    private SongDAO songDAO; // Add a SongDAO to interact with the database
+    private SongDAO songDAO;
+    private PlaylistDAO playlistDAO;
+    private UserDAO userDAO;
 
-    /**
-     * Constructs a Playlist instance.
-     *
-     * @param id the unique identifier for the playlist
-     * @param title the title of the playlist
-     * @param ownerid the owner of the playlist
-     * @param creationDate the date the playlist was created
-     * @param songsCount the count of songs currently in the playlist
-     * @param isPublic a flag indicating if the playlist is public or private
-     */
-    public Playlist(int id, SongDAO songDAO, String title, String ownerid, Date creationDate, int songsCount, boolean isPublic) {
+
+    public Playlist(int id, SongDAO songDAO, String title, int owner, Date creationDate, int songsCount, boolean isPublic, List<String> collaborators, UserDAO userDAO) {
         this.id = id;
         this.songDAO = songDAO;
         this.title = title;
-        this.ownerid = ownerid;
+        this.ownerid = owner;
         this.creationDate = creationDate;
         this.songsCount = songsCount;
         this.isPublic = isPublic;
-        this.songs = songDAO.getSongsFromPlaylist(id); // Fetch the songs from the database
+        this.collaborators = collaborators;
+        this.userDAO = userDAO;
     }
 
-    public void share(){
-
+    public Playlist(int id, SongDAO songDAO, PlaylistDAO playlistDAO, String title, int ownerid, java.util.Date creationDate, int songsCount, boolean isPublic) {
+        this.id = id;
+        this.songDAO = songDAO;
+        this.playlistDAO = playlistDAO;
+        this.title = title;
+        this.ownerid = ownerid; // No need to parse as integer
+        this.creationDate = creationDate;
+        this.songsCount = songsCount;
+        this.isPublic = isPublic;
     }
-
-    public void unshare(){
-
-    }
-
-    // Standard getters and setters for each property
 
     public int getId() {
-        return id;
+        return playlistDAO.getPlaylistIdByTitle(title);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
+        if (title == null) {
+            title = playlistDAO.getPlaylistTitleById(id);
+            if (title == null) {
+                title = "No Title";
+            }
+        }
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getOwner() {
-        return ownerid;
-    }
-
-    public void setOwner(String owner) {
-        this.ownerid = owner;
+        if (this.userDAO == null) {
+            this.userDAO = new UserDAO();
+        }
+        return userDAO.getOwnerNameById(ownerid); // pass ownerid as int
     }
 
     public List<String> getCollaborators() {
-        return collaborators;
+        return playlistDAO.getCollaboratorsByPlaylistId(id);
+    }
+
+    public Date getCreationDate() {
+        return playlistDAO.getCreationDateByPlaylistId(id);
+    }
+
+    public int getSongsCount() {
+        return playlistDAO.getSongsCountByPlaylistId(id);
+    }
+
+    public boolean isPublic() {
+        return playlistDAO.isPlaylistPublic(id);
+    }
+
+    public List<Song> getSongs() {
+        return playlistDAO.getSongsByPlaylistId(id);
+    }
+
+    public void setOwner(int owner) {
+        this.ownerid = owner;
+        PlaylistDAO.updateOwnerByPlaylistId(id, owner);
     }
 
     public void setCollaborators(List<String> collaborators) {
         this.collaborators = collaborators;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
+        playlistDAO.updateCollaboratorsByPlaylistId(id, collaborators);
     }
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+        playlistDAO.updateCreationDateByPlaylistId(id, creationDate);
     }
-
-
 
     public void setSongsCount(int songsCount) {
         this.songsCount = songsCount;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
+        playlistDAO.updateSongsCountByPlaylistId(id, songsCount);
     }
 
     public void setPublic(boolean isPublic) {
         this.isPublic = isPublic;
+        playlistDAO.updateIsPublicByPlaylistId(id, isPublic);
     }
 
-    // Functionalities related to playlist modification
-
-    /**
-     * Adds a collaborator to the playlist.
-     *
-     * @param collaborator the collaborator to add
-     */
-    public void addCollaborator(String collaborator) {
-        collaborators.add(collaborator);
-    }
-
-    /**
-     * Removes a collaborator from the playlist.
-     *
-     * @param collaborator the collaborator to remove
-     */
-    public void removeCollaborator(String collaborator) {
-        collaborators.remove(collaborator);
-    }
-
-
-
-
-
-
-
-    /**
-     * Checks if the playlist is empty.
-     *
-     * @return true if there are no songs in the playlist, otherwise false
-     */
-    public boolean isEmpty() {
-        return songs.isEmpty();
-    }
-
-
-
-    /**
-     * Clears all songs from the playlist and resets the song count.
-     */
-    public void clear() {
-        songs.clear();
-        songsCount = 0;
-    }
-    public List<Song> getSongs() {
-        return songs;
-    }
-
-
-
-    public int getSongsCount() {
-        return songs.size();
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+        playlistDAO.updateSongsByPlaylistId(id, songs);
     }
 
     public int getTotalDuration() {
@@ -165,16 +122,21 @@ public class Playlist {
 
     public void addSong(Song song) {
         songs.add(song);
-        songDAO.addSongToPlaylist(this.id, song); // Add the song to the playlist in the database
+        playlistDAO.addSongToPlaylist(this.id, song);
     }
 
     public void removeSong(Song song) {
         songs.remove(song);
-        songDAO.removeSongFromPlaylist(this.id, song); // Remove the song from the playlist in the database
+        playlistDAO.removeSongFromPlaylist(this.id, song);
     }
 
-    public void setSongs(java.util.List<com.playlistx.model.music.Song> songsFromPlaylist) {
-        this.songs = songsFromPlaylist;
+    public void addCollaborator(String collaborator) {
+        this.collaborators.add(collaborator);
+        playlistDAO.updateCollaboratorsByPlaylistId(id, collaborators);
+    }
+
+    public void setTitle(String newTitle) {
+        this.title = newTitle;
+        playlistDAO.updateTitleByPlaylistId(id, newTitle);
     }
 }
-

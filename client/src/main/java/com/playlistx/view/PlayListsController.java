@@ -72,7 +72,12 @@ public class PlayListsController implements Controller, PropertyChangeListener {
                 throw new RuntimeException(e);
             }
             playTitle.setText(playlist.getTitle());
-            playYear.setText(String.valueOf(Instant.ofEpochMilli(playlist.getCreationDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate().getYear()).substring(2));
+            java.util.Date creationDate = playlist.getCreationDate();
+            if (creationDate != null) {
+                playYear.setText(String.valueOf(Instant.ofEpochMilli(creationDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate().getYear()).substring(2));
+            } else {
+                playYear.setText("No Date");
+            }
             playAuthor.setText(playlist.getOwner());
             if (playlist.isPublic()) {
                 playAccess.setText("Public");

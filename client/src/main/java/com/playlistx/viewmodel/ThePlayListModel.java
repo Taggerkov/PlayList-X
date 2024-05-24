@@ -40,9 +40,14 @@ public class ThePlayListModel implements PropertyChangeListener {
         }
     }
 
-    public void newTitle(int playlistID, String newTitle) {
+    public void newTitle(int playlistID, String newTitle) throws NullPointerException {
         try {
-            model.getPlaylist(playlistID).setTitle(newTitle);
+            Playlist thePlayList = model.getPlaylist(playlistID);
+            if (thePlayList != null) {
+                thePlayList.setTitle(newTitle);
+            } else {
+                throw new NullPointerException("Playlist with ID " + playlistID + " not found");
+            }
         } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
         }

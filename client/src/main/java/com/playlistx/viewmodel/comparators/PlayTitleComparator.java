@@ -43,12 +43,16 @@ public class PlayTitleComparator implements Comparator<Playlist> {
      */
     @Override
     public int compare(@NotNull Playlist firstPlay, @NotNull Playlist secondPlay) {
-        String[] comparator = {firstPlay.getTitle(), secondPlay.getTitle()};
+        String title1 = firstPlay.getTitle();
+        String title2 = secondPlay.getTitle();
+        if (title1 == null || title2 == null) {
+            throw new IllegalArgumentException("Playlist titles cannot be null");
+        }
+        String[] comparator = {title1, title2};
         Arrays.sort(comparator);
-        if (comparator[0].equalsIgnoreCase(firstPlay.getTitle())) return -1;
+        if (comparator[0].equalsIgnoreCase(title1)) return -1;
         else return 1;
     }
-
     /**
      * Returns a comparator that imposes the reverse ordering of this
      * comparator.

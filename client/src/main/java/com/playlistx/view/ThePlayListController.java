@@ -86,37 +86,43 @@ public class ThePlayListController implements Controller, PropertyChangeListener
     @SuppressWarnings("DuplicatedCode")
     private void refresh(Comparator<Song> comparator) {
         Playlist thePlayList = model.getPlayList(playlistId);
-        screenTitle.setText(thePlayList.getTitle());
-        // screenDesc.setText(thePlayList.getDescription());
-        if (thePlayList.isPublic()) isPublic.setText("Pu");
-        else isPublic.setText("Pr");
-        List<Song> songs = thePlayList.getSongs();
-        songs.sort(comparator);
-        songList.getChildren().clear();
-        for (Song song : songs) {
-            System.out.println("Song: " + song.getTitle());
-            HBox songItem;
-            try {
-                songItem = ViewHandler.get().loadSongItems(this);
-            } catch (NullPointerException e) {
-                ViewHandler.popUp(ViewHandler.Notify.FILE, "Files for Song List couldn't be loaded!");
-                throw new RuntimeException(e);
-            }
-            songTitle.setText(song.getTitle());
-            songYear.setText(String.valueOf(song.getYear()).substring(2));
-            songArtist.setText(song.getArtist());
-            songGenre.setText(song.getGenre());
-            songAlbum.setText(song.getAlbumName());
-            songDuration.setText(String.valueOf(song.getDuration()));
-            assert songItem != null;
-            songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
-                if (evt.getButton().equals(MouseButton.PRIMARY)) ViewHandler.get().playVideoYT(song.getLink());
-                else if (evt.getButton().equals(MouseButton.SECONDARY)) {
-                    thePlayList.removeSong(song);
-                    refresh(comparator);
+        if (thePlayList != null) {
+            screenTitle.setText(thePlayList.getTitle());
+            if (thePlayList.isPublic()) isPublic.setText("Pu");
+            else isPublic.setText("Pr");
+            List<Song> songs = thePlayList.getSongs();
+            songs.sort(comparator);
+            songList.getChildren().clear();
+            for (Song song : songs) {
+                System.out.println("Song: " + song.getTitle());
+                HBox songItem = ViewHandler.get().loadSongItems(this);
+                if (songItem == null) {
+                    ViewHandler.popUp(ViewHandler.Notify.FILE, "Files for Song List couldn't be loaded!");
+                    continue;
                 }
-            });
-            songList.getChildren().add(songItem);
+                Label songTitle = (Label) songItem.lookup("#songTitle");
+                Label songYear = (Label) songItem.lookup("#songYear");
+                Label songArtist = (Label) songItem.lookup("#songArtist");
+                Label songGenre = (Label) songItem.lookup("#songGenre");
+                Label songAlbum = (Label) songItem.lookup("#songAlbum");
+                Label songDuration = (Label) songItem.lookup("#songDuration");
+
+                if (songTitle != null) songTitle.setText(song.getTitle());
+                if (songYear != null) songYear.setText(String.valueOf(song.getYear()).substring(2));
+                if (songArtist != null) songArtist.setText(song.getArtist());
+                if (songGenre != null) songGenre.setText(song.getGenre());
+                if (songAlbum != null) songAlbum.setText(song.getAlbumName());
+                if (songDuration != null) songDuration.setText(String.valueOf(song.getDuration()));
+
+                songItem.addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
+                    if (evt.getButton().equals(MouseButton.PRIMARY)) ViewHandler.get().playVideoYT(song.getLink());
+                    else if (evt.getButton().equals(MouseButton.SECONDARY)) {
+                        thePlayList.removeSong(song);
+                        refresh(comparator);
+                    }
+                });
+                songList.getChildren().add(songItem);
+            }
         }
     }
 
