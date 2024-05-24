@@ -37,10 +37,10 @@ class LoginController implements Controller, PropertyChangeListener {
     @FXML
     private ImageView loginLogo, signLogo;
 
-    private LoginController() throws RemoteException, NotBoundException {
+    private LoginController() {
     }
 
-    protected static LoginController get() throws RemoteException, NotBoundException {
+    protected static LoginController get() {
         if (instance == null) instance = new LoginController();
         return instance;
     }

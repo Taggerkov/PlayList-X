@@ -1,6 +1,7 @@
 package com.playlistx.viewmodel;
 
 import com.playlistx.model.login.*;
+import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
 import com.playlistx.view.ViewHandler.*;
 import com.playlistx.view.Views;
@@ -22,18 +23,24 @@ public class LoginModel implements PropertyChangeListener {
     private final PropertyChangeSupport signal = new PropertyChangeSupport(this);
 
     private LoginModel() throws RemoteException, NotBoundException {
+        CSS.addListener(this);
         user.addListener(this);
     }
 
-    public static LoginModel get() throws RemoteException, NotBoundException {
-        if (instance == null) instance = new LoginModel();
-        return instance;
+    public static LoginModel get() {
+        try {
+            if (instance == null) instance = new LoginModel();
+            return instance;
+        } catch (RemoteException | NotBoundException e) {
+            ViewHandler.popUp(Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException("RMI Connection Error!");
+        }
     }
 
     public void login(String userName, String password) {
         if (user.login(userName, password)) {
             signal.firePropertyChange("EXIT", null, null);
-            Views.HOME.show();
+            Views.HOME_INIT.show();
         }
     }
 

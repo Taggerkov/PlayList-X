@@ -240,7 +240,7 @@ public class User {
      * @param password    A {@link String} which represents the 'password'.
      * @return A {@code boolean} which state if the operation was successful.
      */
-    public boolean changeUsername(String newUsername, String password) {
+    public boolean changeUsername(String newUsername, String password) throws LoginException {
         UserName userName = UserName.fresh(newUsername);
         try {
             if (model.changeUsername(userName.toString(), toHashWord(password))) {

@@ -26,7 +26,7 @@ import java.util.HashMap;
  * @since 0.1
  */
 public class KeyChain extends FileHandler implements Serializable {
-    private static final String PATH = "chatty-server/src/main/resources/server/users.bin";
+    private static final String PATH = "server/src/main/resources/server/users.bin";
     /**
      * This {@link String} stores the 'Local I/O' error message.
      */

@@ -1,5 +1,8 @@
 package com.playlistx.model.music;
-
+import java.util.List;
+/**
+ * Represents a single song or track in the music library.
+ */
 public class Song {
     private int id;
     private String artist;
@@ -8,10 +11,24 @@ public class Song {
     private String title;
     private String albumName;
     private String link;
-    private int duration;
-    private String featuredArtists;
+    private int duration; // Duration of the song in seconds
+    private String featuredArtists; // Additional artists featured in the song
+    private List<Song> songs;
+    private SongDAO songDAO;
 
-    // Constructor
+    public Song(String songTitle, SongDAO songDAO) {
+        this.songDAO = songDAO;
+        Song song = songDAO.getSongByTitle(songTitle);
+        this.id = song.getId();
+        this.artist = song.getArtist();
+        this.year = song.getYear();
+        this.genre = song.getGenre();
+        this.title = song.getTitle();
+        this.albumName = song.getAlbumName();
+        this.link = song.getLink();
+        this.featuredArtists = song.getFeaturedArtists();
+    }
+
     public Song(int id, String artist, int year, String genre, String title, String albumName, String link, String featuredArtists) {
         this.id = id;
         this.artist = artist;
@@ -23,7 +40,12 @@ public class Song {
         this.featuredArtists = featuredArtists;
     }
 
-    // Getters and setters
+    public List<Song> getAllSongs() {
+        return this.songs;
+    }
+
+    // Getters and setters for all fields
+
     public int getId() {
         return id;
     }
@@ -88,7 +110,18 @@ public class Song {
         this.featuredArtists = featuredArtists;
     }
 
-    // toString method to represent the song as a string
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * Returns a string representation of the song.
+     * @return A string containing the song's details.
+     */
     @Override
     public String toString() {
         return "Song{" +
@@ -99,15 +132,8 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", albumName='" + albumName + '\'' +
                 ", link='" + link + '\'' +
+                ", duration=" + duration + " seconds" +
                 ", featuredArtists='" + featuredArtists + '\'' +
                 '}';
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 }
