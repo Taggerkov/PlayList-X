@@ -1,17 +1,16 @@
 package com.playlistx.model;
 
 import com.playlistx.model.login.LoginException;
+import com.playlistx.model.music.Playlist;
+import com.playlistx.model.music.Song;
 import com.playlistx.model.proxy.RemoteListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.beans.PropertyChangeListener;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import com.playlistx.model.music.Playlist;
-import com.playlistx.model.music.Song;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 
 public interface Model {

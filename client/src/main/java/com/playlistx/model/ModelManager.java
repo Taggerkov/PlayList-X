@@ -1,6 +1,9 @@
 package com.playlistx.model;
 
 import com.playlistx.model.login.LoginException;
+import com.playlistx.model.music.Playlist;
+import com.playlistx.model.music.Song;
+import com.playlistx.model.music.SongDAO;
 import com.playlistx.model.proxy.Client;
 import com.playlistx.model.proxy.RemoteListener;
 import com.playlistx.model.proxy.Session;
@@ -14,14 +17,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import com.playlistx.model.music.Playlist;
-import com.playlistx.model.music.Song;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import com.playlistx.model.music.SongDAO;
+import java.util.*;
 
 
 

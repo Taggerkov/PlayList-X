@@ -4,7 +4,6 @@ import com.playlistx.model.Model;
 import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.paths.CSS;
-import com.playlistx.view.PlayListsController;
 import com.playlistx.view.ViewHandler;
 import org.jetbrains.annotations.NotNull;
 

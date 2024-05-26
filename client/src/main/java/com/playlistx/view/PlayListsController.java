@@ -1,5 +1,6 @@
 package com.playlistx.view;
 
+import com.playlistx.model.Model;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.paths.FXMLs;
 import com.playlistx.viewmodel.PlayListsModel;
@@ -20,45 +21,110 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class PlayListsController implements Controller, PropertyChangeListener {
+/**
+ * {@link Views#ALL_PLAYLISTS} Controller class. Displays all user related {@link Playlist}s and handles view actions.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see Model#getAllPlaylists()
+ * @since 0.5
+ */
+class PlayListsController implements Controller, PropertyChangeListener {
+    /**
+     * This is the {@code Singleton} instance.
+     */
     private static PlayListsController instance;
+    /**
+     * Class own logic manager.
+     *
+     * @see PlayListsModel
+     */
     private final PlayListsModel model = PlayListsModel.get();
+    /**
+     * The {@link Scene} of the class.
+     */
     private Scene scene;
+    /**
+     * Boolean that states if the sort is in reverse state.
+     */
     private boolean isSortReverse = false;
+    /**
+     * UI zone where injected {@link Playlist}s will be displayed.
+     *
+     * @see ViewHandler#loadPlaylistItems()
+     */
     @FXML
     private VBox playlistList;
+    /**
+     * <b>play...</b> -> Per {@link Playlist} descriptive displays.
+     * <br><b>sort...</b> ->  Interactive sort toggles.
+     */
     @FXML
     private Label sortTitle, playTitle, sortYear, playYear, sortAuthor, playAuthor, sortAccess, playAccess, sortSongCount, playSongCount, activeSort;
 
+    /**
+     * Private constructor that is intended to run only once due being a {@code Singleton} class.
+     */
     private PlayListsController() {
         model.addListener(this);
     }
 
+    /**
+     * {@code Singleton} getter. Gets the singleton instance or creates a new one if none exists.
+     *
+     * @return The singleton instance.
+     */
     public static PlayListsController get() {
         if (instance == null) return instance = new PlayListsController();
         return instance;
     }
 
+    /**
+     * Sets the {@link Scene} for this {@code Controller}.
+     * <br> Not all {@code Controller}s needs a {@code scene}.
+     *
+     * @param scene The {@link Scene} of the class.
+     */
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
     }
 
+    /**
+     * Loads {@link Playlist} and resets to default sort.
+     *
+     * @see #refresh(Comparator)
+     */
     public void refresh() {
         refresh(new PlayTitleComparator());
         activeSort = sortTitle;
     }
 
+    /**
+     * Gets their respective {@code FXML} location.
+     *
+     * @return A {@code String} which contains the location of the respective {@code Controller}.
+     */
     @Override
     public String getFXML() {
         return FXMLs.playlists;
     }
 
+    /**
+     * Gets their respective {@link Scene}.
+     *
+     * @return The {@link Scene} of the class.
+     */
     @Override
     public Scene getScene() {
         return scene;
     }
 
+    /**
+     * Injects the available {@link Playlist}s sorted by the chosen {@link Comparator<Playlist>} to {@link #playlistList}.
+     *
+     * @param comparator One of our custom {@link Comparator<Playlist>}s.
+     */
     private void refresh(Comparator<Playlist> comparator) {
         List<Playlist> playlists = model.getAllPlayLists();
         playlists.sort(comparator);
@@ -87,6 +153,11 @@ public class PlayListsController implements Controller, PropertyChangeListener {
         }
     }
 
+    /**
+     * Toggles sort type.
+     *
+     * @param evt A {@link MouseEvent} from our sort {@link Label}s.
+     */
     @FXML
     private void toggleSort(@NotNull MouseEvent evt) {
         if (evt.getSource() == activeSort) isSortReverse = !isSortReverse;
@@ -144,10 +215,16 @@ public class PlayListsController implements Controller, PropertyChangeListener {
         }
     }
 
+    /**
+     * Deletes sort representative arrow. Made to avoid visual bugs.
+     */
     private void clearVisualSelection() {
         activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
     }
 
+    /**
+     * Creates a new {@link Playlist}.
+     */
     @FXML
     private void createPlaylist() {
         model.createNewPlayList();
@@ -161,7 +238,7 @@ public class PlayListsController implements Controller, PropertyChangeListener {
      *            and the property that has changed.
      */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(@NotNull PropertyChangeEvent evt) {
         if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

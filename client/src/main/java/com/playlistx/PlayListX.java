@@ -4,6 +4,16 @@ import com.playlistx.view.ViewHandler;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * PlayList X client Application.
+ * Runs the client with and integrated UI powered by JavaFX.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see javafx.application.Application
+ * @since 0.1
+ */
+
 public class PlayListX extends Application {
     /**
      * The main entry point for all JavaFX applications.
@@ -18,10 +28,9 @@ public class PlayListX extends Application {
      *                     the application scene can be set.
      *                     Applications may create other stages, if needed, but they will not be
      *                     primary stages.
-     * @throws Exception if something goes wrong
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         ViewHandler.get();
     }
 }

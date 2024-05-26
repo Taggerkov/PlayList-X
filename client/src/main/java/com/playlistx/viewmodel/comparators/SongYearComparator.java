@@ -3,7 +3,6 @@ package com.playlistx.viewmodel.comparators;
 import com.playlistx.model.music.Song;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class SongYearComparator implements Comparator<Song> {

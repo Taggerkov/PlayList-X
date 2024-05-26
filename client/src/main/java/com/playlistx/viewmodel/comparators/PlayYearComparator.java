@@ -4,10 +4,8 @@ import com.playlistx.model.music.Playlist;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class PlayYearComparator implements Comparator<Playlist> {

@@ -1,9 +1,9 @@
 package com.playlistx.viewmodel;
 
-import com.playlistx.model.login.*;
+import com.playlistx.model.login.User;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
-import com.playlistx.view.ViewHandler.*;
+import com.playlistx.view.ViewHandler.Notify;
 import com.playlistx.view.Views;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
