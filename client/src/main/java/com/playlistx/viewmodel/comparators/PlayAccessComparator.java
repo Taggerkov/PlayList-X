@@ -5,6 +5,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Playlist>} class for {@link Playlist playlists}.
+ * <br> Sorts playlists by their access.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ * @since 0.5
+ */
 public class PlayAccessComparator implements Comparator<Playlist> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,
@@ -42,9 +51,9 @@ public class PlayAccessComparator implements Comparator<Playlist> {
      */
     @Override
     public int compare(@NotNull Playlist firstPlay, @NotNull Playlist secondPlay) {
-       if (firstPlay.isPublic() == secondPlay.isPublic()) return 0;
-       else if (firstPlay.isPublic()) return 1;
-       else return -1;
+        if (firstPlay.isPublic() == secondPlay.isPublic()) return 0;
+        else if (firstPlay.isPublic()) return 1;
+        else return -1;
     }
 
     /**

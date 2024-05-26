@@ -5,6 +5,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Song>} class for {@link Song songs}.
+ * <br> Sorts songs by their duration.
+ * @author Sergiu Chirap
+ * @version final
+ * @since 0.5
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ */
 public class SongDurationComparator implements Comparator<Song> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,

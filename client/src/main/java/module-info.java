@@ -20,4 +20,5 @@ module com.playlistx {
     opens com.playlistx to javafx.fxml;
     opens com.playlistx.view to javafx.fxml;
     exports com.playlistx;
+    opens com.playlistx.model to javafx.fxml;
 }

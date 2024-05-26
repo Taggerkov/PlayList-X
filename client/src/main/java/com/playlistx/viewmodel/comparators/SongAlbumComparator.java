@@ -6,6 +6,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Song>} class for {@link Song songs}.
+ * <br> Sorts songs by their album.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ * @since 0.5
+ */
 public class SongAlbumComparator implements Comparator<Song> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,

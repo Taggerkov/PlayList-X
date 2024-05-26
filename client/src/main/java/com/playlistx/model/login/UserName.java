@@ -10,8 +10,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Random;
 
-/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 3.48h */
-
 /**
  * The {@code UserName} is a serializable package-wide class that holds the 'user' username across the package while ensuring its proper use.
  * <p>

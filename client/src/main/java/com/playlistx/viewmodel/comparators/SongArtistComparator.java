@@ -6,6 +6,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Song>} class for {@link Song songs}.
+ * <br> Sorts songs by their artist.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ * @since 0.5
+ */
 public class SongArtistComparator implements Comparator<Song> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,
@@ -26,7 +35,7 @@ public class SongArtistComparator implements Comparator<Song> {
      * y)==0} implies that {@code signum(compare(x,
      * z))==signum(compare(y, z))} for all {@code z}.
      *
-     * @param firstSong the first object to be compared.
+     * @param firstSong  the first object to be compared.
      * @param secondSong the second object to be compared.
      * @return a negative integer, zero, or a positive integer as the
      * first argument is less than, equal to, or greater than the

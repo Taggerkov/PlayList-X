@@ -20,16 +20,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Logic Model for 'PlayLists' view.
+ * <br> This class is a {@code Singleton}.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @since 0.7
+ */
 public class PlayListsModel implements PropertyChangeListener {
+    /**
+     * This is the {@code Singleton} instance.
+     */
     private static PlayListsModel instance;
+    /**
+     * Client main model manager.
+     */
     private final Model model = Model.get();
+    /**
+     * Observer Pattern trigger manager.
+     */
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    /**
+     * Class private constructor. Intended to run only once due to being a {@code Singleton}.
+     *
+     * @throws RemoteException   RMI connection error.
+     * @throws NotBoundException RMI connection error.
+     */
     private PlayListsModel() throws RemoteException, NotBoundException {
         CSS.addListener(this);
         model.addListener(this);
     }
 
+    /**
+     * {@code Singleton} getter. Gets the singleton instance or creates a new one if none exists.
+     *
+     * @return The singleton instance.
+     */
     public static @NotNull PlayListsModel get() {
         try {
             if (instance == null) return instance = new PlayListsModel();
@@ -40,6 +68,10 @@ public class PlayListsModel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Gets all available {@link Playlist} for the user from our database.
+     * @return A {@link List<Playlist>} with all the available playlists for the user.
+     */
     public @NotNull List<Playlist> getAllPlayLists() {
         try {
             return model.getAllPlaylists();
@@ -49,6 +81,9 @@ public class PlayListsModel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Creates a new {@link Playlist}.
+     */
     public void createNewPlayList() {
         Random random = new Random();
         try {
@@ -59,6 +94,10 @@ public class PlayListsModel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Adds a {@link PropertyChangeListener} to this class {@link PropertyChangeSupport}.
+     * @param pcl The listener to be added to this class support.
+     */
     public void addListener(PropertyChangeListener pcl) {
         pcs.addPropertyChangeListener(pcl);
     }
