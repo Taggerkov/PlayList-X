@@ -15,8 +15,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 6.25h */
-
 /**
  * The {@code User} class holds the login information and is responsible for 'user' handling.
  * <p>
@@ -240,7 +238,7 @@ public class User {
      * @param password    A {@link String} which represents the 'password'.
      * @return A {@code boolean} which state if the operation was successful.
      */
-    public boolean changeUsername(String newUsername, String password) {
+    public boolean changeUsername(String newUsername, String password) throws LoginException {
         UserName userName = UserName.fresh(newUsername);
         try {
             if (model.changeUsername(userName.toString(), toHashWord(password))) {

@@ -7,9 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Random;
-
-/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 3.48h */
 
 /**
  * The {@code UserName} is a serializable package-wide class that holds the 'user' username across the package while ensuring its proper use.
@@ -24,7 +23,6 @@ import java.util.Random;
  * @see Serializable
  * @since 0.1
  */
-
 class UserName implements Serializable {
     /**
      * This {@link String} array is used to store nouns for the 'username' generator.
@@ -56,6 +54,15 @@ class UserName implements Serializable {
      */
     private static final String ERROR_LENGTH = "username length should be within 3 and 100 characters!";
     private static Model model;
+
+    static {
+        try {
+            model = Model.get();
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This class is used for the random factor of the 'username' generator.
      */
@@ -76,7 +83,7 @@ class UserName implements Serializable {
         this.username = username;
         try {
             model = Model.get();
-        } catch (IOException | NotBoundException e) {
+        } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -95,8 +102,8 @@ class UserName implements Serializable {
         if (username == null || username.isEmpty()) {
             String generatedName = generateName();
             try {
-                while (!model.isAvailable(generatedName)) generatedName = generateName();
-            } catch (IOException e) {
+                while (!Model.get().isAvailable(generatedName)) generatedName = generateName();
+            } catch (IOException | NotBoundException e) {
                 throw new LoginException(e.getMessage());
             }
             return new UserName(generatedName);

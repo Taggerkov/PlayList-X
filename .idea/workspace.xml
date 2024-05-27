@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="1.0 - viewmodel.package JDocs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/ModelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/login/UserName.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/login/UserName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/AppData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/CSS.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/CSS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/FXMLs.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/FXMLs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/RemoteListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/RemoteListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/HomeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/HomeModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/PlayListsModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/PlayListsModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/SongListModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/SongListModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ThePlayListModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ThePlayListModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/Entry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/PersonalSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/PersonalSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/RMIClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/FileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/exceptions/AccessException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/exceptions/FileException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/FileException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/exceptions/InputException.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Merging-Branch" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Taggerkov&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:/Taggerkov/PlayList-X.git&quot;,
+    &quot;accountId&quot;: &quot;48f3271f-ad3b-4406-a784-6c92261284bf&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2dUkV3Pk64APa971vaMZ0u7FZF8" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Entry.executor": "Run",
+    "Application.PlayListX.executor": "Run",
+    "Application.Server.executor": "Run",
+    "Application.TESTER.executor": "Run",
+    "Application.TESTER2.executor": "Run",
+    "Application.TEWST.executor": "Run",
+    "Application.a.executor": "Run",
+    "OverrideImplement.generate.javadoc": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Sergiu",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Tagge/AppData/Local/SceneBuilder/SceneBuilder.exe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.gutterIcons",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\img" />
+      <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\tick.png" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.playlistx" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.playlistx.model.proxy" />
+      <recent name="com.playlistx.model.utils" />
+      <recent name="com.playlistx.viewmodel.comparators" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.PlayListX">
+    <configuration name="PlayListX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.playlistx.PlayListX" />
+      <module name="client" />
+      <option name="VM_PARAMETERS" value="--add-exports javafx.base/com.sun.javafx.event=org.controlsfx.controls" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.playlistx.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.playlistx.Entry" />
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.playlistx.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.PlayListX" />
+      <item itemvalue="Application.Server" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.PlayListX" />
+        <item itemvalue="Application.Server" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="" />
+      <created>1710070068158</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710070068158</updated>
+      <workItem from="1710070070825" duration="368000" />
+      <workItem from="1710085016110" duration="11522000" />
+      <workItem from="1710153459679" duration="2541000" />
+      <workItem from="1710162389461" duration="6851000" />
+      <workItem from="1710291185324" duration="264000" />
+      <workItem from="1710291550193" duration="664000" />
+      <workItem from="1710332615055" duration="10211000" />
+      <workItem from="1710428429422" duration="233000" />
+      <workItem from="1710428677387" duration="7774000" />
+      <workItem from="1710447958348" duration="7387000" />
+      <workItem from="1710469164949" duration="82000" />
+      <workItem from="1710537102302" duration="459000" />
+      <workItem from="1710878679701" duration="12000" />
+      <workItem from="1711542943257" duration="1698000" />
+      <workItem from="1712441242040" duration="90000" />
+      <workItem from="1712441356595" duration="613000" />
+      <workItem from="1712442536314" duration="1347000" />
+      <workItem from="1712443899532" duration="127000" />
+      <workItem from="1712444163950" duration="105000" />
+      <workItem from="1712599292515" duration="183000" />
+      <workItem from="1712599501374" duration="63000" />
+      <workItem from="1712748791038" duration="157000" />
+      <workItem from="1712748958918" duration="31000" />
+      <workItem from="1713447611787" duration="24000" />
+      <workItem from="1713447652164" duration="4625000" />
+      <workItem from="1713466058237" duration="807000" />
+      <workItem from="1713480132016" duration="86000" />
+      <workItem from="1713895782611" duration="266000" />
+      <workItem from="1713994076412" duration="30000" />
+      <workItem from="1715117631866" duration="680000" />
+      <workItem from="1715120216358" duration="18000" />
+      <workItem from="1715244436816" duration="15450000" />
+      <workItem from="1715280560980" duration="3395000" />
+      <workItem from="1715593216702" duration="5580000" />
+      <workItem from="1715603953832" duration="11427000" />
+      <workItem from="1715640149436" duration="17000" />
+      <workItem from="1716018183993" duration="2432000" />
+      <workItem from="1716025784299" duration="754000" />
+      <workItem from="1716111978385" duration="28841000" />
+      <workItem from="1716198574832" duration="16902000" />
+      <workItem from="1716237429161" duration="419000" />
+      <workItem from="1716280140177" duration="1503000" />
+      <workItem from="1716291310154" duration="4413000" />
+      <workItem from="1716722318023" duration="12352000" />
+      <workItem from="1716739450470" duration="2238000" />
+      <workItem from="1716744098525" duration="18052000" />
+    </task>
+    <task id="LOCAL-00001" summary="0.1 - Login rework (HashMap)">
+      <option name="closed" value="true" />
+      <created>1710106313731</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710106313731</updated>
+    </task>
+    <task id="LOCAL-00002" summary="0.1 - Login (JDocs)">
+      <option name="closed" value="true" />
+      <created>1710155942732</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710155942732</updated>
+    </task>
+    <task id="LOCAL-00003" summary="0.1 - Login V2 (SHA-512 &amp; Password Requirements)">
+      <option name="closed" value="true" />
+      <created>1710187052692</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710187052692</updated>
+    </task>
+    <task id="LOCAL-00004" summary="0.1 - Login Model">
+      <option name="closed" value="true" />
+      <created>1710459178208</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710459178208</updated>
+    </task>
+    <task id="LOCAL-00005" summary="0.1 - Project Merge (Modulation)">
+      <option name="closed" value="true" />
+      <created>1712443969293</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712443969293</updated>
+    </task>
+    <task id="LOCAL-00006" summary="0.3 - HotFix">
+      <option name="closed" value="true" />
+      <created>1713480208343</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1713480208343</updated>
+    </task>
+    <task id="LOCAL-00007" summary="0.4 - CSS Rework / home.fxml polished">
+      <option name="closed" value="true" />
+      <created>1715261460777</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715261460777</updated>
+    </task>
+    <task id="LOCAL-00008" summary="0.5 - SongList &amp; Playlists FXMLs">
+      <option name="closed" value="true" />
+      <created>1715601486140</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715601486140</updated>
+    </task>
+    <task id="LOCAL-00009" summary="0.5 - HotFix - Module FXMLs">
+      <option name="closed" value="true" />
+      <created>1715601977855</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715601977855</updated>
+    </task>
+    <task id="LOCAL-00010" summary="0.5 - More FXML">
+      <option name="closed" value="true" />
+      <created>1715640024796</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715640024796</updated>
+    </task>
+    <task id="LOCAL-00011" summary="0.5 - More FXML">
+      <option name="closed" value="true" />
+      <created>1716112044307</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716112044307</updated>
+    </task>
+    <task id="LOCAL-00012" summary="0.6 - ReWork">
+      <option name="closed" value="true" />
+      <created>1716122365983</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716122365983</updated>
+    </task>
+    <task id="LOCAL-00013" summary="0.6 - HotFix">
+      <option name="closed" value="true" />
+      <created>1716122798545</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1716122798545</updated>
+    </task>
+    <task id="LOCAL-00014" summary="0.6 - HotFix">
+      <option name="closed" value="true" />
+      <created>1716124423048</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1716124423048</updated>
+    </task>
+    <task id="LOCAL-00015" summary="0.6 - Resize">
+      <option name="closed" value="true" />
+      <created>1716125165661</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1716125165661</updated>
+    </task>
+    <task id="LOCAL-00016" summary="0.6 - Resize HotFix">
+      <option name="closed" value="true" />
+      <created>1716125621538</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1716125621538</updated>
+    </task>
+    <task id="LOCAL-00017" summary="0.6 - Resize HotFix">
+      <option name="closed" value="true" />
+      <created>1716125721993</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1716125721993</updated>
+    </task>
+    <task id="LOCAL-00018" summary="0.6 - Resize HotFix">
+      <option name="closed" value="true" />
+      <created>1716125825875</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1716125825875</updated>
+    </task>
+    <task id="LOCAL-00019" summary="0.6 - Testing">
+      <option name="closed" value="true" />
+      <created>1716128646914</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716128646914</updated>
+    </task>
+    <task id="LOCAL-00020" summary="0.6 - Testing">
+      <option name="closed" value="true" />
+      <created>1716129220057</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716129220057</updated>
+    </task>
+    <task id="LOCAL-00021" summary="0.6 - SongList Finish?">
+      <option name="closed" value="true" />
+      <created>1716132495538</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1716132495538</updated>
+    </task>
+    <task id="LOCAL-00022" summary="0.7 - HotFix">
+      <option name="closed" value="true" />
+      <created>1716140003896</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1716140003897</updated>
+    </task>
+    <task id="LOCAL-00023" summary="0.7 - UI Advance">
+      <option name="closed" value="true" />
+      <created>1716141967554</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1716141967554</updated>
+    </task>
+    <task id="LOCAL-00024" summary="0.7 - Testing">
+      <option name="closed" value="true" />
+      <created>1716203907755</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1716203907755</updated>
+    </task>
+    <task id="LOCAL-00025" summary="0.8 - Testing">
+      <option name="closed" value="true" />
+      <created>1716224127830</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1716224127830</updated>
+    </task>
+    <task id="LOCAL-00026" summary="0.8 - Testing">
+      <option name="closed" value="true" />
+      <created>1716224476134</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1716224476134</updated>
+    </task>
+    <task id="LOCAL-00027" summary="1.0 - view.package JDocs">
+      <option name="closed" value="true" />
+      <created>1716733096510</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716733096510</updated>
+    </task>
+    <task id="LOCAL-00028" summary="1.0 - viewmodel.package JDocs">
+      <option name="closed" value="true" />
+      <created>1716748443037</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1716748443037</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="0.1 - Login rework (HashMap)" />
+    <MESSAGE value="0.1 - Login (JDocs)" />
+    <MESSAGE value="0.1 - Login V2 (SHA-512 &amp; Password Requirements)" />
+    <MESSAGE value="0.1 - Login Model" />
+    <MESSAGE value="0.1 - Project Merge (Modulation)" />
+    <MESSAGE value="0.3 - HotFix" />
+    <MESSAGE value="0.4 - CSS Rework / home.fxml polished" />
+    <MESSAGE value="0.5 - SongList &amp; Playlists FXMLs" />
+    <MESSAGE value="0.5 - HotFix - Module FXMLs" />
+    <MESSAGE value="0.5 - More FXML" />
+    <MESSAGE value="0.6 - ReWork" />
+    <MESSAGE value="0.6 - HotFix" />
+    <MESSAGE value="0.6 - Resize" />
+    <MESSAGE value="0.6 - Resize HotFix" />
+    <MESSAGE value="0.6 - Testing" />
+    <MESSAGE value="0.6 - SongList Finish?" />
+    <MESSAGE value="0.7 - HotFix" />
+    <MESSAGE value="0.7 - UI Advance" />
+    <MESSAGE value="0.7 - Testing" />
+    <MESSAGE value="0.8 - Testing" />
+    <MESSAGE value="0.9 - Almost There Update" />
+    <MESSAGE value="1.0 - view.package JDocs" />
+    <MESSAGE value="1.0 - viewmodel.package JDocs" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0 - viewmodel.package JDocs" />
+  </component>
+</project>

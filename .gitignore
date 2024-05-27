@@ -1,7 +1,7 @@
 #General
-/.idea/workspace.xml
+.idea/workspace.xml
 # Client
-/chatty-client/target/
+client/target/
 # Server
-/chatty-server/out/
-/chatty-server/src/main/resources/server/
+server/out/
+server/src/main/resources/server/

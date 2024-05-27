@@ -3,6 +3,10 @@ package com.playlistx.model.music;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents a playlist in the music system. It includes metadata about the playlist
+ * such as its title, owner, collaborators, and the list of songs it contains.
+ */
 public class Playlist {
     private int id;
     private String title;
@@ -12,19 +16,41 @@ public class Playlist {
     private int songsCount;
     private boolean isPublic;
     private List<Song> songs;
+    private SongDAO songDAO; // Add a SongDAO to interact with the database
 
-    // Constructor
-    public Playlist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) {
-        this.id = this.id;
+    /**
+     * Constructs a Playlist instance.
+     *
+     * @param id the unique identifier for the playlist
+     * @param title the title of the playlist
+     * @param owner the owner of the playlist
+     * @param collaborators a list of collaborators who have access to the playlist
+     * @param creationDate the date the playlist was created
+     * @param songsCount the count of songs currently in the playlist
+     * @param isPublic a flag indicating if the playlist is public or private
+     */
+    public Playlist(int id, SongDAO songDAO, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) {
+        this.id = id;
+        this.songDAO = songDAO;
         this.title = title;
         this.owner = owner;
-        this.collaborators = this.collaborators;
-        this.creationDate = this.creationDate;
-        this.songsCount = this.songsCount;
-        this.isPublic = this.isPublic;
+        this.collaborators = collaborators;
+        this.creationDate = creationDate;
+        this.songsCount = songsCount;
+        this.isPublic = isPublic;
+        this.songs = songDAO.getSongsFromPlaylist(id); // Fetch the songs from the database
     }
 
-    // Getters and setters
+    public void share(){
+
+    }
+
+    public void unshare(){
+
+    }
+
+    // Standard getters and setters for each property
+
     public int getId() {
         return id;
     }
@@ -65,9 +91,7 @@ public class Playlist {
         this.creationDate = creationDate;
     }
 
-    public int getSongsCount() {
-        return songsCount;
-    }
+
 
     public void setSongsCount(int songsCount) {
         this.songsCount = songsCount;
@@ -81,60 +105,76 @@ public class Playlist {
         this.isPublic = isPublic;
     }
 
+    // Functionalities related to playlist modification
 
+    /**
+     * Adds a collaborator to the playlist.
+     *
+     * @param collaborator the collaborator to add
+     */
     public void addCollaborator(String collaborator) {
         collaborators.add(collaborator);
     }
 
-
+    /**
+     * Removes a collaborator from the playlist.
+     *
+     * @param collaborator the collaborator to remove
+     */
     public void removeCollaborator(String collaborator) {
         collaborators.remove(collaborator);
     }
 
-    public void setDescription(String description) {
-        return ;
-    }
 
 
-    public String getDescription() {
-        // Implementation
-        return "";
-    }
 
-    public void addSong(Song song) {
-            this.songsCount++;
-    }
 
-    public void removeSong(Song song) {
-        this.songsCount--;
-    }
 
-    public List<Song> getSongs() {
 
-        return songs;
-    }
-
-    private List<Song> getAllSongs() {
-        return getAllSongs();
-    }
-
+    /**
+     * Checks if the playlist is empty.
+     *
+     * @return true if there are no songs in the playlist, otherwise false
+     */
     public boolean isEmpty() {
         return songs.isEmpty();
     }
 
-    // Method to get the total duration of the playlist
-    public int getTotalDuration() {
-        int totalDuration = 0;
-        for (Song song : songs) {
-            totalDuration += song.getDuration();
-        }
-        return totalDuration;
-    }
 
-    // Method to clear all songs from the playlist
+
+    /**
+     * Clears all songs from the playlist and resets the song count.
+     */
     public void clear() {
         songs.clear();
+        songsCount = 0;
+    }
+    public List<Song> getSongs() {
+        return songs;
     }
 
 
+
+    public int getSongsCount() {
+        return songs.size();
+    }
+
+    public int getTotalDuration() {
+        return songs.stream().mapToInt(Song::getDuration).sum();
+    }
+
+    public void addSong(Song song) {
+        songs.add(song);
+        songDAO.addSongToPlaylist(this.id, song); // Add the song to the playlist in the database
+    }
+
+    public void removeSong(Song song) {
+        songs.remove(song);
+        songDAO.removeSongFromPlaylist(this.id, song); // Remove the song from the playlist in the database
+    }
+
+    public void setSongs(java.util.List<com.playlistx.model.music.Song> songsFromPlaylist) {
+        this.songs = songsFromPlaylist;
+    }
 }
+
