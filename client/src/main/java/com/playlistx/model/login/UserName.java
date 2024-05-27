@@ -23,7 +23,6 @@ import java.util.Random;
  * @see Serializable
  * @since 0.1
  */
-
 class UserName implements Serializable {
     /**
      * This {@link String} array is used to store nouns for the 'username' generator.

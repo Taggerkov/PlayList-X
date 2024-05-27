@@ -4,27 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="1.0 - view.package JDocs">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM_[Changes]/ViewHandler$Notify.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM_[Changes]/ViewHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM_[Changes]/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="1.0 - viewmodel.package JDocs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/utils/Emoticons.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/utils/FileHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/utils/exceptions/AccessException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/utils/exceptions/FileException.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/FileException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/utils/exceptions/InputException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/ModelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/login/UserName.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/login/UserName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/AppData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/CSS.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/CSS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/FXMLs.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/paths/FXMLs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/RemoteListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/RemoteListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/HomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/view/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ChooseUserModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ChooseUserModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/HomeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/HomeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/LoginModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/PlayListsModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/PlayListsModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/SongListModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/SongListModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ThePlayListModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/viewmodel/ThePlayListModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/Entry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/PersonalSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/PersonalSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/RMIClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/Session.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/FileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/exceptions/AccessException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/exceptions/FileException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/FileException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/utils/exceptions/InputException.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +40,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -81,34 +87,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Entry.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PlayListX.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TESTER.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TESTER2.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TEWST.executor&quot;: &quot;Run&quot;,
-    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Sergiu&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Tagge/AppData/Local/SceneBuilder/SceneBuilder.exe&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.gutterIcons&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Entry.executor": "Run",
+    "Application.PlayListX.executor": "Run",
+    "Application.Server.executor": "Run",
+    "Application.TESTER.executor": "Run",
+    "Application.TESTER2.executor": "Run",
+    "Application.TEWST.executor": "Run",
+    "Application.a.executor": "Run",
+    "OverrideImplement.generate.javadoc": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Sergiu",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Tagge/AppData/Local/SceneBuilder/SceneBuilder.exe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.gutterIcons",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\css" />
@@ -117,7 +124,12 @@
       <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\img" />
       <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\tick.png" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.playlistx" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.playlistx.model.proxy" />
+      <recent name="com.playlistx.model.utils" />
       <recent name="com.playlistx.viewmodel.comparators" />
     </key>
   </component>
@@ -221,7 +233,7 @@
       <workItem from="1716291310154" duration="4413000" />
       <workItem from="1716722318023" duration="12352000" />
       <workItem from="1716739450470" duration="2238000" />
-      <workItem from="1716744098525" duration="2091000" />
+      <workItem from="1716744098525" duration="18052000" />
     </task>
     <task id="LOCAL-00001" summary="0.1 - Login rework (HashMap)">
       <option name="closed" value="true" />
@@ -439,7 +451,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716733096510</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="1.0 - viewmodel.package JDocs">
+      <option name="closed" value="true" />
+      <created>1716748443037</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1716748443037</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -480,6 +500,7 @@
     <MESSAGE value="0.8 - Testing" />
     <MESSAGE value="0.9 - Almost There Update" />
     <MESSAGE value="1.0 - view.package JDocs" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.0 - view.package JDocs" />
+    <MESSAGE value="1.0 - viewmodel.package JDocs" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0 - viewmodel.package JDocs" />
   </component>
 </project>

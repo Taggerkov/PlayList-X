@@ -6,6 +6,10 @@ import org.jetbrains.annotations.NotNull;
 /**
  * {@code Controller} classes are responsible for their {@code FXML} holding and function.
  * <br> All Controller classes are {@code Singleton}s.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @since 0.6
  */
 interface Controller {
     /**

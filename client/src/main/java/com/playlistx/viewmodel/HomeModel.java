@@ -9,6 +9,8 @@ import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
 import com.playlistx.viewmodel.comparators.PlayYearComparator;
 import com.playlistx.viewmodel.comparators.SongYearComparator;
+import javafx.geometry.Pos;
+import org.controlsfx.control.Notifications;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -169,7 +171,14 @@ public class HomeModel implements PropertyChangeListener {
      * @param css The CSS to be active.
      */
     public void setCSS(@Nullable CSS css) {
-        if (css != null) CSS.setCSS(css);
+        if (css != null) {
+            CSS.setCSS(css);
+            Notifications notificationTest=Notifications.create();
+            notificationTest.position(Pos.BASELINE_RIGHT);
+            notificationTest.title("PlayList X");
+            notificationTest.text("CSS set to " + CSS.getCSS() + "!");
+            notificationTest.show();
+        }
     }
 
     /**

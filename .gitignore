@@ -1,7 +1,7 @@
 #General
-/.idea/workspace.xml
+.idea/workspace.xml
 # Client
-/client/target/
+client/target/
 # Server
-/server/out/
-/server/src/main/resources/server/
+server/out/
+server/src/main/resources/server/

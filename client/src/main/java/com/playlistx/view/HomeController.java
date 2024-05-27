@@ -6,10 +6,12 @@ import com.playlistx.viewmodel.HomeModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.Notifications;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -320,6 +322,13 @@ class HomeController implements Controller, PropertyChangeListener {
      */
     @Override
     public void propertyChange(@NotNull PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
+        if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) {
+            refresh();
+            Notifications notificationTest=Notifications.create();
+            notificationTest.position(Pos.BASELINE_RIGHT);
+            notificationTest.title("PlayList X");
+            notificationTest.text("Received a change from server!");
+            notificationTest.show();
+        }
     }
 }

@@ -5,6 +5,8 @@ import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
+import javafx.geometry.Pos;
+import org.controlsfx.control.Notifications;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -89,6 +91,11 @@ public class PlayListsModel implements PropertyChangeListener {
         try {
             model.createPlaylist(LocalDateTime.now().getNano() + random.nextInt(5000, 10000), User.get().getUsername() + "'s PlayList of " + LocalDateTime.now().truncatedTo(ChronoUnit.HOURS),
                     User.get().getUsername(), new ArrayList<>(), Date.valueOf(LocalDate.now()), 0, false);
+            Notifications notificationTest=Notifications.create();
+            notificationTest.position(Pos.BASELINE_RIGHT);
+            notificationTest.title("PlayList X");
+            notificationTest.text("A new playlist has been created!");
+            notificationTest.show();
         } catch (RemoteException | NotBoundException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
         }

@@ -4,8 +4,10 @@ import com.playlistx.model.paths.FXMLs;
 import com.playlistx.viewmodel.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import org.controlsfx.control.Notifications;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;

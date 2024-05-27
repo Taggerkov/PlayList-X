@@ -4,6 +4,8 @@ import com.playlistx.model.Model;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.paths.CSS;
 import com.playlistx.view.ViewHandler;
+import javafx.geometry.Pos;
+import org.controlsfx.control.Notifications;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -83,6 +85,11 @@ public class ThePlayListModel implements PropertyChangeListener {
     public void newTitle(int playlistID, String newTitle) {
         try {
             model.getPlaylist(playlistID).setTitle(newTitle);
+            Notifications notificationTest=Notifications.create();
+            notificationTest.position(Pos.BASELINE_RIGHT);
+            notificationTest.title("PlayList X");
+            notificationTest.text("Playlist title changed!");
+            notificationTest.show();
         } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
         }
@@ -106,6 +113,11 @@ public class ThePlayListModel implements PropertyChangeListener {
     public void isPublic(int playlistID, boolean temp) {
         try {
             model.getPlaylist(playlistID).setPublic(!temp);
+            Notifications notificationTest=Notifications.create();
+            notificationTest.position(Pos.BASELINE_RIGHT);
+            notificationTest.title("PlayList X");
+            notificationTest.text("Playlist visibility changed!");
+            notificationTest.show();
         } catch (RemoteException e) {
             ViewHandler.popUp(ViewHandler.Notify.ACCESS, "RMI Connection Error!");
         }
