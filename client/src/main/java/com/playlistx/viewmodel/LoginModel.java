@@ -1,5 +1,6 @@
 package com.playlistx.viewmodel;
 
+import com.playlistx.model.login.LoginException;
 import com.playlistx.model.login.User;
 import com.playlistx.model.music.Playlist;
 import com.playlistx.model.paths.CSS;
@@ -78,9 +79,13 @@ public class LoginModel implements PropertyChangeListener {
      * @param password A {@code String} which states the password.
      */
     public void login(String username, String password) {
-        if (user.login(username, password)) {
-            signal.firePropertyChange("EXIT", null, null);
-            Views.HOME_INIT.show();
+        try {
+            if (user.login(username, password)) {
+                signal.firePropertyChange("EXIT", null, null);
+                Views.HOME_INIT.show();
+            }
+        } catch (LoginException e) {
+            signal.firePropertyChange("LOGIN-USER", null, null);
         }
     }
 
