@@ -2,6 +2,10 @@ package com.playlistx.model.music;
 import com.playlistx.model.database.SongDAO;
 
 
+/**
+ * Represents a song in the music system. It includes metadata about the song
+ * such as its title, artist, album, and duration.
+ */
 public class SongList {
     private SongDAO songDAO;  // The SongDAO to interact with the database.
     private int songId;  // The unique identifier for a song.

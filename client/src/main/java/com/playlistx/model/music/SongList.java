@@ -3,6 +3,9 @@ package com.playlistx.model.music;
 import com.playlistx.model.proxy.SongService;
 import java.rmi.RemoteException;
 
+/**
+ * Represents the relationship between a song and a playlist in the music library.
+ */
 public class SongList {
     private SongService songService;  // The SongService to interact with the server.
     private int songId;  // The unique identifier for a song.
@@ -13,6 +16,7 @@ public class SongList {
      *
      * @param songTitle    the title of the song in the relationship.
      * @param playlistName the name of the playlist in the relationship.
+     * @param songService  the service used to fetch song and playlist details.
      */
     public SongList(String songTitle, String playlistName, SongService songService) {
         this.songService = songService;
@@ -23,8 +27,6 @@ public class SongList {
             e.printStackTrace();
         }
     }
-
-
 
     /**
      * Gets the song ID.

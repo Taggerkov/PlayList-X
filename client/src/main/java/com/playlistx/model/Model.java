@@ -166,21 +166,86 @@ public interface Model {
     void close() throws RemoteException;
 
     // Song and Playlist Management Methods
+
+    /**
+     * Adds a song to a playlist and updates the server.
+     *
+     * @param playlistId the ID of the playlist.
+     * @param song       the song to add.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     void addSongToPlaylist(int playlistId, Song song) throws RemoteException;
 
+    /**
+     * Removes a song from a playlist and updates the server.
+     *
+     * @param playlistId the ID of the playlist.
+     * @param song       the song to remove.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     void removeSongFromPlaylist(int playlistId, Song song) throws RemoteException;
 
+    /**
+     * Gets all songs from a playlist.
+     *
+     * @param playlistId the ID of the playlist.
+     * @return a list of all songs in the playlist.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     List<Song> getAllSongsFromPlaylist(int playlistId) throws RemoteException;
 
+    /**
+     * Creates a new playlist.
+     *
+     * @param id            the unique identifier for the playlist.
+     * @param title         the title of the playlist.
+     * @param owner         the owner of the playlist.
+     * @param collaborators the list of collaborators for the playlist.
+     * @param creationDate  the date the playlist was created.
+     * @param songsCount    the count of songs currently in the playlist.
+     * @param isPublic      a flag indicating if the playlist is public or private.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     void createPlaylist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException;
 
+    /**
+     * Deletes a playlist.
+     *
+     * @param id the unique identifier for the playlist to delete.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     void deletePlaylist(int id) throws RemoteException;
 
+    /**
+     * Gets a playlist by its ID.
+     *
+     * @param id the unique identifier for the playlist.
+     * @return the playlist with the specified ID.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     Playlist getPlaylist(int id) throws RemoteException;
 
+    /**
+     * Gets all playlists.
+     *
+     * @return a list of all playlists.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     List<Playlist> getAllPlaylists() throws RemoteException;
 
+    /**
+     * Gets the names of all playlists.
+     *
+     * @return a list of all playlist names.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     List<String> getPlaylistNames() throws RemoteException;
 
+    /**
+     * Gets all songs.
+     *
+     * @return a list of all songs.
+     * @throws RemoteException if there is an RMI connection error.
+     */
     List<Song> getAllSongs() throws RemoteException;
 }

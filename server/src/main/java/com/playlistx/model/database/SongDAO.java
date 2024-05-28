@@ -10,13 +10,23 @@ import com.playlistx.model.music.SongList;
 import com.playlistx.model.music.Playlist;
 
 
-
+/**
+ * This class provides data access methods for interacting with songs and playlists in the database.
+ */
 public class SongDAO {
     private DatabaseConnector dbConnector;
-
+    /**
+     * Constructs a new SongDAO object.
+     */
     public SongDAO() {
         this.dbConnector = new DatabaseConnector();
     }
+    /**
+     * Retrieves all songs from a playlist.
+     *
+     * @param playlistId The ID of the playlist.
+     * @return A list of all songs in the playlist.
+     */
 
     public List<Song> getSongsFromPlaylist(int playlistId) {
         List<Song> songs = new ArrayList<>();
@@ -49,7 +59,12 @@ public class SongDAO {
         return songs;
     }
 
-
+    /**
+     * Retrieves the number of songs in a playlist.
+     *
+     * @param playlistId The ID of the playlist.
+     * @return The number of songs in the playlist.
+     */
     public int getSongsCount(int playlistId) {
         int count = 0;
         try {
@@ -67,7 +82,12 @@ public class SongDAO {
         }
         return count;
     }
-
+    /**
+     * Retrieves the collaborators of a playlist.
+     *
+     * @param playlistId The ID of the playlist.
+     * @return A list of collaborators of the playlist.
+     */
     public List<String> getCollaborators(int playlistId) {
         List<String> collaborators = new ArrayList<>();
         try {
@@ -90,7 +110,12 @@ public class SongDAO {
     }
 
 
-
+    /**
+     * Retrieves all songs from a playlist.
+     *
+     * @param playlistId The ID of the playlist.
+     * @return A list of all songs in the playlist.
+     */
     public List<Song> getAllSongsFromPlaylist(int playlistId) {
         List<Song> songs = new ArrayList<>();
         try {
@@ -121,7 +146,12 @@ public class SongDAO {
         }
         return songs;
     }
-
+    /**
+     * Adds a song to a playlist.
+     *
+     * @param playlistId The ID of the playlist to add the song to.
+     * @param song       The song to be added to the playlist.
+     */
     public void addSongToPlaylist(int playlistId, Song song) {
         try {
             Connection connection = dbConnector.getConnection();
@@ -161,6 +191,12 @@ public class SongDAO {
             e.printStackTrace();
         }
     }
+    /**
+     * Removes a song from a playlist.
+     *
+     * @param playlistId The ID of the playlist to remove the song from.
+     * @param song       The song to be removed from the playlist.
+     */
     public void removeSongFromPlaylist(int playlistId, Song song) {
         try {
             Connection connection = dbConnector.getConnection();
@@ -173,6 +209,11 @@ public class SongDAO {
             e.printStackTrace();
         }
     }
+    /**
+     * Retrieves the most liked songs.
+     *
+     * @return A list of the most liked songs.
+     */
     public List<Song> getMostLikedSongs() {
         List<Song> songs = new ArrayList<>();
         try {
@@ -203,6 +244,12 @@ public class SongDAO {
         }
         return songs;
     }
+    /**
+     * Gets the ID of a playlist by its name.
+     *
+     * @param playlistName The name of the playlist.
+     * @return The ID of the playlist.
+     */
 
     public int getPlaylistId(String playlistName) {
         int playlistId = -1;
@@ -220,6 +267,11 @@ public class SongDAO {
         }
         return playlistId;
     }
+    /**
+     * Retrieves a list of song lists.
+     *
+     * @return A list of song lists.
+     */
 
     public List<SongList> getSongList() {
         List<SongList> songLists = new ArrayList<>();
@@ -237,6 +289,12 @@ public class SongDAO {
         }
         return songLists;
     }
+    /**
+     * Gets the ID of a song by its title.
+     *
+     * @param songTitle The title of the song.
+     * @return The ID of the song.
+     */
 
 
     public int getSongId(String songTitle) {
@@ -255,6 +313,12 @@ public class SongDAO {
         }
         return songId;
     }
+    /**
+     * Retrieves a song by its title.
+     *
+     * @param songTitle The title of the song.
+     * @return The song with the specified title.
+     */
 
     public Song getSongByTitle(String songTitle) {
         Song song = null;
@@ -281,6 +345,11 @@ public class SongDAO {
         }
         return song;
     }
+    /**
+     * Retrieves all music genres.
+     *
+     * @return A list of all music genres.
+     */
 
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
@@ -307,6 +376,11 @@ public class SongDAO {
         }
         return songs;
     }
+    /**
+     * Retrieves all music genres.
+     *
+     * @return A list of all music genres.
+     */
 
     public List<String> getAllGenres() {
         List<String> genres = new ArrayList<>();
@@ -323,6 +397,13 @@ public class SongDAO {
         }
         return genres;
     }
+    /**
+     * Retrieves the top liked songs in a specified genre.
+     *
+     * @param genre The genre of the songs.
+     * @param limit The maximum number of songs to retrieve.
+     * @return A list of the top liked songs in the specified genre.
+     */
 
     public List<Song> getTopLikedSongsByGenre(String genre, int limit) {
         List<Song> songs = new ArrayList<>();
@@ -358,6 +439,11 @@ public class SongDAO {
         }
         return songs;
     }
+    /**
+     * Retrieves all playlists.
+     *
+     * @return A list of all playlists.
+     */
     public List<Playlist> getAllPlaylists() {
         List<Playlist> playlists = new ArrayList<>();
         try {

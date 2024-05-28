@@ -1,6 +1,9 @@
 package com.playlistx.model.music;
 import com.playlistx.model.database.SongDAO;
 
+/**
+ * The Suggestion class provides a method for suggesting a song based on a playlist.
+ */
 public class Suggestion implements com.playlistx.model.music.SongSuggester {
     private String label;
     private java.util.List<Song> suggestedSongs;
@@ -14,6 +17,11 @@ public class Suggestion implements com.playlistx.model.music.SongSuggester {
     public String getLabel() {
         return label;
     }
+    /**
+     * Suggests a song based on a playlist.
+     * @param playlist The playlist to suggest a song for.
+     * @return A list of suggested songs.
+     */
     @Override
     public java.util.List<Song> suggestSong(com.playlistx.model.music.Playlist playlist) {
         // Fetch all unique genres from the database
