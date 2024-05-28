@@ -6,6 +6,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Playlist>} class for {@link Playlist playlists}.
+ * <br> Sorts playlists by their title.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ * @since 0.5
+ */
 public class PlayTitleComparator implements Comparator<Playlist> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,

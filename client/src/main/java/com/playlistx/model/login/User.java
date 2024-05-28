@@ -15,8 +15,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* CLASS H-COUNTER: (Dear colleagues, please remember to add the hours contributed to this code!) 6.25h */
-
 /**
  * The {@code User} class holds the login information and is responsible for 'user' handling.
  * <p>

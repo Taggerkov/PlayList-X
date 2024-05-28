@@ -4,12 +4,19 @@ import com.playlistx.model.music.Playlist;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Playlist>} class for {@link Playlist playlists}.
+ * <br> Sorts playlists by their year.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ * @since 0.5
+ */
 public class PlayYearComparator implements Comparator<Playlist> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,

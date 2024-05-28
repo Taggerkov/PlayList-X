@@ -16,6 +16,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,15 +27,63 @@ import java.util.HashMap;
 
 import static javafx.application.Application.setUserAgentStylesheet;
 
-
+/**
+ * {@code ViewHandler} is the manager and handler of client's UI.
+ * It's responsible for the correct loading of all {@link Controller}s and their respective {@code FXML} files.
+ * <br>
+ * All requests will be processed by its {@code singleton} instance.
+ *
+ * @author Sergiu Chirap
+ * @version 3.4
+ * @see Controller
+ * @see FXMLLoader
+ * @since 0.1
+ */
 public class ViewHandler {
+    /**
+     * UI main {@link Stage}. Most of the runtime will be displayed through the {@code WINDOW} {@link Stage}.
+     *
+     * @see Stage
+     */
     public static final Stage WINDOW = new Stage();
+    /**
+     * Class {@code singleton} instance.
+     */
     private static ViewHandler instance;
+    /**
+     * Main user handle class.
+     *
+     * @see User
+     */
     private final User user = User.get();
+    /**
+     * An array containing all {@link Controller}s to be loaded.
+     *
+     * @see Controller
+     */
     private final Controller[] controllers = {LoginController.get(), HomeController.get(), SongListController.get(), PlayListsController.get(), ThePlayListController.get()};
+    /**
+     * {@link HashMap} containing the relation between the respective {@link Controller} and their {@link Tab}.
+     *
+     * @see HashMap
+     * @see Controller
+     * @see Tab
+     * @see javafx.scene.control.TabPane
+     */
     private final HashMap<Controller, Tab> tabs = new HashMap<>();
+    /**
+     * ID keeping track of the {@link com.playlistx.model.music.Playlist} in scope.
+     *
+     * @see com.playlistx.model.music.Playlist
+     */
     private int selectPlaylistID;
 
+    /**
+     * {@code Singleton} constructor. Initializes and displays the UI.
+     *
+     * @throws NotBoundException if and RMI Connection Error occurred.
+     * @throws RemoteException   if and RMI Connection Error occurred.
+     */
     private ViewHandler() throws NotBoundException, RemoteException {
         loadAllControllers();
         display(Views.LOGIN);
@@ -42,15 +91,31 @@ public class ViewHandler {
         WINDOW.setMinHeight(490);
     }
 
+    /**
+     * Class {@code singleton} getter. Creates new if called for the first time
+     * and {@code instance} if later.
+     * <br> Displays error {@link Alert} on RMI error!
+     *
+     * @return the {@code singleton} instance of this class.
+     */
     public static @NotNull ViewHandler get() {
         try {
             if (instance == null) instance = new ViewHandler();
         } catch (RemoteException | NotBoundException e) {
             popUp(Notify.ACCESS, "RMI Connection Error!");
+            throw new RuntimeException(e);
         }
         return instance;
     }
 
+    /**
+     * UI popup system. Displays an {@link Alert} based on the {@link Notify} type and the {@code string} provided.
+     *
+     * @param type A {@code Notify} {@link Enum} that stated the preset of the popup.
+     * @param msg  The {@code string} message to be displayed.
+     * @return A {@code boolean} in case of any selection preset which states user's choice.
+     * @see Notify
+     */
     public static boolean popUp(@NotNull Notify type, String msg) {
         Alert alert = null;
         switch (type) {
@@ -83,14 +148,32 @@ public class ViewHandler {
         return false;
     }
 
-    public void setTitle(String title) {
+    /**
+     * {@code WINDOWS} title setter. It keeps a preset and then adds the provided {@code title}.
+     *
+     * @param title A {@code string} that will be added to the title of the {@link Stage}.
+     * @see Stage
+     */
+    public void setTitle(@Nullable String title) {
         WINDOW.setTitle("PlayListX: " + title);
     }
 
+    /**
+     * Setter for the {@code playlistID} value.
+     *
+     * @param playlistID The ID as an int of the {@link com.playlistx.model.music.Playlist} to be scoped.
+     */
     public void selectPlaylist(int playlistID) {
         selectPlaylistID = playlistID;
     }
 
+    /**
+     * UI display request processor. This method will switch to the desired view.
+     * <br> Same request could also be sent through {@link Views}.
+     *
+     * @param view An {@link Enum} that states the desired view.
+     * @see Views
+     */
     public void display(@NotNull Views view) {
         Scene scene = null;
 
@@ -158,7 +241,13 @@ public class ViewHandler {
         }
     }
 
-    public void showChooseUser(){
+    /**
+     * Special request to display the 'ChooseUser' view.
+     * <br> A new {@link Stage} will be shown and will lock {@code WINDOW}.
+     *
+     * @see Stage#initOwner(Window)
+     */
+    public void showChooseUser() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLs.chooseUser));
             ChooseUserController chooseUser = ChooseUserController.get(selectPlaylistID);
@@ -184,6 +273,12 @@ public class ViewHandler {
         }
     }
 
+    /**
+     * {@link Controller} loader.
+     *
+     * @param controller The {@link Controller} to be loaded.
+     * @see FXMLLoader
+     */
     private void loadController(@NotNull Controller controller) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -204,11 +299,21 @@ public class ViewHandler {
         }
     }
 
+    /**
+     * Proxy method of {@link #loadController(Controller)} to load all {@code controllers}.
+     */
     private void loadAllControllers() {
         for (Controller controller : controllers) loadController(controller);
     }
 
-    protected @Nullable HBox loadSongItems(Controller controller) {
+    /**
+     * Dedicated loader for repeated {@code songItem.fxml}.
+     *
+     * @param controller Which {@link Controller} to own the item.
+     * @return A {@link HBox} loaded with {@code songItem.fxml}.
+     * @see FXMLLoader
+     */
+    protected @Nullable HBox loadSongItems(@NotNull Controller controller) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(FXMLs.songItem));
@@ -220,6 +325,12 @@ public class ViewHandler {
         return null;
     }
 
+    /**
+     * Dedicated loader for repeated {@code playlistItems.fxml}.
+     *
+     * @return A {@link HBox} loaded with {@code playlistItems.fxml}.
+     * @see FXMLLoader
+     */
     protected @Nullable HBox loadPlaylistItems() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -232,6 +343,11 @@ public class ViewHandler {
         return null;
     }
 
+    /**
+     * Reloads CSS current file.
+     *
+     * @see CSS
+     */
     public void reloadCSS() {
         Scene scene = WINDOW.getScene();
         scene.getStylesheets().clear();
@@ -239,6 +355,14 @@ public class ViewHandler {
         scene.getStylesheets().add(String.valueOf((getClass().getResource(CSS.path()))));
     }
 
+    /**
+     * Plays a YouTube video through as a popup.
+     * <br> A new {@link Stage} will be shown and will lock {@code WINDOW}.
+     *
+     * @param linkYT A {@code string} containing the YouTube video.
+     * @see WebView
+     * @see Stage#initOwner(Window)
+     */
     public void playVideoYT(String linkYT) {
         Stage videoStage = new Stage();
         videoStage.setTitle("PlayVideoYT");
@@ -256,6 +380,9 @@ public class ViewHandler {
         videoStage.show();
     }
 
+    /**
+     * Inner {@link Enum} used for {@link #popUp(Notify, String)}, stating the popup preset.
+     */
     public enum Notify {
         CONFIRM, ACCESS, FILE, INPUT;
     }

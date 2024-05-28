@@ -22,53 +22,127 @@ import java.beans.PropertyChangeListener;
 import java.util.Comparator;
 import java.util.List;
 
-
-public class ThePlayListController implements Controller, PropertyChangeListener {
+/**
+ * {@link Views#PLAYLIST} Controller class. Display data from the scoped {@link Playlist} and handles user actions.
+ *
+ * @author Sergiu Chirap
+ * @version final
+ * @since 0.7
+ */
+class ThePlayListController implements Controller, PropertyChangeListener {
+    /**
+     * This is the {@code Singleton} instance.
+     */
     private static ThePlayListController instance;
+    /**
+     * Class own logic manager.
+     *
+     * @see ThePlayListModel
+     */
     private final ThePlayListModel model = ThePlayListModel.get();
+    /**
+     * ID of the scoped {@link Playlist}.
+     */
     private int playlistId;
+    /**
+     * Boolean that states if the sort is in reverse state.
+     */
     private boolean isSortReverse = false;
+    /**
+     * The {@link Scene} of the class.
+     */
     private Scene scene;
-    private boolean isOnClick, isOnShift;
+    /**
+     * UI zone where injected {@link Song}s will be displayed.
+     *
+     * @see ViewHandler#loadSongItems(Controller)
+     */
     @FXML
     private VBox songList;
+    /**
+     * <b>song...</b> -> Per {@link Song} descriptive displays.
+     * <br><b>sort...</b> ->  Interactive sort toggles.
+     */
     @FXML
     private Label sortTitle, songTitle, sortYear, songYear, sortArtist, songArtist, sortGenre, songGenre, sortAlbum, songAlbum, sortDuration, songDuration, activeSort;
+    /**
+     * {@link Playlist} title display and text input.
+     */
     @FXML
     private TextField screenTitle;
+    /**
+     * {@link Playlist} description display and text input.
+     */
     @FXML
     private TextArea screenDesc;
+    /**
+     * {@link Playlist} Publicity state display.
+     */
     @FXML
     private Text isPublic;
 
+    /**
+     * Private constructor that is intended to run only once due being a {@code Singleton} class.
+     */
     private ThePlayListController() {
         model.addListener(this);
     }
 
+    /**
+     * {@code Singleton} getter. Gets the singleton instance or creates a new one if none exists.
+     *
+     * @return The singleton instance.
+     */
     public static ThePlayListController get() {
         if (instance == null) return instance = new ThePlayListController();
         else return instance;
     }
 
+    /**
+     * Sets the {@link Scene} for this {@code Controller}.
+     * <br> Not all {@code Controller}s needs a {@code scene}.
+     *
+     * @param scene The {@link Scene} of the class.
+     */
     @Override
     public void init(@NotNull Scene scene) {
         this.scene = scene;
     }
 
+    /**
+     * Gets their respective {@code FXML} location.
+     *
+     * @return A {@code String} which contains the location of the respective {@code Controller}
+     */
     @Override
     public String getFXML() {
         return FXMLs.thePlaylist;
     }
 
+    /**
+     * Gets their respective {@link Scene}.
+     *
+     * @return The {@link Scene} of the class.
+     */
     @Override
     public Scene getScene() {
         return scene;
     }
 
+    /**
+     * Sets {@link #playlistId}.
+     *
+     * @param playlistId The ID of the scoped {@link Playlist}.
+     */
     public void setPlayList(int playlistId) {
         this.playlistId = playlistId;
     }
 
+    /**
+     * Loads {@link Song}s and refreshes view.
+     *
+     * @see #refresh(Comparator)
+     */
     public void refresh() {
         if (activeSort == null) {
             refresh(new SongYearComparator());
@@ -83,6 +157,11 @@ public class ThePlayListController implements Controller, PropertyChangeListener
         else if (activeSort.equals(sortDuration)) refresh(new SongDurationComparator());
     }
 
+    /**
+     * Injects all available {@link Song}s into {@link #songList}.
+     *
+     * @param comparator One of our custom {@link Comparator<Playlist>}s.
+     */
     @SuppressWarnings("DuplicatedCode")
     private void refresh(Comparator<Song> comparator) {
         Playlist thePlayList = model.getPlayList(playlistId);
@@ -120,6 +199,11 @@ public class ThePlayListController implements Controller, PropertyChangeListener
         }
     }
 
+    /**
+     * Toggles sort type.
+     *
+     * @param evt A {@link MouseEvent} from our sort {@link Label}s.
+     */
     @FXML
     @SuppressWarnings("DuplicatedCode")
     private void toggleSort(@NotNull MouseEvent evt) {
@@ -188,30 +272,49 @@ public class ThePlayListController implements Controller, PropertyChangeListener
         }
     }
 
+    /**
+     * Deletes sort representative arrow. Made to avoid visual bugs.
+     */
     private void clearVisualSelection() {
         activeSort.setText(activeSort.getText().substring(0, activeSort.getText().length() - 2));
     }
 
+    /**
+     * Changes the scoped {@link Playlist} title with the extracted input of {@link #screenTitle}.
+     */
     @FXML
     private void saveTitle() {
         model.newTitle(playlistId, screenTitle.getText());
     }
 
+    /**
+     * Changes the scoped {@link Playlist} description with the extracted input of {@link #screenDesc}.
+     */
     @FXML
     private void saveDesc() {
         model.newDesc(playlistId, screenDesc.getText());
     }
 
+    /**
+     * Adds a chosen from the available {@link Song}s to the scoped {@link Playlist}.
+     */
     @FXML
     private void addSong() {
         Views.SONGLIST_SELECT.show();
     }
 
+    /**
+     * Shares access of the scoped {@link Playlist} to another user.
+     * @see ChooseUserController
+     */
     @FXML
     private void share() {
         ViewHandler.get().showChooseUser();
     }
 
+    /**
+     * Toggles scoped {@link Playlist} visibility.
+     */
     @FXML
     private void toggleVisibility() {
         boolean temp = isPublic.getText().equalsIgnoreCase("PU");
@@ -227,7 +330,7 @@ public class ThePlayListController implements Controller, PropertyChangeListener
      *            and the property that has changed.
      */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(@NotNull PropertyChangeEvent evt) {
         if (evt.getPropertyName().equalsIgnoreCase("REFRESH")) refresh();
     }
 }

@@ -3,9 +3,16 @@ package com.playlistx.viewmodel.comparators;
 import com.playlistx.model.music.Song;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * UI Custom {@link Comparator<Song>} class for {@link Song songs}.
+ * <br> Sorts songs by their year.
+ * @author Sergiu Chirap
+ * @version final
+ * @since 0.5
+ * @see java.util.Arrays#sort(Object[], Comparator) Arrays.sort(Object[], Comparator)
+ */
 public class SongYearComparator implements Comparator<Song> {
     /**
      * Compares its two arguments for order.  Returns a negative integer,

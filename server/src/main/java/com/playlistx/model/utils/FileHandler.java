@@ -1,6 +1,5 @@
 package com.playlistx.model.utils;
 
-import com.playlistx.model.utils.exceptions.FileException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -16,11 +15,17 @@ import java.util.Scanner;
  * @since 08/01/2024
  */
 public abstract class FileHandler {
-    protected static final String NOT_TXT = "Chosen file is not text (.txt)!";
-    protected static final String NOT_BIN = "Chosen file is not binary (.bin)!";
+    /**
+     * Class error message of incorrect file type.
+     */
+    protected static final String NOT_TXT = "Chosen file is not text (.txt)!", NOT_BIN = "Chosen file is not binary (.bin)!";
 
-    //TEXT FILES
-
+    /**
+     * Check if a file exist or if application has access to path.
+     *
+     * @param path The path to the file to check.
+     * @return If the operation was a success.
+     */
     protected static boolean checkFile(String path) {
         try (FileInputStream test = new FileInputStream(path)) {
         } catch (IOException e) {
@@ -91,7 +96,7 @@ public abstract class FileHandler {
      * @return Array of Strings extracted from the file.
      * @throws FileException Exception if file has invalid extension.
      */
-    protected static String[] readFromText(String path) throws FileException {
+    protected static String @NotNull [] readFromText(@NotNull String path) throws FileException {
         if (path.endsWith(".txt")) {
             Scanner readFromFile = null;
             ArrayList<String> stringArray = new ArrayList<>();
@@ -113,8 +118,6 @@ public abstract class FileHandler {
         } else throw new FileException(NOT_TXT);
     }
 
-    //BINARY FILES
-
     /**
      * Saves any Object in a chosen .bin file.
      * If file exists it will overwrite and if it doesn't it will create a new file in that path.
@@ -123,19 +126,22 @@ public abstract class FileHandler {
      * @param obj  Object to be written in the file.
      * @throws FileException Exception if file has invalid extension.
      */
-    protected static void writeToBinary(String path, Object obj) {
+    protected static boolean writeToBinary(@NotNull String path, Object obj) {
         if (path.endsWith(".bin")) {
             ObjectOutputStream convertToFile = null;
             try {
                 FileOutputStream fileOut = new FileOutputStream(path);
                 convertToFile = new ObjectOutputStream(fileOut);
                 convertToFile.writeObject(obj);
+                return true;
             } catch (FileNotFoundException e) {
                 e.getStackTrace();
                 System.out.println("Path error!");
+                return false;
             } catch (IOException e) {
                 e.getStackTrace();
                 System.out.println("I/O error!");
+                return false;
             } finally {
                 if (convertToFile != null) {
                     try {
@@ -155,7 +161,7 @@ public abstract class FileHandler {
      * @return Object extracted from the file.
      * @throws FileException Exception if file has invalid extension.
      */
-    protected static Object readFromBinary(String path) {
+    protected static Object readFromBinary(@NotNull String path) {
         if (path.endsWith(".bin")) {
             Object obj = null;
             ObjectInput getFromFile = null;
@@ -164,10 +170,10 @@ public abstract class FileHandler {
                 getFromFile = new ObjectInputStream(fileIn);
                 obj = getFromFile.readObject();
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                e.getStackTrace();
                 System.out.println("Class not Found!");
             } catch (IOException e) {
-                e.printStackTrace();
+                e.getStackTrace();
                 System.out.println("I/O error!");
             } finally {
                 if (getFromFile != null) {
