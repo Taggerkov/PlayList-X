@@ -1,9 +1,5 @@
 package com.playlistx.model.music;
-
-import java.util.Date;
-import java.util.List;
-import com.playlistx.model.proxy.SongService;
-import java.rmi.RemoteException;
+import com.playlistx.model.database.SongDAO;
 
 /**
  * Represents a playlist in the music system. It includes metadata about the playlist
@@ -13,12 +9,12 @@ public class Playlist {
     private int id;
     private String title;
     private String ownerid;
-    private List<String> collaborators;
-    private Date creationDate;
+    private java.util.List<String> collaborators;
+    private java.util.Date creationDate;
     private int songsCount;
     private boolean isPublic;
-    private List<Song> songs;
-    private SongService songService; // Add a SongService to interact with the server
+    private java.util.List<Song> songs;
+    private SongDAO songDAO; // Add a SongDAO to interact with the database
 
     /**
      * Constructs a Playlist instance.
@@ -30,21 +26,16 @@ public class Playlist {
      * @param songsCount the count of songs currently in the playlist
      * @param isPublic a flag indicating if the playlist is public or private
      */
-    public Playlist(int id, SongService songService, String title, String ownerid, Date creationDate, int songsCount, boolean isPublic) {
+    public Playlist(int id, SongDAO songDAO, String title, String ownerid, java.util.Date creationDate, int songsCount, boolean isPublic) {
         this.id = id;
-        this.songService = songService;
+        this.songDAO = songDAO;
         this.title = title;
         this.ownerid = ownerid;
         this.creationDate = creationDate;
         this.songsCount = songsCount;
         this.isPublic = isPublic;
-        try {
-            this.songs = songService.getSongsFromPlaylist(id); // Fetch the songs from the server
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        this.songs = songDAO.getSongsFromPlaylist(id); // Fetch the songs from the database
     }
-
 
     public void share(){
 
@@ -80,19 +71,19 @@ public class Playlist {
         this.ownerid = owner;
     }
 
-    public List<String> getCollaborators() {
+    public java.util.List<String> getCollaborators() {
         return collaborators;
     }
 
-    public void setCollaborators(List<String> collaborators) {
+    public void setCollaborators(java.util.List<String> collaborators) {
         this.collaborators = collaborators;
     }
 
-    public Date getCreationDate() {
+    public java.util.Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(java.util.Date creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -154,7 +145,7 @@ public class Playlist {
         songs.clear();
         songsCount = 0;
     }
-    public List<Song> getSongs() {
+    public java.util.List<Song> getSongs() {
         return songs;
     }
 
@@ -165,25 +156,17 @@ public class Playlist {
     }
 
     public int getTotalDuration() {
-        return songs.stream().mapToInt(Song::getDuration).sum();
+        return songs.stream().mapToInt(com.playlistx.model.music.Song::getDuration).sum();
     }
 
-    public void addSong(Song song) {
+    public void addSong(com.playlistx.model.music.Song song) {
         songs.add(song);
-        try {
-            songService.addSongToPlaylist(this.id, song); // Add the song to the playlist in the server
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        songDAO.addSongToPlaylist(this.id, song); // Add the song to the playlist in the database
     }
 
-    public void removeSong(Song song) {
+    public void removeSong(com.playlistx.model.music.Song song) {
         songs.remove(song);
-        try {
-            songService.removeSongFromPlaylist(this.id, song); // Remove the song from the playlist in the server
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        songDAO.removeSongFromPlaylist(this.id, song); // Remove the song from the playlist in the database
     }
 
     public void setSongs(java.util.List<com.playlistx.model.music.Song> songsFromPlaylist) {

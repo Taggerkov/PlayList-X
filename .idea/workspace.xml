@@ -4,13 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="0.8 - Testing">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5e39d256-fbb4-445f-8d98-a01405c0c465.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5e39d256-fbb4-445f-8d98-a01405c0c465.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5e39d256-fbb4-445f-8d98-a01405c0c465/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5e39d256-fbb4-445f-8d98-a01405c0c465/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+    <list default="true" id="9c022264-eb8a-4e23-bd35-ac2a193135e8" name="Changes" comment="rollback">
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/proxy/SongService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/Explorable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/Manageable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/Playlist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/Shareable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/Song.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/SongList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/SongSuggester.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/music/Suggestion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/SongService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/proxy/SongServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_19_2024_2_57_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_20_2024_10_39_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_20_2024_10_39_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_20_2024_11_11_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_20_2024_11_11_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_21_2024_11_23_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_21_2024_11_23_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/ModelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/database/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/Playlist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/Song.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/SongDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/SongDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/creation.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/creation.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/SongDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/model/database/SongDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/SongList.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/SongList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/Suggestion.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/playlistx/model/music/Suggestion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/ModelManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/ModelManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/Playlist.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/Playlist.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/Song.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/Song.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/SongList.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/SongList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/Suggestion.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/playlistx/model/music/Suggestion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/playlistx/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/playlistx/Entry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/playlistx/Entry.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/playlistx/Entry.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +44,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -69,7 +93,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Razz",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Tagge/IdeaProjects/playlist-x/client/src/main/resources/com/playlistx/css",
+    "last_opened_file_path": "C:/Users/banra/college/sep project/PlayList-X/server/src/main/java/com/playlistx/model",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -84,6 +108,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\banra\college\sep project\PlayList-X\server\src\main\java\com\playlistx\model" />
       <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -91,6 +116,7 @@
       <recent name="C:\Users\Tagge\IdeaProjects\playlist-x\client\src\main\resources\com\playlistx\tick.png" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.playlistx.model.proxy" />
       <recent name="com.playlistx.viewmodel.comparators" />
     </key>
   </component>
@@ -401,7 +427,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716224476134</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="rollback">
+      <option name="closed" value="true" />
+      <created>1716884611840</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716884611840</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,6 +475,7 @@
     <MESSAGE value="0.7 - Testing" />
     <MESSAGE value="0.8 - Testing" />
     <MESSAGE value="0.9 - Almost There Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="0.9 - Almost There Update" />
+    <MESSAGE value="rollback" />
+    <option name="LAST_COMMIT_MESSAGE" value="rollback" />
   </component>
 </project>

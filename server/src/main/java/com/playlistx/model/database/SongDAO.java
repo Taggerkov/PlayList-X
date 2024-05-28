@@ -1,10 +1,15 @@
-package com.playlistx.model.music;
+package com.playlistx.model.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import com.playlistx.model.music.Song;
+import com.playlistx.model.music.SongList;
+import com.playlistx.model.music.Playlist;
+
+
 
 public class SongDAO {
     private DatabaseConnector dbConnector;

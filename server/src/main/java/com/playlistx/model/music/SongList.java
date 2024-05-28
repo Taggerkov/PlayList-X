@@ -1,10 +1,9 @@
 package com.playlistx.model.music;
+import com.playlistx.model.database.SongDAO;
 
-import com.playlistx.model.proxy.SongService;
-import java.rmi.RemoteException;
 
 public class SongList {
-    private SongService songService;  // The SongService to interact with the server.
+    private SongDAO songDAO;  // The SongDAO to interact with the database.
     private int songId;  // The unique identifier for a song.
     private int playlistId;  // The unique identifier for a playlist.
 
@@ -14,17 +13,11 @@ public class SongList {
      * @param songTitle    the title of the song in the relationship.
      * @param playlistName the name of the playlist in the relationship.
      */
-    public SongList(String songTitle, String playlistName, SongService songService) {
-        this.songService = songService;
-        try {
-            this.songId = songService.getSongId(songTitle);
-            this.playlistId = songService.getPlaylistId(playlistName);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    public SongList(String songTitle, String playlistName, com.playlistx.model.database.SongDAO songDAO) {
+        this.songDAO = songDAO;
+        this.songId = songDAO.getSongId(songTitle);
+        this.playlistId = songDAO.getPlaylistId(playlistName);
     }
-
-
 
     /**
      * Gets the song ID.

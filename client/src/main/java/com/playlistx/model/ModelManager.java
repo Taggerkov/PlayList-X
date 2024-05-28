@@ -2,10 +2,12 @@ package com.playlistx.model;
 
 import com.playlistx.model.login.LoginException;
 import com.playlistx.model.proxy.Client;
+import com.playlistx.model.proxy.SongService;
 import com.playlistx.model.proxy.RemoteListener;
 import com.playlistx.model.proxy.Session;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -21,28 +23,30 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import com.playlistx.model.music.SongDAO;
+
+
 
 
 
 public class ModelManager implements Model, PropertyChangeListener {
     private static ModelManager instance;
     private final Session session;
-    private final Client client;
+    private final SongService songService;
     private final RemoteListener remoteListener;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Map<Integer, Playlist> playlists = new HashMap<>();
-    private SongDAO songDAO; // Add a SongDAO to interact with the database
+    private final Client client;
+
 
     private ModelManager() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(1099);
         session = (Session) registry.lookup("session");
-        client = (Client) registry.lookup(session.getClient());
+        songService = (SongService) registry.lookup("SongService"); // Lookup the SongService from the RMI registry
         remoteListener = new RemoteListener(this, session);
-        songDAO = new SongDAO();
-        loadPreCreatedPlaylists();// Initialize the SongDAO
-    }
+        client = (Client) registry.lookup(session.getClient());
 
+        loadPreCreatedPlaylists(); // Load the pre-created playlists from the SongService
+    }
     public static Model get() throws RemoteException, NotBoundException {
         if (instance == null) {
             instance = new ModelManager();
@@ -154,11 +158,12 @@ public class ModelManager implements Model, PropertyChangeListener {
 
     @Override
     public void createPlaylist(int id, String title, String owner, List<String> collaborators, Date creationDate, int songsCount, boolean isPublic) throws RemoteException {
-        Playlist newPlaylist = new Playlist(id, songDAO, title, owner, creationDate, songsCount, isPublic); // Pass the SongDAO to the Playlist constructor
+        Playlist newPlaylist = new Playlist(id, songService, title, owner, creationDate, songsCount, isPublic); // Pass the SongService to the Playlist constructor
         playlists.put(id, newPlaylist);
     }
+
     public void loadPreCreatedPlaylists() throws RemoteException {
-        List<Playlist> preCreatedPlaylists = songDAO.getAllPlaylists();
+        List<Playlist> preCreatedPlaylists = songService.getAllPlaylists(); // Use the SongService to get all playlists
         for (Playlist playlist : preCreatedPlaylists) {
             playlists.put(playlist.getId(), playlist);
         }
@@ -186,8 +191,8 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
-    public List<Song> getAllSongs() throws java.rmi.RemoteException {
-        return songDAO.getAllSongs();
+    public List<Song> getAllSongs() throws RemoteException {
+        return songService.getAllSongs();
     }
 
 

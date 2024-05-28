@@ -1,7 +1,5 @@
 package com.playlistx.model.music;
-import java.util.List;
-import com.playlistx.model.proxy.SongService;
-import java.rmi.RemoteException;
+import com.playlistx.model.database.SongDAO;
 
 /**
  * Represents a single song or track in the music library.
@@ -16,28 +14,34 @@ public class Song {
     private String link;
     private int duration; // Duration of the song in seconds
     private String featuredArtists; // Additional artists featured in the song
-    private List<Song> songs;
-    private SongService songService;
+    private java.util.List<Song> songs;
+    private SongDAO songDAO;
 
-    public Song(String songTitle, SongService songService) {
-        this.songService = songService;
-        Song song;
-        try {
-            song = songService.getSongByTitle(songTitle);
-            this.id = song.getId();
-            this.artist = song.getArtist();
-            this.year = song.getYear();
-            this.genre = song.getGenre();
-            this.title = song.getTitle();
-            this.albumName = song.getAlbumName();
-            this.link = song.getLink();
-            this.featuredArtists = song.getFeaturedArtists();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    public Song(String songTitle, SongDAO songDAO) {
+        this.songDAO = songDAO;
+        com.playlistx.model.music.Song song = songDAO.getSongByTitle(songTitle);
+        this.id = song.getId();
+        this.artist = song.getArtist();
+        this.year = song.getYear();
+        this.genre = song.getGenre();
+        this.title = song.getTitle();
+        this.albumName = song.getAlbumName();
+        this.link = song.getLink();
+        this.featuredArtists = song.getFeaturedArtists();
     }
 
-    public List<Song> getAllSongs() {
+    public Song(int id, String artist, int year, String genre, String title, String albumName, String link, String featuredArtists) {
+        this.id = id;
+        this.artist = artist;
+        this.year = year;
+        this.genre = genre;
+        this.title = title;
+        this.albumName = albumName;
+        this.link = link;
+        this.featuredArtists = featuredArtists;
+    }
+
+    public java.util.List<Song> getAllSongs() {
         return this.songs;
     }
 

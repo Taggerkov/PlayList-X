@@ -1,4 +1,4 @@
-package com.playlistx.model.music;
+package com.playlistx.model.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
